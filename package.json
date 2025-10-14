@@ -28,6 +28,8 @@
     "@capacitor/keyboard": "7.0.3",
     "@capacitor/status-bar": "7.0.3",
     "@ionic/angular": "^8.0.0",
+    "@zxing/browser": "^0.1.5",
+    "@zxing/library": "^0.21.3",
     "firebase": "^12.4.0",
     "ionicons": "^7.4.0",
     "rxjs": "~7.8.0",

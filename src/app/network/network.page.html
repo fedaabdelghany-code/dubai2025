@@ -44,16 +44,36 @@
     </div>
 
     <!-- QR Actions -->
-    <div class="qr-actions">
-      <button class="qr-btn primary" (click)="toggleQR(true)">
-        <ion-icon name="qr-code-outline"></ion-icon>
-        <span>Show My QR</span>
+  <div class="qr-actions">
+    <button class="qr-btn primary" (click)="toggleQR(true)">
+      <ion-icon name="qr-code-outline"></ion-icon>
+      <span>Show My QR</span>
+    </button>
+
+    <button class="qr-btn secondary" (click)="switchToScanMode()">
+      <ion-icon name="scan-outline"></ion-icon>
+      <span>Scan QR</span>
+    </button>
+  </div>
+
+  <!-- Fullscreen QR Scanner -->
+  <div class="scanner-overlay" *ngIf="scanning">
+    <video #videoPreview autoplay playsinline></video>
+
+    <div class="overlay-ui">
+      <button class="close-btn" (click)="stopScan()">
+        <ion-icon name="close-outline"></ion-icon>
       </button>
-      <button class="qr-btn secondary" (click)="toggleQR(true)">
-        <ion-icon name="qr-code-outline"></ion-icon>
-        <span>Scan QR</span>
-      </button>
+
+      <div class="scan-frame"></div>
+      <p class="scan-text">Align QR code within the frame</p>
     </div>
+  </div>
+
+  <!-- Scan Result -->
+  <div *ngIf="scanResult" class="scan-result">
+    <p>Scanned: {{ scanResult }}</p>
+  </div>
 
     <!-- People List -->
     <div class="people-container">
