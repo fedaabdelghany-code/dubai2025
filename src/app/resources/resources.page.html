@@ -1,0 +1,177 @@
+<ion-content [fullscreen]="true" class="resources-content">
+  <div class="pb-20">
+    <!-- Header -->
+    <div class="header-gradient">
+      <h2 class="header-title">Resources</h2>
+                    <img src="assets/calig.png" alt="" class="header-overlay" />
+
+      <p class="header-subtitle">Materials, host city info & company operations</p>
+    </div>
+
+    <!-- Section Tabs -->
+    <div class="tabs-container">
+      <div class="tabs-wrapper">
+        <button
+          class="tab-btn"
+          [class.active]="activeSection === 'materials'"
+          (click)="setActiveSection('materials')">
+          <ion-icon name="document-text-outline"></ion-icon>
+          <span>Materials</span>
+        </button>
+        <button
+          class="tab-btn"
+          [class.active]="activeSection === 'host'"
+          (click)="setActiveSection('host')">
+          <ion-icon name="location-outline"></ion-icon>
+          <span>Dubai</span>
+        </button>
+        <button
+          class="tab-btn"
+          [class.active]="activeSection === 'company'"
+          (click)="setActiveSection('company')">
+          <ion-icon name="business-outline"></ion-icon>
+          <span>Holcim</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Materials Section -->
+    <div *ngIf="activeSection === 'materials'" class="content-section">
+      <div class="section-header">
+        <h3 class="section-title">Session Materials</h3>
+        <p class="section-desc">Download presentations and documents</p>
+      </div>
+
+      <div class="documents-list">
+        <div 
+          *ngFor="let doc of documents" 
+          class="document-card">
+          <div class="doc-icon">
+            <ion-icon name="document-text-outline"></ion-icon>
+          </div>
+          <div class="doc-info">
+            <div class="doc-title">{{doc.title}}</div>
+            <div class="doc-meta">{{doc.date}} • {{doc.size}}</div>
+          </div>
+          <button class="download-btn" (click)="downloadDocument(doc)">
+            <ion-icon name="download-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Host City Section -->
+    <div *ngIf="activeSection === 'host'" class="content-section">
+      <div class="section-header">
+        <h3 class="section-title">Discover Dubai</h3>
+        <p class="section-desc">Your guide to the host city</p>
+      </div>
+
+      <!-- Featured Banner -->
+      <div class="featured-banner">
+        <div class="banner-icon">🌆</div>
+        <div class="banner-content">
+          <h4 class="banner-title">Welcome to Dubai</h4>
+          <p class="banner-text">One of the world's most dynamic cities, where tradition meets innovation</p>
+        </div>
+      </div>
+
+      <!-- Host City Info Cards -->
+      <div class="info-grid">
+        <div 
+          *ngFor="let info of hostCityInfo" 
+          class="info-card"
+          (click)="openHostInfo(info)">
+          <div class="info-icon">{{info.icon}}</div>
+          <div class="info-content">
+            <h4 class="info-title">{{info.title}}</h4>
+            <p class="info-desc">{{info.description}}</p>
+          </div>
+          <div class="info-action">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Facts -->
+      <div class="quick-facts">
+        <h4 class="facts-title">Quick Facts</h4>
+        <div class="facts-grid">
+          <div class="fact-item">
+            <div class="fact-label">Currency</div>
+            <div class="fact-value">AED (Dirham)</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-label">Language</div>
+            <div class="fact-value">Arabic, English</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-label">Time Zone</div>
+            <div class="fact-value">GST (UTC+4)</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-label">Emergency</div>
+            <div class="fact-value">999</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Company Section -->
+    <div *ngIf="activeSection === 'company'" class="content-section">
+      <div class="section-header">
+        <h3 class="section-title">Holcim Operations</h3>
+        <p class="section-desc">EMEA regional information</p>
+      </div>
+
+      <!-- Company Overview -->
+      <div class="company-overview">
+        <div class="overview-icon">🏗️</div>
+        <div class="overview-content">
+          <h4 class="overview-title">Holcim EMEA Strategy 2025</h4>
+          <p class="overview-text">Leading the transformation of construction across Europe, Middle East, and Africa through sustainable building solutions and innovation</p>
+        </div>
+      </div>
+
+      <!-- Company Info Cards -->
+      <div class="info-grid">
+        <div 
+          *ngFor="let info of companyInfo" 
+          class="info-card"
+          (click)="openCompanyInfo(info)">
+          <div class="info-icon">{{info.icon}}</div>
+          <div class="info-content">
+            <h4 class="info-title">{{info.title}}</h4>
+            <p class="info-desc">{{info.description}}</p>
+          </div>
+          <div class="info-action">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Stats -->
+      <div class="key-stats">
+        <h4 class="stats-title">Regional Impact</h4>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">20+</div>
+            <div class="stat-label">Countries</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">50+</div>
+            <div class="stat-label">Facilities</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">8,500+</div>
+            <div class="stat-label">Employees</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">Net-Zero</div>
+            <div class="stat-label">By 2050</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

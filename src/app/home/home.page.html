@@ -1,0 +1,195 @@
+<ion-content [fullscreen]="true" [scrollY]="true">
+  <div class="home-wrapper">
+    <!-- Header -->
+    <div class="header-gradient">
+      <div class="header-container">
+        <div class="header-content">
+          <p class="event-label">AMEA STRATEGY 2025</p>
+          <h1 class="day-title">Day 2</h1>
+          <p class="date-text">Ahlan, Feda!</p>
+        </div>
+        <img src="assets/calig.png" alt="" class="header-overlay" />
+      </div>
+    </div>
+
+    <div class="content-container">
+      <!-- Next Session Card -->
+      <div class="next-session-card">
+        <div class="card-content">
+          <div class="session-header">
+            <div class="next-badge">NEXT SESSION</div>
+            <div class="time-remaining">Starts in 15 minutes</div>
+          </div>
+          
+          <h3 class="session-title">Regional Growth Strategies</h3>
+          
+          <div class="session-info">
+            <div class="info-item">
+              <ion-icon name="time-outline" class="info-icon"></ion-icon>
+              <span>10:00 - 11:30</span>
+            </div>
+            <div class="info-item">
+              <ion-icon name="location-outline" class="info-icon"></ion-icon>
+              <span>Hall A</span>
+            </div>
+          </div>
+          
+          <div class="speaker-info">
+            <div class="avatar">SC</div>
+            <div class="speaker-details">
+              <div class="speaker-name">Sarah Chen</div>
+              <div class="speaker-role">VP Strategy, APAC</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <div class="action-card qr-card" (click)="openQRCode()">
+          <div class="action-content">
+            <div class="action-icon qr-icon">
+              <ion-icon name="qr-code-outline"></ion-icon>
+            </div>
+            <div class="action-title">My QR Code</div>
+            <div class="action-desc">Share contact</div>
+          </div>
+        </div>
+        
+        <div class="action-card venue-card" (click)="navigateToVenue()">
+          <div class="action-content">
+            <div class="action-icon venue-icon">
+              <ion-icon name="map-outline"></ion-icon>
+            </div>
+            <div class="action-title">Venue Map</div>
+            <div class="action-desc">Navigate venue</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Agenda -->
+      <div class="agenda-card">
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">My Agenda</h3>
+            <button class="view-all-btn" (click)="navigateToAgenda()">
+              View All
+            </button>
+          </div>
+          
+          <div class="agenda-sessions">
+            <div class="agenda-item">
+              <div class="time-block time-blue">
+                <div class="time">10:00</div>
+                <div class="room">Hall A</div>
+              </div>
+              <div class="session-details">
+                <div class="session-name">Regional Growth Strategies</div>
+                <div class="session-speaker">Sarah Chen</div>
+              </div>
+            </div>
+            
+            <div class="agenda-item">
+              <div class="time-block time-green">
+                <div class="time">13:00</div>
+                <div class="room">Room 3</div>
+              </div>
+              <div class="session-details">
+                <div class="session-name">Digital Innovation Workshop</div>
+                <div class="session-speaker">Multiple Speakers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Announcements -->
+      <div class="announcements-card">
+        <div class="card-content">
+                    <div class="card-header">
+
+          <h3 class="card-title">Announcements</h3>
+          </div>
+          <div class="announcement-list">
+            <div class="announcement-item">
+              <div class="announcement-dot active"></div>
+              <div class="announcement-content">
+                <div class="announcement-title">Lunch Now Serving</div>
+                <div class="announcement-desc">Main hall - Multiple cuisine options</div>
+                <div class="announcement-time">5 min ago</div>
+              </div>
+            </div>
+            
+            <div class="announcement-item">
+              <div class="announcement-dot"></div>
+              <div class="announcement-content">
+                <div class="announcement-title">Session Materials Available</div>
+                <div class="announcement-desc">Morning keynote slides uploaded</div>
+                <div class="announcement-time">1 hour ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Modal -->
+  <ion-modal [isOpen]="showQR" [backdropDismiss]="true" (didDismiss)="closeQRCode()" class="qr-modal">
+    <ng-template>
+      <div class="qr-modal-content">
+        <div class="qr-header">
+          <h2 class="qr-title">Digital Business Card</h2>
+          <button class="close-btn" (click)="closeQRCode()">Close</button>
+        </div>
+
+        <div class="qr-container">
+          <div class="qr-card-modal">
+            <div class="qr-card-content">
+              <div class="qr-display">
+                <div class="qr-frame">
+                  <div class="qr-code">
+                    <ion-icon name="qr-code"></ion-icon>
+                  </div>
+                </div>
+                <p class="qr-instruction">Scan to exchange contact information</p>
+              </div>
+              
+              <div class="user-info">
+                <div class="info-row">
+                  <div class="info-icon">
+                    <ion-icon name="person-outline"></ion-icon>
+                  </div>
+                  <div class="info-text">
+                    <div class="info-label">Name</div>
+                    <div class="info-value">John Anderson</div>
+                  </div>
+                </div>
+                
+                <div class="info-row">
+                  <div class="info-icon info-emoji">💼</div>
+                  <div class="info-text">
+                    <div class="info-label">Position</div>
+                    <div class="info-value">Director of Marketing</div>
+                  </div>
+                </div>
+                
+                <div class="info-row">
+                  <div class="info-icon info-emoji">🌍</div>
+                  <div class="info-text">
+                    <div class="info-label">Country</div>
+                    <div class="info-value">Egypt</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <button class="scanner-button">
+            Switch to Scanner Mode
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

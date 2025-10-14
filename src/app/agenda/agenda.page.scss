@@ -1,0 +1,247 @@
+.schedule-content {
+  --background: #f9fafb;
+}
+
+.pb-20 {
+  padding-bottom: 5rem;
+}
+
+// Header
+.header-gradient {
+  background: linear-gradient(135deg, #1D4370 0%, #1D4370 50%, #00A9E0 100%);
+  padding: 3rem 1.5rem 2rem;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 1.5rem;
+}
+
+// View Toggle
+.view-toggle-container {
+  margin-bottom: 1.25rem;
+}
+
+.view-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  border: none;
+  cursor: pointer;
+
+  &.active {
+    background: white;
+    color: #1D4370;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Day Selector
+.day-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.day-btn {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &.active {
+    background: white;
+    color: #1D4370;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+}
+
+// Sessions Container
+.sessions-container {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+// Session Card
+.session-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border-left: 4px solid;
+  border: 1px solid #f3f4f6;
+  border-left-width: 4px;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Session Header
+.session-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.session-type-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  color: white;
+  text-transform: uppercase;
+}
+
+.in-agenda-badge {
+  width: 1.25rem;
+  height: 1.25rem;
+  background: #94C12E;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 0.75rem;
+    color: white;
+  }
+}
+
+// Session Info
+.session-title {
+  font-weight: 700;
+  color: #1D4370;
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.session-speaker {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0 0 0.75rem;
+}
+
+// Session Meta
+.session-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+
+  ion-icon {
+    font-size: 0.875rem;
+  }
+}
+
+// Session Actions
+.session-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &.primary {
+    flex: 1;
+    background: #00A9E0;
+    color: white;
+    padding: 0.625rem 1rem;
+
+    &:hover {
+      background: #0088B8;
+    }
+  }
+
+  &.secondary {
+    background: #f3f4f6;
+    color: #1D4370;
+    padding: 0.625rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: #e5e7eb;
+    }
+
+    ion-icon {
+      font-size: 1rem;
+    }
+  }
+}
+.header-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20rem;
+  height: auto;
+  opacity: 0.6;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: soft-light;
+    transform: translate(40%, -20%);
+  
+  // Ensure visibility on mobile
+  @media (max-width: 767px) {
+    width: 15rem;
+    transform: translate(30%, -10%);
+  }
+  
+  @media (max-width: 480px) {
+    width: 15rem;
+    transform: translate(30%, -10%);
+  }
+}
+

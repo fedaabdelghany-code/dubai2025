@@ -1,0 +1,143 @@
+<ion-content [fullscreen]="true" class="network-content">
+  <!-- Main Network View -->
+  <div *ngIf="!showQR" class="pb-20">
+    <!-- Header -->
+    <div class="header-gradient">
+      <h2 class="header-title">Network</h2>
+                    <img src="assets/calig.png" alt="" class="header-overlay" />
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <ion-icon name="search-outline" class="search-icon"></ion-icon>
+        <input 
+          type="text" 
+          placeholder="Search attendees..."
+          class="search-input"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchChange($event)"
+        />
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-container">
+      <div class="tabs-wrapper">
+        <button
+          class="tab-btn"
+          [class.active]="networkTab === 'attendees'"
+          (click)="setNetworkTab('attendees')">
+          Attendees
+        </button>
+        <button
+          class="tab-btn"
+          [class.active]="networkTab === 'speakers'"
+          (click)="setNetworkTab('speakers')">
+          Speakers
+        </button>
+        <button
+          class="tab-btn"
+          [class.active]="networkTab === 'connections'"
+          (click)="setNetworkTab('connections')">
+          Connections
+        </button>
+      </div>
+    </div>
+
+    <!-- QR Actions -->
+    <div class="qr-actions">
+      <button class="qr-btn primary" (click)="toggleQR(true)">
+        <ion-icon name="qr-code-outline"></ion-icon>
+        <span>Show My QR</span>
+      </button>
+      <button class="qr-btn secondary" (click)="toggleQR(true)">
+        <ion-icon name="qr-code-outline"></ion-icon>
+        <span>Scan QR</span>
+      </button>
+    </div>
+
+    <!-- People List -->
+    <div class="people-container">
+      <div 
+        *ngFor="let person of people" 
+        class="person-card">
+        
+        <div 
+          class="avatar"
+          [class.connected]="person.connected">
+          {{getInitials(person.name)}}
+        </div>
+
+        <div class="person-info">
+          <h3 class="person-name">{{person.name}}</h3>
+          <p class="person-title">{{person.title}}</p>
+          <p class="person-country">{{person.flag}} {{person.country}}</p>
+        </div>
+
+        <button 
+          class="connect-btn"
+          [class.connected]="person.connected"
+          (click)="toggleConnection(person)">
+          {{person.connected ? 'Connected' : 'Connect'}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Code View -->
+  <div *ngIf="showQR" class="qr-view pb-20">
+    <div class="qr-header">
+      <h2 class="qr-title">Digital Business Card</h2>
+      <button class="close-btn" (click)="toggleQR(false)">
+        Close
+      </button>
+    </div>
+
+    <!-- QR Card -->
+    <div class="qr-card">
+      <div class="qr-code-container">
+        <div class="qr-code-wrapper">
+          <div class="qr-code-box">
+            <ion-icon name="qr-code-outline" class="qr-icon"></ion-icon>
+          </div>
+        </div>
+        <p class="qr-description">Scan to exchange contact information</p>
+      </div>
+
+      <div class="user-details">
+        <div class="detail-item">
+          <div class="detail-icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Name</div>
+            <div class="detail-value">John Anderson</div>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon emoji">
+            💼
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Position</div>
+            <div class="detail-value">Director of Marketing</div>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon emoji">
+            🌍
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Country</div>
+            <div class="detail-value">Egypt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="scanner-btn" (click)="switchToScanMode()">
+      Switch to Scanner Mode
+    </button>
+  </div>
+</ion-content>

@@ -1,0 +1,90 @@
+<ion-content [fullscreen]="true" class="agenda-content">
+  <div class="pb-20">
+    <!-- Header -->
+    <div class="header-gradient">
+      <h2 class="header-title">Schedule</h2>
+              <img src="assets/calig.png" alt="" class="header-overlay" />
+
+      
+      <!-- View Toggle -->
+      <div class="view-toggle-container">
+        <div class="view-toggle">
+          <button 
+            class="toggle-btn" 
+            [class.active]="agendaView === 'my'"
+            (click)="setAgendaView('my')">
+            My Agenda
+          </button>
+          <button 
+            class="toggle-btn" 
+            [class.active]="agendaView === 'full'"
+            (click)="setAgendaView('full')">
+            Full Schedule
+          </button>
+        </div>
+      </div>
+
+      <!-- Day Selector -->
+      <div class="day-selector">
+        <button 
+          *ngFor="let day of [1, 2, 3]"
+          class="day-btn"
+          [class.active]="selectedDay === day"
+          (click)="setSelectedDay(day)">
+          Day {{day}}
+        </button>
+      </div>
+    </div>
+
+    <!-- Sessions List -->
+    <div class="sessions-container">
+      <div 
+        *ngFor="let session of getFilteredSessions()" 
+        class="session-card"
+        [style.border-left-color]="session.color">
+        
+        <!-- Session Header -->
+        <div class="session-header">
+          <div class="header-left">
+            <span class="session-type-badge" [style.background-color]="session.color">
+              {{session.type}}
+            </span>
+            <div *ngIf="session.inAgenda" class="in-agenda-badge">
+              <ion-icon name="checkmark"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- Session Info -->
+        <h3 class="session-title">{{session.title}}</h3>
+        <p class="session-speaker">{{session.speaker}}</p>
+
+        <!-- Time and Location -->
+        <div class="session-meta">
+          <div class="meta-item">
+            <ion-icon name="time-outline"></ion-icon>
+            <span>{{session.time}}</span>
+          </div>
+          <div class="meta-item">
+            <ion-icon name="location-outline"></ion-icon>
+            <span>{{session.room}}</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="session-actions">
+          <button 
+            class="action-btn primary" 
+            (click)="toggleAgenda(session)">
+            {{session.inAgenda ? 'Remove' : 'Add to Agenda'}}
+          </button>
+          <button 
+            class="action-btn secondary" 
+            (click)="downloadMaterial(session)">
+            <ion-icon name="download-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

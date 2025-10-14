@@ -1,0 +1,169 @@
+.login-content {
+  --background: #f8fafc;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* this ensures full height inside ion-content */
+  height: 100%;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 100vh; /* ensures full viewport height */
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 1.75rem;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 169, 224, 0.15);
+}
+
+.login-logo {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 1rem;
+  object-fit: contain;
+}
+
+.login-title {
+  color: #1d4370;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  font-size: 1.4rem;
+}
+
+.login-subtitle {
+  color: #4b5563;
+  font-size: 0.95rem;
+  margin-bottom: 1.75rem;
+}
+
+.login-form {
+  margin-bottom: 1rem;
+}
+
+.login-item {
+  --highlight-color-focused: #00a9e0;
+  --color: #1d4370;
+  margin-bottom: 1rem;
+  border-radius: 0.75rem;
+  --background: #f1f9ff;
+}
+
+ion-icon {
+  color: #00a9e0;
+  font-size: 1.2rem;
+}
+
+ion-input {
+  color: #1d4370;
+}
+
+.login-btn {
+  margin-top: 1.25rem;
+  --background: linear-gradient(90deg, #1d4370, #00a9e0);
+  --background-activated: linear-gradient(90deg, #00a9e0, #00b050);
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 169, 224, 0.4);
+  border-radius: 1.75rem;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Custom Toast Styles --- */
+.modern-toast {
+  --background: rgba(29, 67, 112, 0.9);
+  --color: #fff;
+  --border-radius: 2rem;
+  --box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  --padding-start: 0.75rem;
+  --padding-end: 1rem;
+  --min-height: 48px;
+  backdrop-filter: blur(12px);
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.9rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+/* specific color accents */
+.modern-toast.warning {
+  --background: rgba(0, 169, 224, 0.9);
+}
+
+.modern-toast.danger {
+  --background: rgba(220, 38, 38, 0.9);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-15px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --- Modern Loading Spinner --- */
+.modern-loading {
+  --background: rgba(255, 255, 255, 0.85);
+  --backdrop-opacity: 0.25;
+  border-radius: 1.25rem;
+}
+
+.custom-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.custom-loading .spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(0, 169, 224, 0.25);
+  border-top-color: #00a9e0;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.custom-loading span {
+  font-size: 0.95rem;
+  color: #1d4370;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

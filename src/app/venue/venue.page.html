@@ -1,0 +1,83 @@
+
+<ion-content [fullscreen]="true">
+
+  <div class="page-container">
+    <div class="header-section">
+        <ion-button fill="clear" class="close-button" (click)="closeVenue()">
+  <ion-icon name="close-outline"></ion-icon>
+</ion-button>
+      <h2 class="page-title">Venue Map</h2>
+      
+      <p class="page-subtitle">Navigate the conference venue</p>
+    </div>
+
+    <!-- Interactive Map Card -->
+    <ion-card class="map-card">
+      <ion-card-content>
+        <div class="map-header">
+          <div class="map-icon-container">
+            <ion-icon name="map-outline"></ion-icon>
+          </div>
+          <p class="map-title">Interactive Floor Plan</p>
+          <p class="map-subtitle">Tap areas for details</p>
+        </div>
+
+        <!-- Halls Grid -->
+        <ion-grid class="halls-grid">
+          <ion-row>
+            <ion-col size="6" *ngFor="let hall of halls">
+              <div 
+                class="room-item hall-item" 
+                [style.background-color]="hall.color + '1A'"
+                [style.border-color]="hall.color + '4D'"
+                (click)="onRoomClick(hall)">
+                <div class="room-name">{{ hall.name }}</div>
+                <div class="room-subtitle">{{ hall.subtitle }}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <!-- Rooms Grid -->
+        <ion-grid class="rooms-grid">
+          <ion-row>
+            <ion-col size="4" *ngFor="let room of rooms">
+              <div 
+                class="room-item small-room" 
+                (click)="onRoomClick(room)">
+                <div class="room-name-small">{{ room.name }}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <!-- Main Hall -->
+        <div class="main-hall-item">
+          <div class="main-hall-name">Main Hall</div>
+          <div class="main-hall-subtitle">Registration • Catering • Networking</div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Key Locations -->
+    <div class="locations-section">
+      <h3 class="section-title">Key Locations</h3>
+      
+      <ion-card 
+        *ngFor="let location of locations" 
+        class="location-card"
+        (click)="onLocationClick(location)">
+        <ion-card-content>
+          <div class="location-item">
+            <div class="location-icon">{{ location.icon }}</div>
+            <div class="location-info">
+              <div class="location-name">{{ location.name }}</div>
+              <div class="location-desc">{{ location.desc }}</div>
+            </div>
+            <ion-icon name="chevron-forward-outline" class="chevron-icon"></ion-icon>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
