@@ -43,6 +43,8 @@ interface Session {
 export class HomePage implements OnInit {
   public nextSession$!: Observable<Session | null>;
   public announcements$!: Observable<Announcement[]>;
+  public todaySessions$!: Observable<Session[]>;
+
   public messageType: 'today' | 'over' | null = null;
   public currentDay: number = 1;
   showQR: boolean = false;
@@ -53,6 +55,7 @@ export class HomePage implements OnInit {
     this.calculateCurrentDay();
     this.loadNextSession();
     this.loadAnnouncements();
+    this.loadTodaySessions();
   }
 
   private calculateCurrentDay() {
@@ -126,6 +129,27 @@ export class HomePage implements OnInit {
     );
   }
 
+  private loadTodaySessions() {
+  const sessionsRef = collection(this.firestore, 'sessions');
+  const q = query(sessionsRef, orderBy('startTime', 'asc'));
+
+  this.todaySessions$ = collectionData(q, { idField: 'id' }).pipe(
+    map((sessions: any[]) => {
+      const now = new Date();
+      const todayStr = now.toISOString().split('T')[0]; // compare only date portion
+
+      // filter by day (if you use explicit day field in Firestore)
+      const todaySessions = sessions.filter((s) => {
+        const startDate = s.startTime?.toDate?.().toISOString().split('T')[0];
+        return s.day === `Day ${this.currentDay}` || startDate === todayStr;
+      });
+
+      return todaySessions.slice(0, 3); // limit to 3 sessions for home card
+    })
+  );
+}
+
+
   // Helper method to check if speaker should be displayed
   shouldDisplaySpeaker(session: Session): boolean {
     if (!session.speaker) return false;
@@ -163,4 +187,41 @@ export class HomePage implements OnInit {
     const diffDays = Math.floor(diffHours / 24);
     return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
   }
+
+  getTimeUntil(session: Session): string {
+  if (!session?.startTime?.toDate) return '';
+  const now = new Date();
+  const start = session.startTime.toDate();
+  const diffMs = start.getTime() - now.getTime();
+
+  if (diffMs <= 0) {
+    return 'Now live';
+  }
+
+  const diffMinutes = Math.floor(diffMs / 60000);
+  if (diffMinutes < 60) {
+    return `Starts in ${diffMinutes} min`;
+  }
+
+  const diffHours = Math.floor(diffMinutes / 60);
+  const remainingMinutes = diffMinutes % 60;
+
+  if (remainingMinutes === 0) {
+    return `Starts in ${diffHours} hour${diffHours > 1 ? 's' : ''}`;
+  }
+
+  return `Starts in ${diffHours}h ${remainingMinutes}m`;
+}
+
+goToAgendaSession(session: Session) {
+  // Pass both the day and the session ID as query params
+  this.router.navigate(['tabs/agenda'], {
+    queryParams: {
+      sessionId: session.id,
+      day: session.day
+    }
+  });
+}
+
+
 }

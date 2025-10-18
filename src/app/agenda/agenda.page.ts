@@ -3,6 +3,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { IonContent, IonIcon, IonModal } from '@ionic/angular/standalone';
 import { Firestore, collection, collectionData, query, where } from '@angular/fire/firestore';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { ElementRef, ViewChildren, QueryList } from '@angular/core';
 
 interface Material {
   id: string;
@@ -41,26 +43,61 @@ interface Session {
 })
 export class AgendaPage implements OnInit {
   selectedDay: string = '1';
-  sessions: Session[] = [];
-  
+@ViewChildren('sessionCard') sessionCards!: QueryList<ElementRef>;
+private targetSessionId: string | null = null;
+  sessions: Session[] = [];  
   showMaterialViewer = false;
   selectedMaterial: Material | null = null;
 
   constructor(
     private firestore: Firestore,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+  private route: ActivatedRoute
+
   ) {}
 
   ngOnInit() {
-    this.loadSessions();
-  }
+  this.route.queryParams.subscribe((params) => {
+    this.targetSessionId = params['sessionId'] || null;
+    if (params['day']) {
+      this.selectedDay = params['day'].replace('Day ', '');
+    }
+  });
+  this.loadSessions();
+}
 
-  private loadSessions() {
-    const sessionsRef = collection(this.firestore, 'sessions');
-    collectionData(sessionsRef, { idField: 'id' }).subscribe((data: any[]) => {
-      this.sessions = data;
+
+private loadSessions() {
+  const sessionsRef = collection(this.firestore, 'sessions');
+  collectionData(sessionsRef, { idField: 'id' }).subscribe((data: any[]) => {
+    this.sessions = data;
+
+    // Wait for DOM render before scrolling
+    setTimeout(() => {
+      if (this.targetSessionId) {
+        this.scrollToSession(this.targetSessionId);
+      }
+    }, 400);
+  });
+}
+
+scrollToSession(sessionId: string) {
+  const targetElement = this.sessionCards.find(
+    (card) => card.nativeElement.id === sessionId
+  );
+  if (targetElement) {
+    targetElement.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
     });
+
+    // Optional: temporary highlight
+    targetElement.nativeElement.classList.add('highlight');
+    setTimeout(() => {
+      targetElement.nativeElement.classList.remove('highlight');
+    }, 2000);
   }
+}
 
   setSelectedDay(day: string) {
     this.selectedDay = day;

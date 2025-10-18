@@ -23,10 +23,12 @@
 <!-- Sessions List -->
 <div class="sessions-container">
   <ng-container *ngIf="getFilteredSessions().length > 0; else noSessions">
-    <div
-      *ngFor="let session of getFilteredSessions()"
-      class="session-card"
-      [style.border-left-color]="session.color">
+<div
+  *ngFor="let session of getFilteredSessions()"
+  class="session-card"
+  #sessionCard
+  [id]="session.id"
+  [style.border-left-color]="session.color">
       
       <!-- Session Time Badge -->
       <div class="time-badge" [style.background-color]="session.color">

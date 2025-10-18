@@ -21,9 +21,9 @@
           <div class="next-badge" [style.background]="'#94C12E'">
             NEXT SESSION
           </div>
-          <div class="time-remaining">
-            Starts at {{ session.startTime.toDate() | date:'shortTime' }}
-          </div>
+<div class="time-remaining">
+  {{ getTimeUntil(session) }}
+</div>
         </div>
 
         <h3 class="session-title">{{ session.title }}</h3>
@@ -106,29 +106,33 @@
             </button>
           </div>
           
-          <div class="agenda-sessions">
-            <div class="agenda-item">
-              <div class="time-block time-blue">
-                <div class="time">10:00</div>
-                <div class="room">Hall A</div>
-              </div>
-              <div class="session-details">
-                <div class="session-name">Regional Growth Strategies</div>
-                <div class="session-speaker">Sarah Chen</div>
-              </div>
-            </div>
-            
-            <div class="agenda-item">
-              <div class="time-block time-green">
-                <div class="time">13:00</div>
-                <div class="room">Room 3</div>
-              </div>
-              <div class="session-details">
-                <div class="session-name">Digital Innovation Workshop</div>
-                <div class="session-speaker">Multiple Speakers</div>
-              </div>
-            </div>
-          </div>
+<div class="agenda-sessions" *ngIf="todaySessions$ | async as todaySessions">
+  <ng-container *ngIf="todaySessions.length; else noSessions">
+<div
+  class="agenda-item"
+  *ngFor="let session of todaySessions; let i = index"
+  (click)="goToAgendaSession(session)"
+>
+  <div class="time-block" [ngClass]="session.color ? 'time-' + session.color : 'time-blue'">
+    <div class="time">
+      {{ session.startTime.toDate() | date: 'shortTime' }}
+    </div>
+    <div class="room">{{ session.location }}</div>
+  </div>
+  <div class="session-details">
+    <div class="session-name">{{ session.title }}</div>
+    <div class="session-speaker" *ngIf="shouldDisplaySpeaker(session)">
+      {{ session.speaker?.name }}
+    </div>
+  </div>
+</div>
+  </ng-container>
+
+  <ng-template #noSessions>
+    <p class="no-sessions">No sessions scheduled for today.</p>
+  </ng-template>
+</div>
+
         </div>
       </div>
 
