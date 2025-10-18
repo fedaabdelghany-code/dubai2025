@@ -51,63 +51,100 @@ export class AgendaPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Subscribe to query params and react every time they change
     this.route.queryParams.subscribe((params) => {
+      // Normalize day param if present (strip "Day " if passed)
+      if (params['day']) {
+        // if the day param might be passed as "Day 1" or "1", normalize to "1"
+        this.selectedDay = String(params['day']).replace(/^Day\s*/i, '');
+      }
+
+      // Always take sessionId (could be null)
       this.targetSessionId = params['sessionId'] || null;
-      // Only set selectedDay from params if there's no targetSessionId
-      // If there's a targetSessionId, let loadSessions determine the correct day
-      if (params['day'] && !this.targetSessionId) {
-        this.selectedDay = params['day'].replace('Day ', '');
+
+      // If sessions are already loaded, reapply filters and attempt to scroll.
+      // Otherwise loadSessions will handle it once sessions arrive.
+      if (this.sessions && this.sessions.length > 0) {
+        // If we got a targetSessionId, try to set the day to its session day (safeguard)
+        if (this.targetSessionId) {
+          const target = this.sessions.find(s => s.id === this.targetSessionId);
+          if (target) {
+            this.selectedDay = String(target.day).replace(/^Day\s*/i, '');
+          }
+        }
+
+        this.applyFilters();
+        // attempt scroll (wait for DOM if necessary)
+        this.waitAndScrollToSessionIfNeeded(this.targetSessionId);
+      } else {
+        // sessions not loaded yet — load them (this also triggers scroll once loaded)
+        this.loadSessions();
       }
     });
-    this.loadSessions();
+  }
+
+  ngAfterViewInit() {
+    // When the list of session cards changes (day switch, new data), try scrolling if we have a target
+    this.sessionCards.changes.subscribe(() => {
+      if (this.targetSessionId) {
+        this.waitAndScrollToSessionIfNeeded(this.targetSessionId);
+      }
+    });
   }
 
   private loadSessions() {
     const sessionsRef = collection(this.firestore, 'sessions');
     collectionData(sessionsRef, { idField: 'id' }).subscribe((data: any[]) => {
-      this.sessions = data;
-      
-      // If we have a target session, find its day first
+      this.sessions = data || [];
+
+      // If we have a target session, ensure we show its day (safety)
       if (this.targetSessionId) {
-        const targetSession = this.sessions.find(s => s.id === this.targetSessionId);
+        const targetSession = this.sessions.find((s) => s.id === this.targetSessionId);
         if (targetSession) {
-          this.selectedDay = targetSession.day;
+          this.selectedDay = String(targetSession.day).replace(/^Day\s*/i, '');
         }
       }
-      
-      this.applyFilters(); // Apply filters after loading
 
-      // Wait for DOM render before scrolling
+      this.applyFilters();
+
+      // Attempt scroll after a short delay — but also rely on sessionCards.changes subscription
       setTimeout(() => {
         if (this.targetSessionId) {
-          this.scrollToSession(this.targetSessionId);
+          this.waitAndScrollToSessionIfNeeded(this.targetSessionId);
         }
-      }, 400);
+      }, 150);
     });
   }
 
-  scrollToSession(sessionId: string) {
-    const targetElement = this.sessionCards.find(
-      (card) => card.nativeElement.id === sessionId
-    );
-    if (targetElement) {
-      targetElement.nativeElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
+  // New helper: retries until the DOM has the element (or until retries exhausted)
+  private waitAndScrollToSessionIfNeeded(sessionId: string | null, retries = 12) {
+    if (!sessionId) return;
+    const target = this.sessionCards?.find(card => card.nativeElement.id === sessionId);
 
-      // Optional: temporary highlight
-      targetElement.nativeElement.classList.add('highlight');
-      setTimeout(() => {
-        targetElement.nativeElement.classList.remove('highlight');
-      }, 2000);
+    if (target && target.nativeElement) {
+      // Scroll & highlight
+      target.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.nativeElement.classList.add('highlight');
+      setTimeout(() => target.nativeElement.classList.remove('highlight'), 2200);
+
+      // Once we've scrolled to it, clear targetSessionId so we don't repeatedly scroll
+      // (optional — keep it if you want repeatable behavior)
+      this.targetSessionId = null;
+    } else if (retries > 0) {
+      // Retry after a short delay; this handles caching/render delays
+      setTimeout(() => this.waitAndScrollToSessionIfNeeded(sessionId, retries - 1), 200);
     }
   }
 
   setSelectedDay(day: string) {
+    // Called by UI day buttons — ensure filtering and clear session target (since user explicitly changed day)
     this.selectedDay = day;
-    this.applyFilters(); // Reapply filters when day changes
+    this.applyFilters();
+    // Clear any pending scroll-to-target because user manually changed day
+    this.targetSessionId = null;
   }
+
+
 
   onSearchChange(query: string) {
     this.searchQuery = query;
