@@ -114,7 +114,7 @@
   (click)="goToAgendaSession(session)"
 >
   <div class="time-block" [ngClass]="session.color ? 'time-' + session.color : 'time-blue'">
-    <div class="time">
+    <div class="time-green">
       {{ session.startTime.toDate() | date: 'shortTime' }}
     </div>
     <div class="room">{{ session.location }}</div>
