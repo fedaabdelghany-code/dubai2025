@@ -39,9 +39,9 @@
 
     <!-- Sessions List -->
     <div class="sessions-container">
-      <ng-container *ngIf="getFilteredSessions().length > 0; else noSessions">
+      <ng-container *ngIf="filteredSessions.length > 0; else noSessions">
         <div
-          *ngFor="let session of getFilteredSessions()"
+          *ngFor="let session of filteredSessions"
           class="session-card"
           #sessionCard
           [id]="session.id"
@@ -259,9 +259,9 @@
 
     <!-- Sessions List -->
     <div class="sessions-container">
-      <ng-container *ngIf="getFilteredSessions().length > 0; else noSessions">
+      <ng-container *ngIf="filteredSessions.length > 0; else noSessions">
         <div
-          *ngFor="let session of getFilteredSessions()"
+          *ngFor="let session of filteredSessions"
           class="session-card"
           #sessionCard
           [id]="session.id"

@@ -215,12 +215,10 @@ export class HomePage implements OnInit {
 
 goToAgendaSession(session: Session) {
   // Pass both the day and the session ID as query params
-  this.router.navigate(['tabs/agenda'], {
-    queryParams: {
-      sessionId: session.id,
-      day: session.day
-    }
-  });
+this.router.navigate(['tabs/agenda'], {
+  queryParams: { sessionId: session.id, day: session.day },
+  state: { fromHome: true }
+});
 }
 
 
