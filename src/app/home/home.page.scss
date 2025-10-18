@@ -62,7 +62,7 @@ ion-content {
 
 .day-title {
   color: white;
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   font-weight: 700;
   margin: 0;
   letter-spacing: -0.025em;
@@ -196,6 +196,11 @@ ion-content {
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin-bottom: 1.25rem;
+
+    &.no-next-session {
+    margin-top: 32px; // Adjust this value as needed
+  }
+
 }
 
 .action-card {

@@ -4,17 +4,17 @@
     <!-- Header -->
     <div class="header-gradient">
       <h2 class="header-title">Network</h2>
-                    <img src="assets/calig.png" alt="" class="header-overlay" />
+      <img src="assets/calig.png" alt="" class="header-overlay" />
 
       <!-- Search Bar -->
       <div class="search-container">
         <ion-icon name="search-outline" class="search-icon"></ion-icon>
         <input 
           type="text" 
-          placeholder="Search attendees..."
+          placeholder="Search..."
           class="search-input"
           [(ngModel)]="searchQuery"
-          (ngModelChange)="onSearchChange($event)"
+          (input)="onSearchChange(searchQuery)"
         />
       </div>
     </div>
@@ -44,41 +44,41 @@
     </div>
 
     <!-- QR Actions -->
-  <div class="qr-actions">
-    <button class="qr-btn primary" (click)="toggleQR(true)">
-      <ion-icon name="qr-code-outline"></ion-icon>
-      <span>Show My QR</span>
-    </button>
-
-    <button class="qr-btn secondary" (click)="switchToScanMode()">
-      <ion-icon name="scan-outline"></ion-icon>
-      <span>Scan QR</span>
-    </button>
-  </div>
-
-  <!-- Fullscreen QR Scanner -->
-  <div class="scanner-overlay" *ngIf="scanning">
-    <video #videoPreview autoplay playsinline></video>
-
-    <div class="overlay-ui">
-      <button class="close-btn" (click)="stopScan()">
-        <ion-icon name="close-outline"></ion-icon>
+    <div class="qr-actions">
+      <button class="qr-btn primary" (click)="toggleQR(true)">
+        <ion-icon name="qr-code-outline"></ion-icon>
+        <span>Show My QR</span>
       </button>
 
-      <div class="scan-frame"></div>
-      <p class="scan-text">Align QR code within the frame</p>
+      <button class="qr-btn secondary" (click)="switchToScanMode()">
+        <ion-icon name="scan-outline"></ion-icon>
+        <span>Scan QR</span>
+      </button>
     </div>
-  </div>
 
-  <!-- Scan Result -->
-  <div *ngIf="scanResult" class="scan-result">
-    <p>Scanned: {{ scanResult }}</p>
-  </div>
+    <!-- Fullscreen QR Scanner -->
+    <div class="scanner-overlay" *ngIf="scanning">
+      <video #videoPreview autoplay playsinline></video>
+
+      <div class="overlay-ui">
+        <button class="close-btn" (click)="stopScan()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+
+        <div class="scan-frame"></div>
+        <p class="scan-text">Align QR code within the frame</p>
+      </div>
+    </div>
+
+    <!-- Scan Result -->
+    <div *ngIf="scanResult" class="scan-result">
+      <p>Scanned: {{ scanResult }}</p>
+    </div>
 
     <!-- People List -->
     <div class="people-container">
       <div 
-        *ngFor="let person of people" 
+        *ngFor="let person of people$ | async" 
         class="person-card">
         
         <div 
@@ -90,7 +90,15 @@
         <div class="person-info">
           <h3 class="person-name">{{person.name}}</h3>
           <p class="person-title">{{person.title}}</p>
-          <p class="person-country">{{person.flag}} {{person.country}}</p>
+
+          <p class="person-country">
+            <span
+              class="fi"
+              [style.background-image]="'url(assets/flags/4x3/' + getCountryCode(person.country) + '.svg)'"
+              style="background-size: cover; display:inline-block; width: 20px; height: 15px; margin-right: 6px;"
+            ></span>
+            {{person.country}}
+          </p>
         </div>
 
         <button 
@@ -135,9 +143,7 @@
         </div>
 
         <div class="detail-item">
-          <div class="detail-icon emoji">
-            💼
-          </div>
+          <div class="detail-icon emoji">💼</div>
           <div class="detail-content">
             <div class="detail-label">Position</div>
             <div class="detail-value">Director of Marketing</div>
@@ -145,9 +151,7 @@
         </div>
 
         <div class="detail-item">
-          <div class="detail-icon emoji">
-            🌍
-          </div>
+          <div class="detail-icon emoji">🌍</div>
           <div class="detail-content">
             <div class="detail-label">Country</div>
             <div class="detail-value">Egypt</div>

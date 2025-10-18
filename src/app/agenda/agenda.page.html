@@ -3,31 +3,12 @@
     <!-- Header -->
     <div class="header-gradient">
       <h2 class="header-title">Schedule</h2>
-              <img src="assets/calig.png" alt="" class="header-overlay" />
-
-      
-      <!-- View Toggle -->
-      <div class="view-toggle-container">
-        <div class="view-toggle">
-          <button 
-            class="toggle-btn" 
-            [class.active]="agendaView === 'my'"
-            (click)="setAgendaView('my')">
-            My Agenda
-          </button>
-          <button 
-            class="toggle-btn" 
-            [class.active]="agendaView === 'full'"
-            (click)="setAgendaView('full')">
-            Full Schedule
-          </button>
-        </div>
-      </div>
+      <img src="assets/calig.png" alt="" class="header-overlay" />
 
       <!-- Day Selector -->
       <div class="day-selector">
-        <button 
-          *ngFor="let day of [1, 2, 3]"
+        <button
+          *ngFor="let day of ['1', '2', '3']"
           class="day-btn"
           [class.active]="selectedDay === day"
           (click)="setSelectedDay(day)">
@@ -38,53 +19,142 @@
 
     <!-- Sessions List -->
     <div class="sessions-container">
-      <div 
-        *ngFor="let session of getFilteredSessions()" 
-        class="session-card"
-        [style.border-left-color]="session.color">
-        
-        <!-- Session Header -->
-        <div class="session-header">
-          <div class="header-left">
-            <span class="session-type-badge" [style.background-color]="session.color">
-              {{session.type}}
-            </span>
-            <div *ngIf="session.inAgenda" class="in-agenda-badge">
-              <ion-icon name="checkmark"></ion-icon>
+      <ng-container *ngIf="getFilteredSessions().length > 0; else noSessions">
+        <div
+          *ngFor="let session of getFilteredSessions()"
+          class="session-card"
+          [style.border-left-color]="session.color">
+          
+          <!-- Session Time Badge -->
+          <div class="time-badge" [style.background-color]="session.color">
+            {{ session.startTime.toDate() | date:'shortTime' }}
+          </div>
+
+          <!-- Session Content -->
+          <div class="session-content">
+            <!-- Category & Status -->
+            <div class="session-tags">
+              <span class="category-tag" [style.background-color]="session.color + '20'" [style.color]="session.color">
+                {{ session.category }}
+              </span>
+            </div>
+
+            <!-- Title & Speaker -->
+            <h3 class="session-title">{{ session.title }}</h3>
+            
+            <div class="speaker-info" *ngIf="session.speaker?.name && session.speaker?.name?.toLowerCase() !== 'all'">
+              <div class="speaker-avatar" *ngIf="!session.speaker?.photoURL || session.speaker?.photoURL === 'null'">
+                {{ session.speaker?.name?.[0] }}{{ session.speaker?.name?.split(' ')?.[1]?.[0] || '' }}
+              </div>
+              <img *ngIf="session.speaker?.photoURL && session.speaker?.photoURL !== 'null'"
+                   [src]="session.speaker?.photoURL"
+                   alt="{{ session.speaker?.name }}"
+                   class="speaker-avatar-img" />
+              <div class="speaker-details">
+                <div class="speaker-name">{{ session.speaker?.name }}</div>
+                <div class="speaker-role">{{ session.speaker?.title }}</div>
+              </div>
+            </div>
+
+            <!-- Session Details -->
+            <div class="session-details">
+              <div class="detail-row">
+                <ion-icon name="time-outline" class="detail-icon"></ion-icon>
+                <span>{{ formatSessionTime(session) }}</span>
+              </div>
+              <div class="detail-row">
+                <ion-icon name="location-outline" class="detail-icon"></ion-icon>
+                <span>{{ session.location }}</span>
+              </div>
+            </div>
+
+            <!-- Materials Section -->
+            <div class="materials-section" *ngIf="session.materials && session.materials.length > 0">
+              <div class="materials-header">
+                <ion-icon name="document-text-outline"></ion-icon>
+                <span>Session Materials</span>
+              </div>
+              <div class="materials-list">
+                <div 
+                  *ngFor="let material of session.materials" 
+                  class="material-item"
+                  (click)="viewMaterial(material)">
+                  <div class="material-info">
+                    <ion-icon [name]="getMaterialIcon(material.type)" class="material-icon"></ion-icon>
+                    <div class="material-details">
+                      <div class="material-name">{{ material.name }}</div>
+                      <div class="material-meta">{{ material.type }} • {{ material.size }}</div>
+                    </div>
+                  </div>
+                  <button 
+                    class="material-action"
+                    (click)="downloadMaterial($event, material)">
+                    <ion-icon name="download-outline"></ion-icon>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </ng-container>
 
-        <!-- Session Info -->
-        <h3 class="session-title">{{session.title}}</h3>
-        <p class="session-speaker">{{session.speaker}}</p>
-
-        <!-- Time and Location -->
-        <div class="session-meta">
-          <div class="meta-item">
-            <ion-icon name="time-outline"></ion-icon>
-            <span>{{session.time}}</span>
-          </div>
-          <div class="meta-item">
-            <ion-icon name="location-outline"></ion-icon>
-            <span>{{session.room}}</span>
-          </div>
+      <!-- No Sessions Message -->
+      <ng-template #noSessions>
+        <div class="no-sessions">
+          <ion-icon name="calendar-outline" class="fun-icon"></ion-icon>
+          <p>No sessions scheduled for Day {{ selectedDay }} 🌤️<br>
+          Check back later or explore other days!</p>
         </div>
-
-        <!-- Action Buttons -->
-        <div class="session-actions">
-          <button 
-            class="action-btn primary" 
-            (click)="toggleAgenda(session)">
-            {{session.inAgenda ? 'Remove' : 'Add to Agenda'}}
-          </button>
-          <button 
-            class="action-btn secondary" 
-            (click)="downloadMaterial(session)">
-            <ion-icon name="download-outline"></ion-icon>
-          </button>
-        </div>
-      </div>
+      </ng-template>
     </div>
   </div>
+
+  <!-- Material Viewer Modal -->
+  <ion-modal 
+    [isOpen]="showMaterialViewer" 
+    [backdropDismiss]="true" 
+    (didDismiss)="closeMaterialViewer()"
+    class="material-modal">
+    <ng-template>
+      <div class="material-viewer">
+        <div class="viewer-header">
+          <h3 class="viewer-title">{{ selectedMaterial?.name }}</h3>
+          <div class="viewer-actions">
+            <button class="icon-btn" (click)="downloadCurrentMaterial()">
+              <ion-icon name="download-outline"></ion-icon>
+            </button>
+            <button class="icon-btn" (click)="closeMaterialViewer()">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="viewer-content">
+          <!-- PDF Viewer -->
+          <iframe 
+            *ngIf="selectedMaterial?.type === 'PDF'"
+            [src]="sanitizeUrl(selectedMaterial?.url ?? '')"
+            class="pdf-viewer">
+          </iframe>
+
+          <!-- Image Viewer -->
+          <img 
+            *ngIf="selectedMaterial?.type === 'Image'"
+            [src]="selectedMaterial?.url"
+            class="image-viewer"
+            alt="{{ selectedMaterial?.name }}" />
+
+          <!-- Document Preview -->
+          <div *ngIf="selectedMaterial?.type === 'Document'" class="doc-preview">
+            <ion-icon name="document-text-outline" class="doc-icon"></ion-icon>
+            <p>Preview not available for this document type</p>
+            <button class="download-btn" (click)="downloadCurrentMaterial()">
+              <ion-icon name="download-outline"></ion-icon>
+              Download to View
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
 </ion-content>

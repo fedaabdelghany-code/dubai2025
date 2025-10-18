@@ -9,27 +9,42 @@
 // Header
 .header-gradient {
   background: linear-gradient(135deg, #1D4370 0%, #00A9E0 100%);
-  padding: 3rem 1.5rem 2rem;
+  padding: 3rem 1.5rem 3rem; // Increased bottom padding
+  position: relative;
+  overflow: hidden; // Changed from hidden to visible
+  z-index: 1; // Lower z-index so tabs float above
+}
 
+.header-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0; // Behind everything in header
 }
 
 .header-title {
-  font-size: 1.5rem;
-  font-weight: 700;
   color: white;
-  margin: 0 0 1.5rem;
+  font-size: 28px;
+  font-size: 1.5rem;
+  margin: 0 0 20px 0;
+  position: relative;
+  z-index: 2;
 }
 
 // Search
 .search-container {
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
   border-radius: 0.75rem;
   padding: 0.75rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
 }
 
 .search-icon {
@@ -51,11 +66,13 @@
   }
 }
 
-// Tabs
+// Tabs - Floating over header
 .tabs-container {
   padding: 0 1.5rem;
-  margin-top: -1rem;
+  margin-top: -1.5rem; // Negative margin to overlap header
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 10; // High z-index to float above header
 }
 
 .tabs-wrapper {
@@ -63,7 +80,7 @@
   border-radius: 0.75rem;
   padding: 0.25rem;
   display: flex;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); // Enhanced shadow for floating effect
   border: 1px solid #f3f4f6;
 }
 
@@ -85,8 +102,11 @@
     color: white;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   }
-}
 
+  &:hover:not(.active) {
+    background: #f3f4f6;
+  }
+}
 // QR Actions
 .qr-actions {
   display: flex;
@@ -105,13 +125,13 @@
     cursor: pointer;
 
     &.primary {
-      background: var(--ion-color-primary);
+      background: #7AB023;
       color: white;
     }
 
     &.secondary {
       background: #e5f3fa;
-      color: var(--ion-color-primary);
+      color: #00A9E0;
     }
 
     ion-icon {
@@ -452,4 +472,16 @@
     width: 15rem;
     transform: translate(30%, -10%);
   }
+}
+
+.fi {
+  width: 22px;
+  height: 16px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+.person-country {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }

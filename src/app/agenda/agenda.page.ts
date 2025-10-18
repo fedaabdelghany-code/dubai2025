@@ -1,89 +1,133 @@
-import { Component } from '@angular/core';
-import { IonContent, IonIcon } from '@ionic/angular/standalone';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { IonContent, IonIcon, IonModal } from '@ionic/angular/standalone';
+import { Firestore, collection, collectionData, query, where } from '@angular/fire/firestore';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
+interface Material {
+  id: string;
+  name: string;
+  type: 'PDF' | 'Document' | 'Image' | 'Spreadsheet';
+  size: string;
+  url: string;
+}
 
 interface Session {
-  time: string;
+  id: string;
   title: string;
-  speaker: string;
-  room: string;
-  type: string;
+  startTime: any;
+  endTime: any;
+  location: string;
+  day: string;
+  description?: string;
+  category: string;
   color: string;
-  inAgenda: boolean;
+  isGeneral: boolean;
+  materials?: Material[];
+  speaker?: {
+    name: string;
+    title: string;
+    photoURL: string | null;
+    userID: string;
+  };
 }
 
 @Component({
   selector: 'app-agenda',
   standalone: true,
-  templateUrl: 'agenda.page.html',
-  styleUrls: ['agenda.page.scss'],
-  imports: [IonContent, IonIcon, CommonModule]
+  imports: [IonModal, IonContent, IonIcon, CommonModule, DatePipe],
+  templateUrl: './agenda.page.html',
+  styleUrls: ['./agenda.page.scss'],
 })
-export class AgendaPage {
-  agendaView: 'my' | 'full' = 'my';
-  selectedDay = 2;
+export class AgendaPage implements OnInit {
+  selectedDay: string = '1';
+  sessions: Session[] = [];
+  
+  showMaterialViewer = false;
+  selectedMaterial: Material | null = null;
 
-  sessions: Session[] = [
-    { 
-      time: '09:00 - 10:00', 
-      title: 'Opening Keynote', 
-      speaker: 'Dr. James Wilson', 
-      room: 'Hall A', 
-      type: 'Keynote', 
-      color: '#94C12E', 
-      inAgenda: true 
-    },
-    { 
-      time: '10:00 - 11:30', 
-      title: 'Regional Growth Strategies', 
-      speaker: 'Sarah Chen', 
-      room: 'Hall A', 
-      type: 'Session', 
-      color: '#00A9E0', 
-      inAgenda: true 
-    },
-    { 
-      time: '11:45 - 13:00', 
-      title: 'Innovation Workshop', 
-      speaker: 'Multiple Speakers', 
-      room: 'Room 3', 
-      type: 'Workshop', 
-      color: '#1D4370', 
-      inAgenda: false 
-    },
-    { 
-      time: '14:00 - 15:30', 
-      title: 'Market Analysis Deep Dive', 
-      speaker: 'Alex Kumar', 
-      room: 'Hall B', 
-      type: 'Breakout', 
-      color: '#00A9E0', 
-      inAgenda: true 
-    }
-  ];
+  constructor(
+    private firestore: Firestore,
+    private sanitizer: DomSanitizer
+  ) {}
 
-  constructor() {}
-
-  setAgendaView(view: 'my' | 'full') {
-    this.agendaView = view;
+  ngOnInit() {
+    this.loadSessions();
   }
 
-  setSelectedDay(day: number) {
+  private loadSessions() {
+    const sessionsRef = collection(this.firestore, 'sessions');
+    collectionData(sessionsRef, { idField: 'id' }).subscribe((data: any[]) => {
+      this.sessions = data;
+    });
+  }
+
+  setSelectedDay(day: string) {
     this.selectedDay = day;
   }
 
   getFilteredSessions(): Session[] {
-    if (this.agendaView === 'full') {
-      return this.sessions;
+    return this.sessions
+      .filter((s) => s.day === this.selectedDay)
+      .sort((a, b) => a.startTime.toDate().getTime() - b.startTime.toDate().getTime());
+  }
+
+  formatSessionTime(session: Session): string {
+    const start = session.startTime.toDate();
+    const end = session.endTime.toDate();
+    const options: Intl.DateTimeFormatOptions = { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      hour12: true 
+    };
+    return `${start.toLocaleTimeString('en-US', options)} - ${end.toLocaleTimeString('en-US', options)}`;
+  }
+
+  getMaterialIcon(type: string): string {
+    const icons: Record<string, string> = {
+      'PDF': 'document-text-outline',
+      'Document': 'document-outline',
+      'Image': 'image-outline',
+      'Spreadsheet': 'grid-outline',
+    };
+    return icons[type] || 'document-outline';
+  }
+
+  viewMaterial(material: Material) {
+    this.selectedMaterial = material;
+    this.showMaterialViewer = true;
+  }
+
+  downloadMaterial(event: Event, material: Material) {
+    event.stopPropagation();
+    // Create a temporary link and trigger download
+    const link = document.createElement('a');
+    link.href = material.url;
+    link.download = material.name;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  downloadCurrentMaterial() {
+    if (this.selectedMaterial) {
+      const link = document.createElement('a');
+      link.href = this.selectedMaterial.url;
+      link.download = this.selectedMaterial.name;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
-    return this.sessions.filter(session => session.inAgenda);
   }
 
-  toggleAgenda(session: Session) {
-    session.inAgenda = !session.inAgenda;
+  closeMaterialViewer() {
+    this.showMaterialViewer = false;
+    this.selectedMaterial = null;
   }
 
-  downloadMaterial(session: Session) {
-    console.log('Downloading material for:', session.title);
+  sanitizeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

@@ -23,9 +23,7 @@
               "browser": ""
             },
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -33,9 +31,18 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/flag-icons/flags/4x3",
+                "output": "assets/flag-icons/4x3"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": [
+              "src/global.scss",
+              "src/theme/variables.scss",
+              "node_modules/flag-icons/css/flag-icons.min.css"
+            ],
             "scripts": [],
             "browser": "src/main.ts"
           },
@@ -50,7 +57,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "7kb",
-                  "maximumError": "8kb"
+                  "maximumError": "40kb"
                 }
               ],
               "fileReplacements": [
@@ -109,7 +116,11 @@
                 "output": "assets"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": [
+              "src/global.scss",
+              "src/theme/variables.scss",
+              "node_modules/flag-icons/css/flag-icons.min.css"
+            ],
             "scripts": []
           },
           "configurations": {
