@@ -130,4 +130,16 @@ export class AgendaPage implements OnInit {
   sanitizeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
+
+  formatCategory(category: string): string {
+  if (!category) return '';
+  
+  // Replace dashes and underscores with spaces, then capitalize each word
+  return category
+    .replace(/[-_]/g, ' ')  // Replace dashes and underscores with spaces
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
 }

@@ -207,7 +207,7 @@
   font-weight: 500;
 }
 
-// People List
+/* People List */
 .people-container {
   padding: 0 1.5rem;
   display: flex;
@@ -229,6 +229,9 @@
   &:hover {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
+
+  /* Allow wrapping when the container gets narrow */
+  flex-wrap: wrap;
 }
 
 .avatar {
@@ -251,7 +254,8 @@
 
 .person-info {
   flex: 1;
-  min-width: 0;
+  min-width: 0; /* important for text wrapping in flex layouts */
+  overflow: hidden;
 }
 
 .person-name {
@@ -259,22 +263,30 @@
   color: #1D4370;
   font-size: 0.875rem;
   margin: 0 0 0.25rem;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .person-title {
   font-size: 0.75rem;
   color: #4b5563;
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal; /* was nowrap */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .person-country {
   font-size: 0.75rem;
   color: #6b7280;
   margin: 0.25rem 0 0;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
+
+
 
 .connect-btn {
   padding: 0.5rem 1rem;
