@@ -155,3 +155,26 @@
   box-shadow: none !important;
   padding: 0 !important;
 }
+
+ion-tab-bar {
+  --background: #ffffff; /* keep background white */
+  --color: #6b7280; /* default gray for inactive icons/text */
+  --color-selected: #1D4370; /* ✅ Holcim dark blue for active tab */
+  --border: none;
+  border-top: 1px solid #e5e7eb;
+}
+
+ion-tab-button {
+  font-weight: 500;
+
+  ion-icon {
+    font-size: 1.4rem;
+  }
+
+  &.tab-selected {
+    ion-icon {
+      transform: scale(1.1);
+      transition: transform 0.2s ease;
+    }
+  }
+}
