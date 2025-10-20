@@ -138,66 +138,75 @@ export class HomePage implements OnInit, OnDestroy {
    * - secondary: the next session after primary (only shown when primary is LIVE NOW)
    * - messageType: 'today' | 'over' | null
    */
-  private evaluateSessions(sessions: Session[]): {
-    primary: Session | null;
-    secondary: Session | null;
-    messageType: MessageType;
-  } {
-    const now = new Date();
-    // guard empty list
-    if (!sessions || sessions.length === 0) {
-      return { primary: null, secondary: null, messageType: 'over' };
-    }
+/**
+ * Core logic: determines which sessions are LIVE/UP NEXT, but
+ * now restricted to the current day's sessions only.
+ */
+private evaluateSessions(sessions: Session[]): {
+  primary: Session | null;
+  secondary: Session | null;
+  messageType: MessageType;
+} {
+  const now = new Date();
 
-    // ensure sessions are sorted (they should be from query but double-guard)
-    sessions = sessions.slice().sort((a, b) => this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime());
-
-    // find current LIVE session
-    const live = sessions.find(
-      (s) => this.toDate(s.startTime) <= now && this.toDate(s.endTime) > now
-    );
-
-    if (live) {
-      // when live: set primary to live, secondary = next after live
-      const idx = sessions.findIndex((s) => s.id === live.id);
-      const next = sessions.slice(idx + 1).find((s) => this.toDate(s.startTime) > now) || null;
-      return { primary: live, secondary: next, messageType: null };
-    }
-
-    // no live session → find next upcoming session (first with start > now)
-    const upcoming = sessions.find((s) => this.toDate(s.startTime) > now) || null;
-
-    if (upcoming) {
-      // primary is the upcoming session, secondary is the one after (but we only show secondary when live exists)
-      const idx = sessions.findIndex((s) => s.id === upcoming.id);
-      const nextAfter = sessions.slice(idx + 1).find((s) => this.toDate(s.startTime) > this.toDate(upcoming.startTime)) || null;
-      return { primary: upcoming, secondary: null /* do not show yet */, messageType: null };
-    }
-
-    // no upcoming sessions -> determine if "today" (finished for today) or "over" (conference finished)
-    // conference end = endTime of last session in the list
-    const lastSession = sessions[sessions.length - 1];
-    const conferenceEnd = this.toDate(lastSession.endTime);
-    const lastDay = 3; // update if conference length changes
-
-    if (this.currentDay < lastDay) {
-      // there are more days after today but no more sessions today
-      return { primary: null, secondary: null, messageType: 'today' };
-    }
-
-    // if currentDay === lastDay
-    if (this.currentDay === lastDay) {
-      if (now > conferenceEnd) {
-        return { primary: null, secondary: null, messageType: 'over' };
-      } else {
-        // between last session start and its end but we didn't detect it as live (edge case)
-        return { primary: null, secondary: null, messageType: 'today' };
-      }
-    }
-
-    // fallback
+  if (!sessions || sessions.length === 0) {
     return { primary: null, secondary: null, messageType: 'over' };
   }
+
+  // --- 1️⃣ Filter to sessions belonging to current day ---
+  const todaySessions = sessions.filter((s) => {
+    // Match against the 'day' field (supports "Day 1", "1", etc.)
+    const normalizedDay = (s.day || '').toString().toLowerCase().replace('day ', '');
+    return normalizedDay === this.currentDay.toString();
+  });
+
+  // if no sessions today but there are future days ahead → show 'today' message
+  if (todaySessions.length === 0) {
+    const futureSessions = sessions.filter((s) => {
+      const normalizedDay = (s.day || '').toString().toLowerCase().replace('day ', '');
+      return Number(normalizedDay) > this.currentDay;
+    });
+    return futureSessions.length > 0
+      ? { primary: null, secondary: null, messageType: 'today' }
+      : { primary: null, secondary: null, messageType: 'over' };
+  }
+
+  // ensure sorted by start time
+  todaySessions.sort(
+    (a, b) => this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime()
+  );
+
+  // --- 2️⃣ Determine LIVE session (if any) ---
+  const live = todaySessions.find(
+    (s) => this.toDate(s.startTime) <= now && this.toDate(s.endTime) > now
+  );
+
+  if (live) {
+    const idx = todaySessions.findIndex((s) => s.id === live.id);
+    const next = todaySessions.slice(idx + 1).find((s) => this.toDate(s.startTime) > now) || null;
+    return { primary: live, secondary: next, messageType: null };
+  }
+
+  // --- 3️⃣ No live session → look for next upcoming (today only) ---
+  const upcoming = todaySessions.find((s) => this.toDate(s.startTime) > now) || null;
+  if (upcoming) {
+    return { primary: upcoming, secondary: null, messageType: null };
+  }
+
+  // --- 4️⃣ No live or upcoming sessions today ---
+  // Check if there are any sessions for future days
+  const futureSessions = sessions.filter((s) => {
+    const normalizedDay = (s.day || '').toString().toLowerCase().replace('day ', '');
+    return Number(normalizedDay) > this.currentDay;
+  });
+
+  if (futureSessions.length > 0) {
+    return { primary: null, secondary: null, messageType: 'today' };
+  }
+
+  // --- 5️⃣ If this is the last day and all done ---
+  return { primary: null, secondary: null, messageType: 'over' };
+}
 
   // ---------- Helper utilities ----------
 

@@ -884,7 +884,7 @@ ion-header {
   /* Enables centering with margin: auto */
   display: block; 
   /* Centers the image horizontally and adds 20px space below it */
-  margin: -20px auto -20px auto; 
+  margin: -20px auto 10px auto; 
   /* Optional: Ensures the image scales down if the container is small */
   max-width: 70%; 
 }
