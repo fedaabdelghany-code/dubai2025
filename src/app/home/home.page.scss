@@ -335,15 +335,15 @@ ion-content {
       }
 
       &.photos {
-        background: linear-gradient(135deg, #062974 0%, #062974 100%);
+                background: linear-gradient(135deg, #94C12E 0%, #7da825 100%);
+
       }
 
-      &.venue {
-        background: linear-gradient(135deg, #94C12E 0%, #7da825 100%);
+      &.venue {       background: linear-gradient(135deg, #1f8f28 0%, #0c7218 100%);
+
       }
 
-      &.networking {
-        background: linear-gradient(135deg, #b5b5b5 0%, #b5b5b5 100%);
+      &.networking {background: linear-gradient(135deg, #062974 0%, #1f48a2 100%); 
       }
 
       ion-icon {

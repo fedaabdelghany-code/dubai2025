@@ -76,6 +76,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.calculateCurrentDay();
+    this.startDayWatcher();
     const sessions$ = this.loadSessionsObservable();
     const tick$ = interval(this.TICK_MS);
 
@@ -285,28 +286,6 @@ private evaluateSessions(sessions: Session[]): {
 
   // ---------- Day calculation ----------
 
-  private calculateCurrentDay() {
-    // Convention starts November 10, 2025 in Dubai timezone (GMT+4)
-    const conventionStart = new Date('2025-11-10T00:00:00+04:00');
-    const now = new Date();
-
-    // Convert current time to Dubai timezone (account for local tz offset)
-    const dubaiOffset = 4 * 60; // minutes
-    const localOffset = now.getTimezoneOffset(); // minutes
-    const dubaiTime = new Date(now.getTime() + (dubaiOffset + localOffset) * 60000);
-
-    const diffTime = dubaiTime.getTime() - conventionStart.getTime();
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays < 0) {
-      this.currentDay = 1;
-    } else if (diffDays >= 3) {
-      this.currentDay = 3;
-    } else {
-      this.currentDay = diffDays + 1;
-    }
-  }
-
   // ---------- Navigation / UI helpers ----------
 
   navigateToAgenda() {
@@ -353,4 +332,37 @@ private evaluateSessions(sessions: Session[]): {
   navigateToVenue() {
     this.router.navigate(['/venue']);
   }
+
+  /** Determines current event day based on local device time */
+private calculateCurrentDay() {
+  // Convention start date: October 20, 2025 (local time)
+  const conventionStart = new Date('2025-10-20T00:00:00');
+  const now = new Date();
+
+  const diffTime = now.getTime() - conventionStart.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 0) {
+    this.currentDay = 1;
+  } else if (diffDays >= 3) {
+    this.currentDay = 3; // adjust if your event runs longer
+  } else {
+    this.currentDay = diffDays + 1;
+  }
+}
+
+/** Keeps currentDay automatically updated after midnight (local time) */
+private startDayWatcher() {
+  interval(60000) // check every minute
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(() => {
+      const prevDay = this.currentDay;
+      this.calculateCurrentDay();
+
+      if (this.currentDay !== prevDay) {
+        console.log(`🕛 Day rolled over — now Day ${this.currentDay}`);
+      }
+    });
+}
+
 }
