@@ -4,7 +4,7 @@ ion-content {
 
 .home-wrapper {
   min-height: 100vh;
-  padding-bottom: 0.5rem; // reduced white space
+  padding-bottom: 0.5rem;
 }
 
 // Header
@@ -37,9 +37,8 @@ ion-content {
   pointer-events: none;
   user-select: none;
   mix-blend-mode: soft-light;
-    transform: translate(40%, -30%);
+  transform: translate(40%, -30%);
   
-  // Ensure visibility on mobile
   @media (max-width: 767px) {
     width: 13rem;
     transform: translate(40%, -30%);
@@ -79,202 +78,297 @@ ion-content {
 // Content Container
 .content-container {
   max-width: 28rem;
-  margin: -1.5rem auto 0; // raised to overlay header
+  margin: -1.5rem auto 0;
   padding: 0 1.5rem 1.5rem;
 }
 
-// Next Session Card
-.next-session-card {
+/* ========================================
+   UNIFIED SESSION CARD SYSTEM
+   All session cards (next, no-session, current) share the same styling
+   ======================================== */
+.session-card {
   background: white;
   border-radius: 1rem;
-  margin-top: -1rem; // overlaps header more
+  margin-top: -1rem;
   position: relative;
-  z-index: 3; // ensures it's above header
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f3f4f6;
-  margin-bottom: 1.25rem;
+  z-index: 100;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06),
+    0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 1.5em;
+  transition: all 0.2s ease;
 
   .card-content {
     padding: 1.5rem;
   }
+
+  &.next-session:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.08),
+      0 3px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  &.live {
+    border-left: 4px solid #27ae60; // Green accent for live
+  }
+
+  // untouched no-session
+  &.no-session {
+    text-align: center;
+
+    &.today {
+      &:hover {
+        box-shadow: 0 10px 15px -3px rgba(148, 193, 46, 0.1),
+          0 4px 6px -2px rgba(148, 193, 46, 0.05);
+      }
+    }
+
+    &.complete {
+      &:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 169, 224, 0.1),
+          0 4px 6px -2px rgba(0, 169, 224, 0.05);
+      }
+    }
+  }
 }
 
+/* --- SESSION HEADER --- */
 .session-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: space-between;
   margin-bottom: 1rem;
+
+  .status-badge {
+    font-weight: 600;
+    font-size: 0.6875rem;
+    padding: 0.3rem 0.625rem;
+    border-radius: 0.375rem;
+    line-height: 1.4;
+    letter-spacing: 0.025em;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    &.next {
+      background: linear-gradient(135deg, #00a9e0 0%, #0092c4 100%);
+      color: white;
+    }
+
+    /* 🟢 LIVE NOW badge with pulsing dot */
+    &.live {
+      background: #e8f9e9;
+      color: #138808;
+      border: 1px solid rgba(19, 136, 8, 0.25);
+      padding-left: 1.5rem;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #27ae60;
+        box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.5);
+        animation: pulse 1.4s infinite;
+      }
+    }
+  }
+
+  .time-remaining {
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-weight: 500;
+    line-height: 1.5;
+  }
 }
 
-.next-badge {
-  background: #94C12E;
-  color: white;
-  font-weight: 700;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  line-height: 1.5;
+/* --- LIVE PULSE ANIMATION --- */
+@keyframes pulse {
+  0% {
+    transform: translateY(-50%) scale(1);
+    box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4);
+  }
+  70% {
+    transform: translateY(-50%) scale(1.5);
+    box-shadow: 0 0 0 8px rgba(39, 174, 96, 0);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+    box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+  }
 }
 
-.time-remaining {
-  font-size: 0.75rem;
-  color: #6b7280;
-  line-height: 1.5;
-}
-
+/* --- SESSION DETAILS --- */
 .session-title {
-  color: #1D4370;
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0 0 0.75rem;
-  line-height: 1.3;
+  color: #1d4370;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.875rem;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
 .session-info {
   display: flex;
-  gap: 1.5rem;
+  flex-direction: column;
+  gap: 0.5rem;
   margin-bottom: 1rem;
-}
 
-.info-item {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem; // reduced gap
-  font-size: 0.875rem;
-  color: #4b5563;
+  ion-icon {
+    font-size: 1rem;
+    color: rgb(0, 115, 255);
+  }
 
-  .info-icon {
-    font-size: 0.3rem; // smaller icons
-    color: #1D4370;
-    background: none !important; 
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8125rem;
+    color: #4b5563;
+    line-height: 1;
   }
 }
 
+/* --- SPEAKER SECTION --- */
 .speaker-info {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding-top: 1rem;
   border-top: 1px solid #f3f4f6;
-}
 
-.avatar {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #1D4370, #00A9E0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
+  .avatar,
+  .avatar-img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1d4370, #00a9e0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+
+  .avatar-img {
+    object-fit: cover;
+  }
+
+  .speaker-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .speaker-name {
+    color: #1d4370;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-bottom: 0.125rem;
+  }
+
+  .speaker-role {
+    color: #6b7280;
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+}
+// untouched no-session text
+.session-text {
   font-size: 0.875rem;
-  flex-shrink: 0;
-}
-
-.speaker-details {
-  flex: 1;
-  min-width: 0;
-}
-
-.speaker-name {
-  color: #1D4370;
-  font-weight: 600;
-  font-size: 0.875rem;
-  line-height: 1.4;
-}
-
-.speaker-role {
   color: #6b7280;
-  font-size: 0.75rem;
-  line-height: 1.5;
+  margin: 0;
+  line-height: 1.6;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
 }
-
-// Quick Actions
+// ========================================
+// QUICK ACTIONS
+// ========================================
 .quick-actions {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 0.75rem;
   margin-bottom: 1.25rem;
 
-    &.no-next-session {
-    margin-top: 32px; // Adjust this value as needed
-  }
-
-}
-
-.action-card {
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  border: 1px solid #f3f4f6;
-  cursor: pointer;
-  transition: all 0.15s ease;
-
-  &:hover {
+  .action-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 2px solid #f3f4f6;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .action-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+
+      &.qr {
+        background: linear-gradient(135deg, #00A9E0 0%, #0092c4 100%);
+      }
+
+      &.photos {
+        background: linear-gradient(135deg, #062974 0%, #062974 100%);
+      }
+
+      &.venue {
+        background: linear-gradient(135deg, #94C12E 0%, #7da825 100%);
+      }
+
+      &.networking {
+        background: linear-gradient(135deg, #b5b5b5 0%, #b5b5b5 100%);
+      }
+
+      ion-icon {
+        font-size: 1.5rem;
+        color: white;
+      }
+    }
+
+    .action-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1D4370;
+      margin-bottom: 0.125rem;
+    }
+
+    .action-desc {
+      font-size: 0.625rem;
+      color: #6b7280;
+    }
   }
-
-  &.qr-card:hover {
-    border-color: rgba(0, 169, 224, 0.3);
-  }
-
-  &.venue-card:hover {
-    border-color: rgba(148, 193, 46, 0.3);
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-
-  .action-content {
-    padding: 1.25rem;
-  }
 }
 
-.action-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.75rem;
-  transition: transform 0.15s ease;
-
-  ion-icon {
-    font-size: 1.25rem;
-    color: white;
-  }
-}
-
-.action-card:hover .action-icon {
-  transform: scale(1.1);
-}
-
-.qr-icon {
-  background: #00A9E0;
-}
-
-.venue-icon {
-  background: #94C12E;
-}
-
-.action-title {
-  color: #1D4370;
-  font-weight: 600;
-  font-size: 0.875rem;
-  margin-bottom: 0.125rem;
-  line-height: 1.4;
-}
-
-.action-desc {
-  color: #6b7280;
-  font-size: 0.75rem;
-  line-height: 1.5;
-}
-
-// Agenda & Announcements Cards
+// ========================================
+// AGENDA & ANNOUNCEMENTS CARDS
+// ========================================
 .agenda-card,
 .announcements-card {
   background: white;
@@ -318,6 +412,7 @@ ion-content {
   }
 }
 
+// Agenda Specific Styles
 .agenda-sessions {
   display: flex;
   flex-direction: column;
@@ -344,18 +439,15 @@ ion-content {
   flex-shrink: 0;
 }
 
-.time-blue {
-  color: #00A9E0;
-}
 
+
+.time-label,
 .time-green {
   color: #94C12E;
-    font-size: 1.125rem;
+  font-size: 1.125rem;
   font-weight: 700;
   line-height: 1.3;
-
 }
-
 
 .room {
   font-size: 0.75rem;
@@ -374,11 +466,10 @@ ion-content {
   font-size: 0.875rem;
   margin-bottom: 0.125rem;
   line-height: 1.4;
-  white-space: normal !important; // allow wrapping
+  white-space: normal;
   word-wrap: break-word;
   overflow: visible;
 }
-
 
 .session-speaker {
   color: #4b5563;
@@ -386,6 +477,48 @@ ion-content {
   line-height: 1.5;
 }
 
+// No Sessions Empty State
+.no-sessions-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f3f4f6;
+}
+
+.no-sessions-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+
+  ion-icon {
+    font-size: 2rem;
+    color: #1D4370;
+  }
+}
+
+.no-sessions-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1D4370;
+  margin: 0 0 0.5rem;
+  line-height: 1.3;
+}
+
+.no-sessions-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.6;
+}
+
+// Announcements Specific Styles
 .announcement-list {
   display: flex;
   flex-direction: column;
@@ -407,6 +540,11 @@ ion-content {
 
   &.active {
     background: #94C12E;
+  }
+
+  &.pulse {
+    background: #ef4444;
+    animation: pulse 2s ease-in-out infinite;
   }
 }
 
@@ -436,61 +574,168 @@ ion-content {
   line-height: 1.5;
 }
 
-// QR Modal
+// No Announcements Empty State
+.no-announcements {
+  text-align: center;
+  padding: 2rem 1rem;
+
+  .fun-icon {
+    font-size: 3rem;
+    color: #d1d5db;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+// ========================================
+// EMPTY STATE (Unified)
+// ========================================
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+
+  .empty-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+
+    ion-icon {
+      font-size: 1.5rem;
+      color: #1D4370;
+    }
+  }
+
+  .empty-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1D4370;
+    margin: 0 0 0.5rem;
+  }
+
+  .empty-text {
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+// ========================================
+// QR MODAL
+// ========================================
+// Brand Colors
+$color-primary: #1D4370; // Dark Blue
+$color-secondary: #00A9E0; // Blue/Cyan
+$color-accent: #94C12E; // Green
+$color-bg-light: #f9fafb;
+$color-border: #e5e7eb;
+
+// ========================================
+// QR MODAL
+// ========================================
 .qr-modal {
-  --background: #f9fafb;
+  // Ensure modal is full-screen on mobile and constrained on desktop
+  --width: 90%;
   --height: 100%;
-  --border-radius: 0;
+  --max-width: 440px; 
+  --max-height: 90%;
+  --border-radius: 1.5rem; // Full screen on small devices
+  @media (min-width: 441px) {
+    --border-radius: 1.5rem; // Rounded corners on desktop/tablet
+  }
 }
 
 .qr-modal-content {
-  background: #f9fafb;
-  min-height: 100vh;
-  overflow-y: auto;
-  padding-bottom: 5rem;
+  background: white; 
+  height: 100%; // Use 'height: 100%' to fill the modal's viewport area
+  overflow-y: auto; // This enables vertical scrolling when content overflows
+  display: flex;
+  flex-direction: column; // Ensures header stays at top and footer at bottom if needed
 }
-
 .qr-header {
-  padding: 3rem 1.5rem 2rem;
+  // Less vertical padding to make it feel less heavy
+  padding: 1.5rem 1.5rem 1rem; 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid $color-border; // Subtle separation
+  margin-bottom: 1.5rem; // Space between header and content
+}
+
+.qr-title-group {
+  // Contains the main title and new subtitle
+  flex-grow: 1;
 }
 
 .qr-title {
-  color: #1D4370;
-  font-size: 1.5rem;
-  font-weight: 700;
+  color: $color-primary;
+  // Bolder, slightly larger typography for a stronger headline
+  font-size: 1.625rem; 
+  font-weight: 800; 
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.2;
+}
+
+.qr-subtitle {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
 }
 
 .close-btn {
-  background: none;
+  background: $color-bg-light;
   border: none;
-  color: #4b5563;
-  font-weight: 500;
-  font-size: 0.875rem;
+  // Made it a contained circle icon for a better look than a text button
+  border-radius: 50%;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   padding: 0;
-  transition: color 0.15s ease;
+  margin-left: 1rem; // Spacing from the title
+  transition: background 0.15s ease;
+
+  ion-icon {
+    font-size: 1.25rem;
+    color: #4b5563;
+    transition: color 0.15s ease;
+  }
 
   &:hover {
-    color: #00A9E0;
+    background: darken($color-bg-light, 3%);
+    ion-icon {
+      color: $color-secondary; // Use brand accent on hover
+    }
   }
 }
 
 .qr-container {
-  padding: 0 1.5rem;
-  max-width: 28rem;
+  padding: 0 1.5rem 2rem; // Added bottom padding here
+  max-width: 100%; // Removed fixed max-width as modal has one
   margin: 0 auto;
 }
 
 .qr-card-modal {
-  background: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  border: 1px solid #f3f4f6;
+  // Removed white background as modal is now white
+  background: $color-bg-light; 
+  border-radius: 1.25rem; // Slightly smaller radius for inner element
+  // A subtler shadow is better inside a white modal
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06); 
+  border: 1px solid $color-border; 
   margin-bottom: 1.5rem;
 }
 
@@ -504,69 +749,82 @@ ion-content {
 }
 
 .qr-frame {
-  display: inline-block;
-  background: #f9fafb;
-  padding: 1.5rem;
+  // Simpler design for the frame
+  background: white; 
+  padding: 1rem;
   border-radius: 1rem;
   margin-bottom: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid $color-border;
+  display: inline-flex; // Use flex to center QR code better
+  justify-content: center;
+  align-items: center;
 }
 
 .qr-code {
-  width: 12rem;
-  height: 12rem;
+  width: 10rem; // Slightly smaller QR code is often sufficient and looks less bulky
+  height: 10rem;
   background: white;
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #e5e7eb;
+  border: none; // Removing the inner border for a cleaner look
 
   ion-icon {
-    font-size: 8rem;
-    color: #1D4370;
+    font-size: 6rem; // Adjusted size for smaller box
+    color: $color-primary;
   }
 }
 
 .qr-instruction {
-  color: #4b5563;
+  color: #6b7280;
   font-size: 0.875rem;
   margin: 0;
   line-height: 1.5;
+  font-weight: 500; // Adding a bit of weight
 }
 
 .user-info {
   padding-top: 1.5rem;
-  border-top: 1px solid #f3f4f6;
+  border-top: 1px solid $color-border;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem; // Increased gap for better visual separation
 }
 
 .info-row {
   display: flex;
   align-items: center;
   gap: 1rem;
+  
+  // Highlight the primary info row (Name) for visual hierarchy
+  &.info-row-primary {
+    .info-icon {
+      background: rgba($color-accent, 0.1); // Light tint of the accent color
+      ion-icon {
+        color: $color-accent; // Accent color for the icon
+      }
+    }
+    .info-value {
+      color: $color-primary;
+      font-weight: 700; // Bolder name
+    }
+  }
 }
 
 .info-icon {
-  width: 1rem;
-  height: 1rem;
-  background: #f3f4f6;
-  border-radius: 0.5rem;
+  width: 2.75rem; // Slightly larger touch target/icon area
+  height: 2.75rem;
+  background: $color-bg-light; // Neutral background for most icons
+  border-radius: 50%; // Circular icons look sleeker
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 
   ion-icon {
-    font-size: 1rem;
-    color: #1D4370;
-  }
-
-  &.info-emoji {
-    font-size: 1.25rem;
-    background: #f3f4f6;
+    font-size: 1.35rem;
+    color: $color-secondary; // Using secondary brand color for icons
   }
 }
 
@@ -576,38 +834,69 @@ ion-content {
 }
 
 .info-label {
-  color: #6b7280;
-  font-size: 0.75rem;
+  color: #9ca3af; // Lighter gray for a softer label
+  font-size: 0.7rem; // Slightly smaller label
   margin-bottom: 0.125rem;
-  line-height: 1.5;
+  text-transform: uppercase; // Use uppercase for a modern label style
+  letter-spacing: 0.05em;
+  font-weight: 600;
 }
 
 .info-value {
-  color: #1D4370;
+  color: $color-primary;
   font-weight: 600;
-  font-size: 1rem;
-  line-height: 1.4;
+  font-size: 1.05rem; // Slightly larger value
+  line-height: 1.3;
 }
 
-.scanner-button {
-  width: 100%;
-  background: #94C12E;
-  color: white;
-  border: none;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  font-weight: 700;
-  font-size: 1rem;
+.qr-footer {
+  text-align: center;
+  padding-top: 1rem;
+  
+  p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #9ca3af;
+  }
+}
+// ========================================
+// ANIMATIONS
+// ========================================
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// ========================================
+// Z-INDEX MANAGEMENT
+// ========================================
+ion-header {
+  z-index: 10;
+}
+
+/* In your component's CSS/SCSS file */
+
+.announcement-image {
+  /* Enables centering with margin: auto */
+  display: block; 
+  /* Centers the image horizontally and adds 20px space below it */
+  margin: -20px auto -20px auto; 
+  /* Optional: Ensures the image scales down if the container is small */
+  max-width: 70%; 
+}
+/* Add this to your component's SCSS or a global stylesheet */
+.deeplink-text {
+  color: #00A9E0; /* Use your brand's secondary/accent color */
+  text-decoration: none; /* Clearly indicates it's a link */
+  font-weight: 500; /* Optional: Make it slightly bolder */
   cursor: pointer;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  transition: all 0.15s ease;
+}
 
-  &:hover {
-    background: #7AB023;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
+/* If you want the color to change on hover/tap (optional) */
+.deeplink-text:hover {
+  color: darken(#00A9E0, 10%); 
 }

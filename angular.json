@@ -26,22 +26,20 @@
             "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "assets"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/flag-icons/flags/4x3",
-                "output": "assets/flag-icons/4x3"
-              }
-            ],
-            "styles": [
+"assets": [
+  {
+    "glob": "**/*",
+    "input": "src/assets",
+    "output": "assets"
+  },
+  {
+    "glob": "**/*.svg",
+    "input": "node_modules/flag-icons/flags/4x3",
+    "output": "flags/4x3"
+  }
+],            "styles": [
               "src/global.scss",
-              "src/theme/variables.scss",
-              "node_modules/flag-icons/css/flag-icons.min.css"
+              "src/theme/variables.scss"
             ],
             "scripts": [],
             "browser": "src/main.ts"

@@ -1,14 +1,11 @@
 <ion-content [fullscreen]="true" class="resources-content">
   <div class="pb-20">
-    <!-- Header -->
     <div class="header-gradient">
-      <h2 class="header-title">Resources</h2>
-                    <img src="assets/calig.png" alt="" class="header-overlay" />
-
-      <p class="header-subtitle">Materials, host city info & company operations</p>
+      <h2 class="header-title">AMEA Resources</h2>
+      <img src="assets/calig.png" alt="" class="header-overlay" />
+      <p class="header-subtitle">Essential materials, host city guide & AMEA regional operations</p>
     </div>
 
-    <!-- Section Tabs -->
     <div class="tabs-container">
       <div class="tabs-wrapper">
         <button
@@ -35,14 +32,39 @@
       </div>
     </div>
 
-    <!-- Materials Section -->
     <div *ngIf="activeSection === 'materials'" class="content-section">
       <div class="section-header">
-        <h3 class="section-title">Session Materials</h3>
-        <p class="section-desc">Download presentations and documents</p>
+        <p class="section-desc">Download session slides, summaries, and relevant material.</p>
       </div>
 
+
       <div class="documents-list">
+        <div class="document-card document-card-highlight">
+          <div class="doc-icon doc-icon-summary">
+            <ion-icon name="star-outline"></ion-icon>
+          </div>
+          <div class="doc-info">
+            <div class="doc-title">Day 1: Top 3 Executive Summary</div>
+            <div class="doc-meta">Oct 7, 2025 • 500 KB</div>
+          </div>
+          <button class="download-btn" (click)="downloadDocument({title: 'Day 1 Summary', date: 'Oct 7, 2025', size: '500 KB', category: 'session'})">
+            <ion-icon name="download-outline"></ion-icon>
+          </button>
+        </div>
+
+        <div class="document-card">
+          <div class="doc-icon">
+            <ion-icon name="map-outline"></ion-icon>
+          </div>
+          <div class="doc-info">
+            <div class="doc-title">Venue Floor Plan & Amenities Map</div>
+            <div class="doc-meta">Oct 6, 2025 • 1.2 MB</div>
+          </div>
+          <button class="download-btn" (click)="downloadDocument({title: 'Venue Floor Plan & Amenities Map', date: 'Oct 6, 2025', size: '1.2 MB', category: 'session'})">
+            <ion-icon name="download-outline"></ion-icon>
+          </button>
+        </div>
+        
         <div 
           *ngFor="let doc of documents" 
           class="document-card">
@@ -58,25 +80,50 @@
           </button>
         </div>
       </div>
+      
+      <div class="survey-link-card">
+        <p>Help us improve! Submit your session feedback to unlock exclusive post-event content.</p>
+        <button class="primary-action-btn">
+          <ion-icon name="chatbox-outline"></ion-icon>
+          <span>Give Feedback Now</span>
+        </button>
+      </div>
     </div>
 
-    <!-- Host City Section -->
     <div *ngIf="activeSection === 'host'" class="content-section">
       <div class="section-header">
-        <h3 class="section-title">Discover Dubai</h3>
-        <p class="section-desc">Your guide to the host city</p>
+        <p class="section-desc">Discover the icons, culture, and must-know essentials of the host city.</p>
       </div>
 
-      <!-- Featured Banner -->
-      <div class="featured-banner">
-        <div class="banner-icon">🌆</div>
-        <div class="banner-content">
-          <h4 class="banner-title">Welcome to Dubai</h4>
-          <p class="banner-text">One of the world's most dynamic cities, where tradition meets innovation</p>
+      <div class="section-header pt-0">
+        <h4 class="section-subtitle">The Dubai Big 5 Challenge</h4>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-card">
+          <div class="icon-emoji">🗼</div>
+          <div class="icon-title">Burj Khalifa</div>
+          <p class="icon-detail">Tallest building on Earth</p>
+        </div>
+        <div class="icon-card">
+          <div class="icon-emoji">🛍️</div>
+          <div class="icon-title">Dubai Mall</div>
+          <p class="icon-detail">Shopping & Aquarium</p>
+        </div>
+        <div class="icon-card">
+          <div class="icon-emoji">🌴</div>
+          <div class="icon-title">The Palm Jumeirah</div>
+          <p class="icon-detail">Iconic man-made island</p>
+        </div>
+        <div class="icon-card">
+          <div class="icon-emoji">🕌</div>
+          <div class="icon-title">Al Fahidi (Old Dubai)</div>
+          <p class="icon-detail">Culture & History</p>
         </div>
       </div>
-
-      <!-- Host City Info Cards -->
+      
+      <div class="section-header">
+        <h4 class="section-subtitle">Quick Guides & Services</h4>
+      </div>
       <div class="info-grid">
         <div 
           *ngFor="let info of hostCityInfo" 
@@ -93,47 +140,78 @@
         </div>
       </div>
 
-      <!-- Quick Facts -->
       <div class="quick-facts">
-        <h4 class="facts-title">Quick Facts</h4>
-        <div class="facts-grid">
-          <div class="fact-item">
-            <div class="fact-label">Currency</div>
-            <div class="fact-value">AED (Dirham)</div>
+        <h4 class="facts-title">Culture & Etiquette: Quick Do's & Don'ts</h4>
+        <div class="facts-grid facts-grid-two-col">
+          <div class="fact-item fact-item-do">
+            <div class="fact-label">✅ DO</div>
+            <div class="fact-value">Use your right hand for greetings</div>
           </div>
-          <div class="fact-item">
-            <div class="fact-label">Language</div>
-            <div class="fact-value">Arabic, English</div>
+          <div class="fact-item fact-item-dont">
+            <div class="fact-label">❌ DON'T</div>
+            <div class="fact-value">Photograph locals without permission</div>
           </div>
-          <div class="fact-item">
-            <div class="fact-label">Time Zone</div>
-            <div class="fact-value">GST (UTC+4)</div>
+          <div class="fact-item fact-item-do">
+            <div class="fact-label">✅ DO</div>
+            <div class="fact-value">Dress respectfully in public areas</div>
           </div>
-          <div class="fact-item">
-            <div class="fact-label">Emergency</div>
-            <div class="fact-value">999</div>
+          <div class="fact-item fact-item-dont">
+            <div class="fact-label">❌ DON'T</div>
+            <div class="fact-value">Display public affection</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Company Section -->
     <div *ngIf="activeSection === 'company'" class="content-section">
       <div class="section-header">
-        <h3 class="section-title">Holcim Operations</h3>
-        <p class="section-desc">EMEA regional information</p>
+        <h3 class="section-title">Holcim AMEA: Building Progress</h3>
+        <p class="section-desc">Celebrating the diversity and impact of our Australia, Middle East & Africa regions.</p>
       </div>
 
-      <!-- Company Overview -->
-      <div class="company-overview">
-        <div class="overview-icon">🏗️</div>
+      <div class="company-overview region-map-card">
+        <div class="overview-icon">🌐</div>
         <div class="overview-content">
-          <h4 class="overview-title">Holcim EMEA Strategy 2025</h4>
-          <p class="overview-text">Leading the transformation of construction across Europe, Middle East, and Africa through sustainable building solutions and innovation</p>
+          <h4 class="overview-title">AMEA Fun Fact Spotlight!</h4>
+          <p class="overview-text">Did you know? Our Australian team is using recycled tires to build new road foundations in Victoria. #CircularEconomy</p>
+          <a href="#" class="fact-link">
+            <ion-icon name="flag-outline"></ion-icon>
+            <span>Explore AMEA Fun Facts</span>
+          </a>
         </div>
       </div>
 
-      <!-- Company Info Cards -->
+      <div class="key-stats green-impact-card">
+        <h4 class="stats-title">Green Impact Meter (Last Quarter AMEA)</h4>
+        <div class="stats-grid stats-grid-two-col">
+          <div class="stat-item">
+            <div class="stat-value stat-value-lg">35%</div>
+            <div class="stat-label">Sustainable Products Sold</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value stat-value-lg">500k+</div>
+            <div class="stat-label">Tons CO2 Reduced</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section-header">
+        <h4 class="section-subtitle">Meet Our AMEA People</h4>
+      </div>
+      <div class="people-carousel">
+        <div class="profile-card">
+          <img src="assets/profile-dummy-1.jpg" alt="Profile" class="profile-img"/>
+          <div class="profile-info">
+            <div class="profile-name">Ahmed El-Masri</div>
+            <div class="profile-role">Logistics, **Egypt** 🇪🇬</div>
+            <p class="profile-quote">"Proud to build the future of Cairo with ECOPact!"</p>
+          </div>
+        </div>
+        </div>
+      
+      <div class="section-header">
+        <h4 class="section-subtitle">Strategic Priorities</h4>
+      </div>
       <div class="info-grid">
         <div 
           *ngFor="let info of companyInfo" 
@@ -146,29 +224,6 @@
           </div>
           <div class="info-action">
             <ion-icon name="chevron-forward-outline"></ion-icon>
-          </div>
-        </div>
-      </div>
-
-      <!-- Key Stats -->
-      <div class="key-stats">
-        <h4 class="stats-title">Regional Impact</h4>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-value">20+</div>
-            <div class="stat-label">Countries</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">50+</div>
-            <div class="stat-label">Facilities</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">8,500+</div>
-            <div class="stat-label">Employees</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">Net-Zero</div>
-            <div class="stat-label">By 2050</div>
           </div>
         </div>
       </div>

@@ -34,6 +34,12 @@ interface Session {
   styleUrls: ['./agenda.page.scss'],
 })
 export class AgendaPage implements OnInit {
+goToLocation(arg0: string) {
+throw new Error('Method not implemented.');
+}
+goToSpeaker(arg0: { name: string; title: string; photoURL: string|null; userID: string; }|undefined) {
+throw new Error('Method not implemented.');
+}
   selectedDay = '1';
   @ViewChildren('sessionCard') sessionCards!: QueryList<ElementRef>;
   private targetSessionId: string | null = null;

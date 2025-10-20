@@ -34,96 +34,96 @@ export class ResourcesPage {
 
   documents: Document[] = [
     { 
-      title: 'Opening Keynote Slides', 
+      title: 'AMEA Leadership Keynote Deck', 
       date: 'Oct 7, 2025', 
-      size: '2.4 MB',
+      size: '4.1 MB', // Slightly larger file for a main deck
       category: 'session'
     },
     { 
-      title: 'Growth Strategy Document', 
+      title: 'ME&A Market Growth Forecast Q4', // Specific to Middle East & Africa
       date: 'Oct 8, 2025', 
       size: '1.8 MB',
       category: 'session'
     },
     { 
-      title: 'Conference Handbook', 
+      title: 'Regional Delegate Handbook', // Renamed for relevance
       date: 'Oct 6, 2025', 
       size: '5.2 MB',
       category: 'general'
     },
     { 
-      title: 'Innovation Workshop Materials', 
+      title: 'Sustainability Roadmap (AMEA)', // Explicitly AMEA
       date: 'Oct 8, 2025', 
       size: '3.1 MB',
-      category: 'session'
+      category: 'company' // Changed category
     }
   ];
 
   hostCityInfo: HostInfo[] = [
     {
-      icon: '🏙️',
-      title: 'About Dubai',
-      description: 'A global hub of innovation, culture, and business excellence',
-      action: 'Learn More'
+      icon: '🏛️', // More cultural icon
+      title: 'Venue & Facilities Guide', // Renamed for more practical use
+      description: 'Your guide to the conference center and on-site amenities',
+      action: 'View Map'
     },
     {
-      icon: '🏨',
-      title: 'Hotel Information',
-      description: 'Conference venue and recommended accommodations',
-      action: 'View Details'
+      icon: '💡', // New info card
+      title: 'Local Business Etiquette', // Very relevant for the AMEA region
+      description: 'Quick tips on cultural norms and business communication in the UAE',
+      action: 'Read Guide'
     },
     {
       icon: '🍽️',
-      title: 'Dining Recommendations',
-      description: 'Top restaurants and local cuisine near the venue',
+      title: 'Top Culinary Experiences', // Focused on experience
+      description: 'Explore the best Emirati, Arabic, and international dining in Dubai',
       action: 'Explore'
     },
     {
       icon: '🚕',
-      title: 'Transportation',
-      description: 'Getting around Dubai - Metro, taxis, and ride-sharing',
+      title: 'Transportation & Safety', // Added safety
+      description: 'Official conference transport options and essential safety contacts',
       action: 'View Guide'
     },
     {
-      icon: '🎭',
-      title: 'Things to Do',
-      description: 'Must-see attractions and cultural experiences',
+      icon: '🐪', // Unique local icon
+      title: 'Cultural Highlights', // Focused on culture
+      description: 'Desert safaris, cultural centers, and local excursions',
       action: 'Discover'
     },
     {
-      icon: '🌡️',
-      title: 'Weather & Climate',
-      description: 'October average: 28°C (82°F) - Perfect conference weather',
-      action: 'Forecast'
+      icon: '📞', // New info card
+      title: 'Emergency Contact List', 
+      description: 'Direct numbers for medical, security, and conference support',
+      action: 'Call Now'
     }
   ];
 
   companyInfo: CompanyInfo[] = [
     {
-      icon: '🏢',
-      title: 'Holcim EMEA Operations',
-      description: 'Overview of our Europe, Middle East, and Africa operations and strategic initiatives'
+      icon: '📈', // More business-focused icon
+      title: 'AMEA Market Performance',
+      description: 'Latest financial highlights and regional growth drivers for Holcim'
     },
     {
-      icon: '🌍',
-      title: 'Regional Offices',
-      description: 'Holcim presence across 20+ EMEA countries with 50+ offices and production facilities'
+      icon: '🌐', // Icon for global/regional
+      title: 'Regional Leadership Team',
+      description: 'Meet the AMEA Executive Committee and their areas of focus'
     },
     {
       icon: '🏗️',
-      title: 'Construction Solutions',
-      description: 'Innovative building materials and sustainable construction solutions for EMEA'
+      title: 'Flagship AMEA Projects', // Specific to regional impact
+      description: 'Showcasing key construction and sustainability projects across the region'
     },
     {
       icon: '♻️',
-      title: 'Sustainability Goals',
-      description: 'Our commitment to net-zero carbon emissions and circular economy practices'
+      title: 'Green Building Solutions',
+      description: 'Our ECOPact and ECOPlanet product deployment and impact in the AMEA region'
     },
-   
+    
     {
-      icon: '📱',
-      title: 'Contact Directory',
-      description: 'Key contacts and regional leadership team information'
+      icon: '🔒', // Added a security/compliance-related card
+      title: 'Compliance & Ethics',
+      description: 'Regional policies and resources for maintaining ethical business conduct'
     }
   ];
 

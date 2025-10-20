@@ -37,106 +37,118 @@
       </div>
     </div>
 
-    <!-- Sessions List -->
-    <div class="sessions-container">
-      <ng-container *ngIf="filteredSessions.length > 0; else noSessions">
+<!-- Sessions List -->
+<div class="sessions-container">
+  <ng-container *ngIf="filteredSessions.length > 0; else noSessions">
+    <div
+      *ngFor="let session of filteredSessions"
+      class="session-card"
+      #sessionCard
+      [id]="session.id"
+      [style.border-left-color]="session.color"
+    >
+      <!-- Session Time Badge -->
+      <div class="time-badge" [style.background-color]="session.color">
+        <ion-icon name="time-outline" class="time-icon"></ion-icon>
+        {{ session.startTime.toDate() | date: 'shortTime' }}
+      </div>
+
+      <!-- Session Content -->
+      <div class="session-content">
+        <!-- Category Tag -->
+        <div class="session-tags">
+          <span
+            class="category-tag"
+            [style.background-color]="session.color + '20'"
+            [style.color]="session.color"
+          >
+            {{ formatCategory(session.category) }}
+          </span>
+        </div>
+
+        <!-- Title -->
+        <h3 class="session-title">{{ session.title }}</h3>
+
+        <!-- Speaker Info -->
         <div
-          *ngFor="let session of filteredSessions"
-          class="session-card"
-          #sessionCard
-          [id]="session.id"
-          [style.border-left-color]="session.color">
-          
-          <!-- Session Time Badge -->
-          <div class="time-badge" [style.background-color]="session.color">
-            <ion-icon name="time-outline" class="time-icon"></ion-icon>
-            {{ session.startTime.toDate() | date:'shortTime' }}
+          class="speaker-info"
+          *ngIf="session.speaker?.name && session.speaker?.name?.toLowerCase() !== 'all'"
+          (click)="goToSpeaker(session.speaker)"
+        >
+          <div
+            class="speaker-avatar"
+            *ngIf="!session.speaker?.photoURL || session.speaker?.photoURL === 'null'"
+          >
+            {{ session.speaker?.name?.[0] || '' }}{{ (session.speaker?.name?.split(' ')?.[1] || '')?.[0] || '' }}
+          </div>
+          <img
+            *ngIf="session.speaker?.photoURL && session.speaker?.photoURL !== 'null'"
+            [src]="session.speaker?.photoURL"
+            alt="{{ session.speaker?.name }}"
+            class="speaker-avatar-img"
+          />
+          <div class="speaker-details">
+            <div class="speaker-name clickable">{{ session.speaker?.name }}</div>
+            <div class="speaker-role">{{ session.speaker?.title }}</div>
+          </div>
+        </div>
+
+        <!-- Session Meta Info -->
+        <div class="session-meta sleek">
+          <div class="meta-item">
+            <ion-icon name="time-outline" class="meta-icon"></ion-icon>
+            <span class="meta-value">{{ formatSessionTime(session) }}</span>
+          </div>
+          <div
+            class="meta-item clickable"
+            (click)="goToLocation(session.location)"
+          >
+            <ion-icon name="location-outline" class="meta-icon"></ion-icon>
+            <span class="meta-value">{{ session.location }}</span>
+          </div>
+        </div>
+
+        <!-- Materials Section -->
+        <div class="materials-section" *ngIf="hasMaterial(session)">
+          <div class="materials-header">
+            <div class="materials-title">
+              <ion-icon name="folder-outline" class="folder-icon"></ion-icon>
+              <span>Attachment</span>
+            </div>
           </div>
 
-          <!-- Session Content -->
-          <div class="session-content">
-            <!-- Category Tag -->
-            <div class="session-tags">
-              <span class="category-tag" [style.background-color]="session.color + '20'" [style.color]="session.color">
-                {{ formatCategory(session.category) }}
-              </span>
-            </div>
-
-            <!-- Title -->
-            <h3 class="session-title">{{ session.title }}</h3>
-
-            <!-- Speaker Info -->
-            <div class="speaker-info" *ngIf="session.speaker?.name && session.speaker?.name?.toLowerCase() !== 'all'">
-              <div class="speaker-avatar" *ngIf="!session.speaker?.photoURL || session.speaker?.photoURL === 'null'">
-                {{ session.speaker?.name?.[0] || '' }}{{ (session.speaker?.name?.split(' ')?.[1] || '')?.[0] || '' }}
+          <div class="materials-grid">
+            <div class="material-card" (click)="viewMaterial(session)">
+              <div
+                class="material-icon-wrapper"
+                [style.background-color]="session.color + '15'"
+              >
+                <ion-icon
+                  [name]="getMaterialIcon(getMaterialType(session.material!))"
+                  class="material-icon"
+                  [style.color]="session.color"
+                ></ion-icon>
               </div>
-              <img *ngIf="session.speaker?.photoURL && session.speaker?.photoURL !== 'null'"
-                   [src]="session.speaker?.photoURL"
-                   alt="{{ session.speaker?.name }}"
-                   class="speaker-avatar-img" />
-              <div class="speaker-details">
-                <div class="speaker-label">Speaker</div>
-                <div class="speaker-name">{{ session.speaker?.name }}</div>
-                <div class="speaker-role">{{ session.speaker?.title }}</div>
-              </div>
-            </div>
-
-            <!-- Session Meta Info -->
-            <div class="session-meta-grid">
-              <div class="meta-card">
-                <ion-icon name="time-outline" class="meta-icon"></ion-icon>
-                <div class="meta-content">
-                  <div class="meta-label">Duration</div>
-                  <div class="meta-value">{{ formatSessionTime(session) }}</div>
+              <div class="material-info">
+                <div class="material-name">{{ session.title }}</div>
+                <div class="material-meta">
+                  <span class="material-type">{{ getMaterialType(session.material!) }}</span>
                 </div>
               </div>
-              
-              <div class="meta-card">
-                <ion-icon name="location-outline" class="meta-icon"></ion-icon>
-                <div class="meta-content">
-                  <div class="meta-label">Location</div>
-                  <div class="meta-value">{{ session.location }}</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Materials Section -->
-            <div class="materials-section" *ngIf="hasMaterial(session)">
-              <div class="materials-header">
-                <div class="materials-title">
-                  <ion-icon name="folder-outline" class="folder-icon"></ion-icon>
-                  <span>Attachment</span>
-                </div>
-              </div>
-              
-              <div class="materials-grid">
-                <div
-                  class="material-card"
-                  (click)="viewMaterial(session)">
-                  <div class="material-icon-wrapper" [style.background-color]="session.color + '15'">
-                    <ion-icon [name]="getMaterialIcon(getMaterialType(session.material!))" 
-                              class="material-icon"
-                              [style.color]="session.color"></ion-icon>
-                  </div>
-                  <div class="material-info">
-                    <div class="material-name">{{ session.title }}</div>
-                    <div class="material-meta">
-                      <span class="material-type">{{ getMaterialType(session.material!) }}</span>
-                    </div>
-                  </div>
-                  <button 
-                    class="material-download-btn"
-                    (click)="downloadMaterial($event, session)"
-                    [style.color]="session.color">
-                    <ion-icon name="download-outline"></ion-icon>
-                  </button>
-                </div>
-              </div>
+              <button
+                class="material-download-btn"
+                (click)="downloadMaterial($event, session)"
+                [style.color]="session.color"
+              >
+                <ion-icon name="download-outline"></ion-icon>
+              </button>
             </div>
           </div>
         </div>
-      </ng-container>
-
+      </div>
+    </div>
+  </ng-container>
+</div>
       <!-- No Sessions Message -->
       <ng-template #noSessions>
         <div class="no-sessions">
@@ -357,27 +369,35 @@
         </div>
       </ng-container>
 
-      <!-- No Sessions Message -->
-      <ng-template #noSessions>
-        <div class="no-sessions">
-          <div class="no-sessions-icon">
-            <ion-icon name="calendar-clear-outline"></ion-icon>
-          </div>
-          <h3 class="no-sessions-title">
-            {{ searchQuery ? 'No Results Found' : 'No Sessions Scheduled' }}
-          </h3>
-          <p class="no-sessions-text">
-            <ng-container *ngIf="searchQuery; else noSearchMessage">
-              No sessions match your search "{{ searchQuery }}".<br>
-              Try different keywords or <button class="inline-clear-btn" (click)="clearSearch()">clear your search</button>.
-            </ng-container>
-            <ng-template #noSearchMessage>
-              There are no sessions scheduled for Day {{ selectedDay }}.<br>
-              Check other days or come back later for updates!
-            </ng-template>
-          </p>
-        </div>
+<!-- No Sessions Message -->
+<ng-template #noSessions>
+  <div class="no-sessions" [class.search-empty]="searchQuery">
+    <div class="no-sessions-image-container">
+      <img
+        src="assets/plastering.png"
+        alt="No Sessions"
+        class="no-sessions-image"
+      />
+    </div>
+
+    <h3 class="no-sessions-title">
+      {{ searchQuery ? 'No Results Found' : 'All Caught Up!' }}
+    </h3>
+
+    <p class="no-sessions-text">
+      <ng-container *ngIf="searchQuery; else noSearchMessage">
+        No sessions match <span class="highlight">"{{ searchQuery }}"</span>.
+        Try different keywords or
+        <button class="inline-clear-btn" (click)="clearSearch()">clear search</button>.
+      </ng-container>
+      <ng-template #noSearchMessage>
+        You’ve completed all of today’s sessions!
+        <br />Enjoy some downtime or explore other days.
       </ng-template>
+    </p>
+  </div>
+</ng-template>
+
     </div>
 
     <!-- Material Viewer Modal -->

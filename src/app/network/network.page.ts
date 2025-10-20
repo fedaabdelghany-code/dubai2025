@@ -111,20 +111,41 @@ export class NetworkPage implements OnInit {
   }
 
   // Quick flag generator
-  public getCountryCode(country: string): string {
-    const map: Record<string, string> = {
-      Egypt: 'eg',
-      Singapore: 'sg',
-      India: 'in',
-      Philippines: 'ph',
-      UAE: 'ae',
-      'United States': 'us',
-      France: 'fr',
-      Germany: 'de',
-    };
-    return map[country] || 'un'; // 'un' = UN flag for unknown
-  }
+public getCountryCode(country: string): string {
+  const map: Record<string, string> = {
+    // Existing Countries
+    Egypt: 'eg',
+    Singapore: 'sg',
+    India: 'in',
+    Philippines: 'ph',
+    UAE: 'ae',
+    'United States': 'us',
+    France: 'fr',
+    Germany: 'de',
+    Switzerland: 'ch',
+    Italy: 'it',
+    Spain: 'es',
+    Canada: 'ca',
+    Australia: 'au',
+    Nigeria: 'ng',
+    Kenya: 'ke',
 
+    // New Countries Added
+    Algeria: 'dz',
+    Azerbaijan: 'az',
+    Bangladesh: 'bd',
+    China: 'cn',
+    Iraq: 'iq',
+    'Ivory Coast': 'ci', // Use the official country name with correct code
+    Morocco: 'ma',
+    'New Zealand': 'nz',
+    Oman: 'om',
+    Qatar: 'qa',
+  };
+  
+  // Use 'un' for any country not found, including "CEM AMEA" and "Region"
+  return map[country] || 'un'; 
+}
   // Tab switching
   setNetworkTab(tab: 'attendees' | 'speakers' | 'connections') {
     this.networkTab = tab;

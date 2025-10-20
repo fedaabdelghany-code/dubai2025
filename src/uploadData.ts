@@ -1,7 +1,7 @@
 // uploadSessions.ts
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore';
-import sessions from 'src/assets/data/agenda.json'; // Your JSON file
+import sessions from './assets/data/agenda.json' ;
 
 // Your Firebase configuration
 const firebaseConfig = {

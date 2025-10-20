@@ -1,28 +1,30 @@
+// Brand Colors
+$color-dark-blue: #1D4370;
+$color-cyan-blue: #00A9E0;
+$color-holcim-green: #94C12E;
+$color-holcim-green-dark: #7AB023;
+$color-light-gray: #f9fafb;
+$color-medium-gray: #6b7280;
+$color-border: #f3f4f6;
+
 .resources-content {
-  --background: #f9fafb;
+  --background: $color-light-gray;
 }
 
 .pb-20 {
   padding-bottom: 5rem;
 }
 
-// Header
-.header-gradient {
-  background: linear-gradient(135deg, #1D4370 0%, #00A9E0 100%);
-  padding: 3rem 1.5rem 3rem; // Increased bottom padding
-  position: relative;
-  overflow: hidden; // Changed from hidden to visible
-  z-index: 1; // Lower z-index so tabs float above
-}
+// ========================================
+// 1. Header & Tabs
+// ========================================
 
-.header-overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  opacity: 0.1;
-  pointer-events: none;
-  z-index: 0; // Behind everything in header
+.header-gradient {
+  background: linear-gradient(135deg, $color-dark-blue 0%, $color-cyan-blue 100%);
+  padding: 3rem 1.5rem 3rem; 
+  position: relative;
+  overflow: hidden;
+  z-index: 1; 
 }
 
 .header-title {
@@ -33,23 +35,43 @@
   position: relative;
   z-index: 2;
 }
-// Tabs
-// Tabs - Floating over header
-.tabs-container {
-  padding: 0 1.5rem;
-  margin-top: -1.5rem; // Negative margin to overlap header
-  margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 10; // High z-index to float above header
+
+.header-subtitle {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
 }
 
-.tabs-wrapper {
-  background: white;
-  border-radius: 0.75rem;
-  padding: 0.25rem;
-  display: flex;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); // Enhanced shadow for floating effect
-  border: 1px solid #f3f4f6;
+.header-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20rem;
+  height: auto;
+  opacity: 0.6;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: soft-light;
+  transform: translate(40%, -20%);
+
+  @media (max-width: 767px) {
+    width: 15rem;
+    transform: translate(30%, -10%);
+  }
+
+  @media (max-width: 480px) {
+    width: 15rem;
+    transform: translate(30%, -10%);
+  }
+}
+
+.tabs-container {
+  padding: 0 1.5rem;
+  margin-top: -1.5rem; 
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 10; 
 }
 
 .tabs-wrapper {
@@ -58,14 +80,8 @@
   padding: 0.25rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid #f3f4f6;
-}
-
-.header-subtitle {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid $color-border;
 }
 
 .tab-btn {
@@ -75,7 +91,7 @@
   font-size: 0.75rem;
   transition: all 0.2s;
   background: transparent;
-  color: #6b7280;
+  color: $color-medium-gray;
   border: none;
   cursor: pointer;
   display: flex;
@@ -88,13 +104,16 @@
   }
 
   &.active {
-    background: #00A9E0;
+    background: $color-cyan-blue;
     color: white;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   }
 }
 
-// Content Section
+// ========================================
+// 2. Base Content Styles
+// ========================================
+
 .content-section {
   padding: 0 1.5rem;
 }
@@ -106,21 +125,89 @@
 .section-title {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #1D4370;
+  color: $color-dark-blue;
   margin: 0 0 0.25rem;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $color-dark-blue;
+  margin: 1.5rem 0 0.75rem;
 }
 
 .section-desc {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: $color-medium-gray;
   margin: 0;
 }
 
-// Documents List
+// ========================================
+// 3. Materials Section Styles
+// ========================================
+
+.action-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.network-guide {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  .network-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+  }
+
+  ion-icon {
+    font-size: 1.75rem;
+    color: $color-cyan-blue;
+    flex-shrink: 0;
+  }
+
+  .network-title {
+    font-weight: 600;
+    color: $color-dark-blue;
+    margin: 0 0 0.25rem;
+  }
+
+  .network-text {
+    font-size: 0.75rem;
+    color: $color-medium-gray;
+    margin: 0;
+  }
+
+  .network-btn {
+    background: $color-cyan-blue;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    &:hover {
+      background: darken($color-cyan-blue, 10%);
+    }
+  }
+}
+
 .documents-list {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .document-card {
@@ -128,7 +215,7 @@
   border-radius: 0.75rem;
   padding: 1rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid #f3f4f6;
+  border: 1px solid $color-border;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -139,10 +226,23 @@
   }
 }
 
+.document-card-highlight {
+  background: lighten($color-holcim-green, 40%); // Light green background for summary
+  border-left: 5px solid $color-holcim-green;
+  padding: 1rem 1rem 1rem 0.75rem;
+
+  .doc-icon-summary {
+    background: $color-holcim-green;
+    ion-icon {
+      color: white;
+    }
+  }
+}
+
 .doc-icon {
   width: 3rem;
   height: 3rem;
-  background: rgba(0, 169, 224, 0.1);
+  background: rgba($color-cyan-blue, 0.1);
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
@@ -151,7 +251,7 @@
 
   ion-icon {
     font-size: 1.5rem;
-    color: #00A9E0;
+    color: $color-cyan-blue;
   }
 }
 
@@ -162,7 +262,7 @@
 
 .doc-title {
   font-weight: 600;
-  color: #1D4370;
+  color: $color-dark-blue;
   font-size: 0.875rem;
   margin-bottom: 0.25rem;
   white-space: nowrap;
@@ -172,11 +272,11 @@
 
 .doc-meta {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: $color-medium-gray;
 }
 
 .download-btn {
-  background: #94C12E;
+  background: $color-holcim-green;
   color: white;
   border: none;
   border-radius: 0.5rem;
@@ -193,13 +293,51 @@
   }
 
   &:hover {
-    background: #7AB023;
+    background: $color-holcim-green-dark;
   }
 }
 
-// Featured Banner
+.survey-link-card {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+
+  p {
+    font-size: 0.875rem;
+    color: $color-medium-gray;
+    margin-bottom: 1rem;
+  }
+
+  .primary-action-btn {
+    background: $color-cyan-blue;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($color-cyan-blue, 10%);
+    }
+  }
+}
+
+
+// ========================================
+// 4. Host City Section Styles
+// ========================================
+
 .featured-banner {
-  background: linear-gradient(135deg, #1D4370 0%, #00A9E0 100%);
+  background: linear-gradient(135deg, $color-dark-blue 0%, $color-cyan-blue 100%);
   border-radius: 1rem;
   padding: 1.5rem;
   display: flex;
@@ -232,7 +370,42 @@
   line-height: 1.4;
 }
 
-// Info Grid
+// Iconic Landmarks Grid
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.icon-card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid $color-border;
+}
+
+.icon-emoji {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.icon-title {
+  font-weight: 600;
+  color: $color-dark-blue;
+  font-size: 0.875rem;
+  margin: 0 0 0.25rem;
+}
+
+.icon-detail {
+  font-size: 0.7rem;
+  color: $color-medium-gray;
+  margin: 0;
+}
+
+// Info Grid (Your original)
 .info-grid {
   display: flex;
   flex-direction: column;
@@ -245,7 +418,7 @@
   border-radius: 0.75rem;
   padding: 1rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid #f3f4f6;
+  border: 1px solid $color-border;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -270,14 +443,14 @@
 
 .info-title {
   font-weight: 600;
-  color: #1D4370;
+  color: $color-dark-blue;
   font-size: 0.875rem;
   margin: 0 0 0.25rem;
 }
 
 .info-desc {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: $color-medium-gray;
   margin: 0;
   line-height: 1.4;
 }
@@ -291,47 +464,169 @@
   }
 }
 
-// Quick Facts
+// Quick Facts / Etiquette Section
 .quick-facts {
   background: white;
   border-radius: 1rem;
   padding: 1.25rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid #f3f4f6;
+  border: 1px solid $color-border;
 }
 
 .facts-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #1D4370;
+  color: $color-dark-blue;
   margin: 0 0 1rem;
 }
 
-.facts-grid {
+.facts-grid-two-col {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
 }
 
 .fact-item {
   text-align: center;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  
+  .fact-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .fact-value {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $color-dark-blue;
+  }
 }
 
-.fact-label {
-  font-size: 0.75rem;
-  color: #6b7280;
+.fact-item-do {
+  background: lighten($color-holcim-green, 45%); // Light green for DO
+  .fact-label {
+    color: $color-holcim-green-dark;
+  }
+}
+
+.fact-item-dont {
+  background: #FFEBEB; // Light red/pink for DON'T
+  .fact-label {
+    color: #CC4444; 
+  }
+}
+
+
+// ========================================
+// 5. Company Section Styles (Holcim AMEA)
+// ========================================
+
+// Fun Fact Map / Regional Recognition
+.company-overview.region-map-card {
+  background: $color-dark-blue; // Dark blue background
+  .overview-icon {
+    font-size: 3rem;
+  }
+  .overview-title {
+    color: white;
+  }
+  .overview-text {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .fact-link {
+    color: $color-holcim-green; // Green link
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+
+    ion-icon {
+        font-size: 1rem;
+    }
+  }
+}
+
+// Green Impact Meter
+.key-stats.green-impact-card {
+  background: white;
+  margin-bottom: 1.5rem;
+
+  .stats-grid-two-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stat-item {
+    background: lighten($color-holcim-green, 40%); // Light green background
+  }
+  .stat-value-lg {
+    font-size: 1.75rem;
+    color: $color-holcim-green-dark;
+  }
+}
+
+// People Carousel
+.people-carousel {
+  overflow-x: scroll;
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem; /* Space for scrollbar */
+}
+
+.profile-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid $color-border;
+  flex: 0 0 70%; // Card width: 70% of container
+  max-width: 250px;
+  text-align: center;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 0.75rem;
+  border: 3px solid $color-cyan-blue;
+}
+
+.profile-name {
+  font-weight: 700;
+  color: $color-dark-blue;
+  font-size: 1rem;
   margin-bottom: 0.25rem;
 }
 
-.fact-value {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #1D4370;
+.profile-role {
+  font-size: 0.75rem;
+  color: $color-medium-gray;
+  margin-bottom: 0.5rem;
+  
+  strong {
+      color: $color-dark-blue;
+  }
 }
 
-// Company Overview
+.profile-quote {
+  font-style: italic;
+  font-size: 0.8rem;
+  color: $color-medium-gray;
+}
+
+// Original Company Overview
 .company-overview {
-  background: linear-gradient(135deg, #94C12E 0%, #7AB023 100%);
+  background: linear-gradient(135deg, $color-holcim-green 0%, $color-holcim-green-dark 100%);
   border-radius: 1rem;
   padding: 1.5rem;
   display: flex;
@@ -364,19 +659,19 @@
   line-height: 1.4;
 }
 
-// Key Stats
+// Key Stats (Re-used for Regional Impact)
 .key-stats {
   background: white;
   border-radius: 1rem;
   padding: 1.25rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid #f3f4f6;
+  border: 1px solid $color-border;
 }
 
 .stats-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #1D4370;
+  color: $color-dark-blue;
   margin: 0 0 1rem;
 }
 
@@ -389,43 +684,19 @@
 .stat-item {
   text-align: center;
   padding: 1rem;
-  background: #f9fafb;
+  background: $color-light-gray;
   border-radius: 0.75rem;
 }
 
 .stat-value {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #00A9E0;
+  color: $color-cyan-blue;
   margin-bottom: 0.25rem;
 }
 
 .stat-label {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: $color-medium-gray;
   font-weight: 500;
-}
-.header-overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 20rem;
-  height: auto;
-  opacity: 0.6;
-  z-index: 1;
-  pointer-events: none;
-  user-select: none;
-  mix-blend-mode: soft-light;
-    transform: translate(40%, -20%);
-  
-  // Ensure visibility on mobile
-  @media (max-width: 767px) {
-    width: 15rem;
-    transform: translate(30%, -10%);
-  }
-  
-  @media (max-width: 480px) {
-    width: 15rem;
-    transform: translate(30%, -10%);
-  }
 }
