@@ -91,9 +91,10 @@
       <!-- Dubai Big 4 Challenge -->
       <div class="dubai-section">
         <div class="section-header-main">
-          <h3 class="section-title-main">The Dubai Big 4 Challenge</h3>
+          <h3 class="section-title-main">The Dubai Big 4</h3>
           <p class="section-desc-main">Experience the iconic landmarks that define this remarkable city</p>
         </div>
+
 
         <div class="landmark-grid">
           <!-- Burj Khalifa -->
@@ -169,6 +170,7 @@
           </div>
         </div>
       </div>
+
 
       <!-- Restaurant Recommendations -->
       <div class="dubai-section">
@@ -286,189 +288,158 @@
         </div>
       </div>
 
-      <!-- Getting Around -->
-      <div class="dubai-section">
-        <div class="section-header-main">
-          <h3 class="section-title-main">Getting Around Dubai</h3>
-          <p class="section-desc-main">Navigate the city with ease</p>
-        </div>
-
-        <div class="transport-list">
-          <div class="transport-card">
-            <div class="transport-icon" style="background: linear-gradient(135deg, #E63946 0%, #F77F00 100%);">
-              <ion-icon name="subway-outline"></ion-icon>
-            </div>
-            <div class="transport-content">
-              <h4 class="transport-title">Dubai Metro</h4>
-              <p class="transport-desc">
-                <strong>Best for:</strong> Quick, affordable travel along main routes<br>
-                <strong>Lines:</strong> Red & Green Lines<br>
-                <strong>Cost:</strong> AED 3-8.50 per journey<br>
-                <strong>Tip:</strong> Get a Nol Card at any station for seamless travel.
-              </p>
-            </div>
-          </div>
-
-          <div class="transport-card">
-            <div class="transport-icon" style="background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);">
-              <ion-icon name="water-outline"></ion-icon>
-            </div>
-            <div class="transport-content">
-              <h4 class="transport-title">Water Taxi & Abra</h4>
-              <p class="transport-desc">
-                <strong>Best for:</strong> Creek crossings and scenic rides<br>
-                <strong>Traditional Abra:</strong> AED 1 per crossing<br>
-                <strong>Tip:</strong> The traditional abra across Dubai Creek is an authentic local experience.
-              </p>
-            </div>
-          </div>
-
-          <div class="transport-card">
-            <div class="transport-icon" style="background: linear-gradient(135deg, #F59E0B 0%, #EAB308 100%);">
-              <ion-icon name="car-outline"></ion-icon>
-            </div>
-            <div class="transport-content">
-              <h4 class="transport-title">Taxis & Ride-Hailing</h4>
-              <p class="transport-desc">
-                <strong>Best for:</strong> Door-to-door convenience<br>
-                <strong>Apps:</strong> Careem, Uber widely available<br>
-                <strong>Tip:</strong> Careem often offers better rates during peak hours.
-              </p>
-            </div>
-          </div>
-
-          <div class="transport-card">
-            <div class="transport-icon" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
-              <ion-icon name="bus-outline"></ion-icon>
-            </div>
-            <div class="transport-content">
-              <h4 class="transport-title">Public Buses</h4>
-              <p class="transport-desc">
-                <strong>Best for:</strong> Budget-friendly city exploration<br>
-                <strong>Cost:</strong> AED 3-7.50 per journey<br>
-                <strong>Tip:</strong> All buses are air-conditioned. Use Google Maps for routes.
-              </p>
-            </div>
-          </div>
-
-          <div class="transport-card">
-            <div class="transport-icon" style="background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);">
-              <ion-icon name="walk-outline"></ion-icon>
-            </div>
-            <div class="transport-content">
-              <h4 class="transport-title">Dubai Tram & Walking</h4>
-              <p class="transport-desc">
-                <strong>Best for:</strong> Marina, JBR, and waterfront areas<br>
-                <strong>Cost:</strong> AED 3-6.50<br>
-                <strong>Tip:</strong> Walking is pleasant Nov-Mar. Summer can exceed 40°C.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick Reference Box -->
-        <div class="quick-facts-box">
-          <h4 class="quick-facts-title">Quick Reference</h4>
-          <div class="quick-facts-grid">
-            <div class="quick-fact">
-              <ion-icon name="cash-outline" class="fact-icon"></ion-icon>
-              <div>
-                <span class="fact-label">Currency</span>
-                <span class="fact-value">UAE Dirham (AED)<br>1 USD ≈ 3.67 AED</span>
-              </div>
-            </div>
-            <div class="quick-fact">
-              <ion-icon name="language-outline" class="fact-icon"></ion-icon>
-              <div>
-                <span class="fact-label">Language</span>
-                <span class="fact-value">Arabic<br>English widely spoken</span>
-              </div>
-            </div>
-            <div class="quick-fact">
-              <ion-icon name="call-outline" class="fact-icon"></ion-icon>
-              <div>
-                <span class="fact-label">Emergency</span>
-                <span class="fact-value">999 Police<br>998 Ambulance • 997 Fire</span>
-              </div>
-            </div>
-            <div class="quick-fact">
-              <ion-icon name="time-outline" class="fact-icon"></ion-icon>
-              <div>
-                <span class="fact-label">Timezone</span>
-                <span class="fact-value">GST (UTC+4)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- COMPANY SECTION -->
-    <div *ngIf="activeSection === 'company'" class="content-section">
-      <div class="section-header">
-        <h3 class="section-title">Holcim AMEA: Building Progress</h3>
-        <p class="section-desc">Celebrating the diversity and impact of our Australia, Middle East & Africa regions.</p>
-      </div>
+<!-- COMPANY SECTION -->
+<div *ngIf="activeSection === 'company'" class="company-section">
 
-      <div class="company-overview">
-        <div class="overview-icon">🌐</div>
-        <div class="overview-content">
-          <h4 class="overview-title">AMEA Fun Fact Spotlight!</h4>
-          <p class="overview-text">Did you know? Our Australian team is using recycled tires to build new road foundations in Victoria. #CircularEconomy</p>
-          <a href="#" class="fact-link">
-            <ion-icon name="flag-outline"></ion-icon>
-            <span>Explore AMEA Fun Facts</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="key-stats">
-        <h4 class="stats-title">Green Impact Meter</h4>
-        <p class="stats-subtitle">Last Quarter AMEA</p>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-value">35%</div>
-            <div class="stat-label">Sustainable Products Sold</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">500k+</div>
-            <div class="stat-label">Tons CO2 Reduced</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="section-header">
-        <h4 class="section-subtitle">Meet Our AMEA People</h4>
-      </div>
-      <div class="people-carousel">
-        <div class="profile-card">
-          <img src="assets/profile-dummy-1.jpg" alt="Profile" class="profile-img"/>
-          <div class="profile-info">
-            <div class="profile-name">Ahmed El-Masri</div>
-            <div class="profile-role">Logistics, Egypt 🇪🇬</div>
-            <p class="profile-quote">"Proud to build the future of Cairo with ECOPact!"</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="section-header">
-        <h4 class="section-subtitle">Strategic Priorities</h4>
-      </div>
-      <div class="info-grid">
-        <div 
-          *ngFor="let info of companyInfo" 
-          class="info-card"
-          (click)="openCompanyInfo(info)">
-          <div class="info-icon">{{info.icon}}</div>
-          <div class="info-content">
-            <h4 class="info-title">{{info.title}}</h4>
-            <p class="info-desc">{{info.description}}</p>
-          </div>
-          <div class="info-action">
-            <ion-icon name="chevron-forward-outline"></ion-icon>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- Header -->
+  <div class="section-header">
+    <h3 class="section-title-main">Holcim AMEA: Building Progress</h3>
+    <p class="section-desc">
+      Celebrating the diversity and impact of our Australia, Middle East & Africa regions.
+    </p>
   </div>
-</ion-content>
+
+  <!-- Purpose / 3 Ps -->
+  <section class="purpose-section">
+    <h4 class="section-subtitle">Our Purpose</h4>
+    <p class="purpose-text">
+      At Holcim AMEA, we stand by our commitment to sustainability, innovation and social impact.
+      Through our 3 Ps — <strong>People, Performance & Purpose</strong> — we deliver responsible growth
+      across our communities and infrastructure.
+    </p>
+    <div class="purpose-grid">
+      <div class="purpose-card people-card">
+        <h5>People</h5>
+        <p>Empowering our teams across AMEA countries to lead local impact programs and build resilient communities.</p>
+      </div>
+      <div class="purpose-card performance-card">
+        <h5>Performance</h5>
+        <p>Driving innovation in construction materials, carbon-reduction, and sustainable infrastructure projects.</p>
+      </div>
+      <div class="purpose-card purpose-card-main">
+        <h5>Purpose</h5>
+        <p>Embedding sustainability and circular-economy values into everything we build and deliver.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance / Flagship Projects -->
+  <section class="performance-section">
+    <h4 class="section-subtitle">Flagship Projects</h4>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <img src="assets/meter.png" alt="Victoria Recycled-Roads Project" />
+        <div class="project-info">
+          <h5>Recycled Roads — Victoria, Australia</h5>
+          <p>Holcim Australia leads circular-economy innovation by using recycled tyres in road base foundations, reducing waste and promoting sustainability.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img src="assets/meter.png" alt="ECOPact Tower" />
+        <div class="project-info">
+          <h5>Low-Carbon Concrete Tower — Dubai, UAE</h5>
+          <p>Supply of ECOPact low-carbon concrete for sustainable high-rise developments in Dubai, lowering embodied carbon emissions and supporting green urban growth.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img src="assets/meter.png" alt="Milaki OLYMPUS Project" />
+        <div class="project-info">
+          <h5>Near-Zero Cement Plant — Milaki, Algeria</h5>
+          <p>Holcim El Djazaïr’s strategic expansion and port logistics strengthen exports to up to 40%.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img src="assets/meter.png" alt="Grand Egyptian Museum" />
+        <div class="project-info">
+          <h5>Sustainable Build — Grand Egyptian Museum, Egypt</h5>
+          <p>Holcim supplied sustainable materials for Africa’s first IFC EDGE Advanced Green Building certified site.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img src="assets/meter.png" alt="Common Seawater Project Iraq" />
+        <div class="project-info">
+          <h5>Water Infrastructure — Um Qasr, Iraq</h5>
+          <p>Holcim supports infrastructure projects like the Common Seawater Supply Project near Um Qasr, part of Iraq’s integrated energy and utilities development.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img src="assets/meter.png" alt="Ebimpé Stadium" />
+        <div class="project-info">
+          <h5>Ebimpé Stadium Construction — Ivory Coast</h5>
+          <p>Holcim provided 60,000 tonnes of cement for the first Olympic-sized stadium in Ivory Coast, a landmark for sports and national pride.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img src="assets/meter.png" alt="New Zealand Proposed Cement Plant" />
+        <div class="project-info">
+          <h5>Proposed Cement Plant — Oamaru, New Zealand</h5>
+          <p>Holcim plans a new cement plant in North Otago to expand presence, pending final regulatory approvals as of 2025.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- People / Voices -->
+  <section class="people-section">
+    <h4 class="section-subtitle">Our AMEA Voices</h4>
+    <div class="people-list">
+      <div class="profile-item">
+        <img src="assets/profile.jpg" alt="Ahmed El-Masri" />
+        <div class="profile-info">
+          <h5>Ahmed El-Masri</h5>
+          <p>Logistics, Egypt</p>
+          <q>“Building the future of Cairo sustainably with ECOPact.”</q>
+        </div>
+      </div>
+      <div class="profile-item">
+        <img src="assets/profile.jpg" alt="Sophie Turner" />
+        <div class="profile-info">
+          <h5>Sophie Turner</h5>
+          <p>Innovation, Australia</p>
+          <q>“Recycling meets resilience — our tire-to-road project redefines urban infrastructure.”</q>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fun Facts by Country -->
+  <section class="fun-facts-section">
+    <h4 class="section-subtitle">Did You Know?</h4>
+    <div class="facts-grid">
+      <div class="fact-card">
+        <h5>Egypt</h5>
+        <p>Holcim Egypt developed a cement blend that reduces water consumption by 25% under arid climate conditions.</p>
+      </div>
+      <div class="fact-card">
+        <h5>Australia</h5>
+        <p>Holcim Australia champions circular economy with tyre-recycled road base materials, easing environmental burden significantly.</p>
+      </div>
+      <div class="fact-card">
+        <h5>UAE</h5>
+        <p>ECOPact low-carbon concrete from Holcim UAE supports major sustainable urban developments and green certifications.</p>
+      </div>
+      <div class="fact-card">
+        <h5>Ivory Coast</h5>
+        <p>Holcim supplied cement for the first Olympic-sized stadium, a symbol of national pride and sports advancement.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing Statement -->
+  <div class="closing-statement">
+    <p>
+      Together, through People, Performance & Purpose, we are building progress across AMEA.
+    </p>
+  </div>
+
+</div>
