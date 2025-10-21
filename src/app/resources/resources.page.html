@@ -1,11 +1,13 @@
 <ion-content [fullscreen]="true" class="resources-content">
   <div class="pb-20">
+    <!-- Header -->
     <div class="header-gradient">
       <h2 class="header-title">AMEA Resources</h2>
       <img src="assets/calig.png" alt="" class="header-overlay" />
       <p class="header-subtitle">Essential materials, host city guide & AMEA regional operations</p>
     </div>
 
+    <!-- Tabs -->
     <div class="tabs-container">
       <div class="tabs-wrapper">
         <button
@@ -32,11 +34,11 @@
       </div>
     </div>
 
+    <!-- MATERIALS SECTION -->
     <div *ngIf="activeSection === 'materials'" class="content-section">
       <div class="section-header">
         <p class="section-desc">Download session slides, summaries, and relevant material.</p>
       </div>
-
 
       <div class="documents-list">
         <div class="document-card document-card-highlight">
@@ -81,95 +83,334 @@
         </div>
       </div>
       
-      <div class="survey-link-card">
-        <p>Help us improve! Submit your session feedback to unlock exclusive post-event content.</p>
-        <button class="primary-action-btn">
-          <ion-icon name="chatbox-outline"></ion-icon>
-          <span>Give Feedback Now</span>
-        </button>
-      </div>
     </div>
 
+    <!-- DUBAI SECTION (Mobile-First Design) -->
     <div *ngIf="activeSection === 'host'" class="content-section">
-      <div class="section-header">
-        <p class="section-desc">Discover the icons, culture, and must-know essentials of the host city.</p>
-      </div>
-
-      <div class="section-header pt-0">
-        <h4 class="section-subtitle">The Dubai Big 5 Challenge</h4>
-      </div>
-      <div class="icon-grid">
-        <div class="icon-card">
-          <div class="icon-emoji">🗼</div>
-          <div class="icon-title">Burj Khalifa</div>
-          <p class="icon-detail">Tallest building on Earth</p>
-        </div>
-        <div class="icon-card">
-          <div class="icon-emoji">🛍️</div>
-          <div class="icon-title">Dubai Mall</div>
-          <p class="icon-detail">Shopping & Aquarium</p>
-        </div>
-        <div class="icon-card">
-          <div class="icon-emoji">🌴</div>
-          <div class="icon-title">The Palm Jumeirah</div>
-          <p class="icon-detail">Iconic man-made island</p>
-        </div>
-        <div class="icon-card">
-          <div class="icon-emoji">🕌</div>
-          <div class="icon-title">Al Fahidi (Old Dubai)</div>
-          <p class="icon-detail">Culture & History</p>
-        </div>
-      </div>
       
-      <div class="section-header">
-        <h4 class="section-subtitle">Quick Guides & Services</h4>
-      </div>
-      <div class="info-grid">
-        <div 
-          *ngFor="let info of hostCityInfo" 
-          class="info-card"
-          (click)="openHostInfo(info)">
-          <div class="info-icon">{{info.icon}}</div>
-          <div class="info-content">
-            <h4 class="info-title">{{info.title}}</h4>
-            <p class="info-desc">{{info.description}}</p>
+      <!-- Dubai Big 4 Challenge -->
+      <div class="dubai-section">
+        <div class="section-header-main">
+          <h3 class="section-title-main">The Dubai Big 4 Challenge</h3>
+          <p class="section-desc-main">Experience the iconic landmarks that define this remarkable city</p>
+        </div>
+
+        <div class="landmark-grid">
+          <!-- Burj Khalifa -->
+          <div class="landmark-card">
+            <div class="landmark-image-container">
+              <img src="assets/burj.jpg" alt="Burj Khalifa" class="landmark-image" />
+              <div class="landmark-badge">1</div>
+            </div>
+            <div class="landmark-content">
+              <h4 class="landmark-title">Burj Khalifa</h4>
+              <p class="landmark-description">
+                At 828 meters, the world's tallest building offers breathtaking views from its observation decks on floors 124, 125, and 148. Visit at sunset for the most spectacular experience as the city transforms from day to night.
+              </p>
+              <div class="landmark-tip">
+                <ion-icon name="bulb-outline"></ion-icon>
+                <span>Book tickets online in advance to skip the queues</span>
+              </div>
+            </div>
           </div>
-          <div class="info-action">
-            <ion-icon name="chevron-forward-outline"></ion-icon>
+
+          <!-- Dubai Mall -->
+          <div class="landmark-card">
+            <div class="landmark-image-container">
+              <img src="assets/mall.webp" alt="Dubai Mall" class="landmark-image" />
+              <div class="landmark-badge">2</div>
+            </div>
+            <div class="landmark-content">
+              <h4 class="landmark-title">Dubai Mall</h4>
+              <p class="landmark-description">
+                More than just shopping—this mega-mall features over 1,200 stores, the Dubai Aquarium, an Olympic-sized ice rink, and the mesmerizing Dubai Fountain show outside.
+              </p>
+              <div class="landmark-tip">
+                <ion-icon name="bulb-outline"></ion-icon>
+                <span>Fountain shows run every 30 minutes from 6 PM</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Palm Jumeirah -->
+          <div class="landmark-card">
+            <div class="landmark-image-container">
+              <img src="assets/palm.jpg" alt="Palm Jumeirah" class="landmark-image" />
+              <div class="landmark-badge">3</div>
+            </div>
+            <div class="landmark-content">
+              <h4 class="landmark-title">The Palm Jumeirah</h4>
+              <p class="landmark-description">
+                This engineering marvel is visible from space—a man-made archipelago shaped like a palm tree. Home to luxury resorts and the famous Atlantis resort.
+              </p>
+              <div class="landmark-tip">
+                <ion-icon name="bulb-outline"></ion-icon>
+                <span>Visit The View at The Palm for 360° panoramic views</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Al Fahidi -->
+          <div class="landmark-card">
+            <div class="landmark-image-container">
+              <img src="assets/fahidi.jpg" alt="Al Fahidi" class="landmark-image" />
+              <div class="landmark-badge">4</div>
+            </div>
+            <div class="landmark-content">
+              <h4 class="landmark-title">Al Fahidi Historical District</h4>
+              <p class="landmark-description">
+                Step back in time in Old Dubai's preserved heritage site. Wander through narrow lanes, visit traditional wind-tower houses, art galleries, and the Dubai Museum.
+              </p>
+              <div class="landmark-tip">
+                <ion-icon name="bulb-outline"></ion-icon>
+                <span>Best visited in early morning or late afternoon</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="quick-facts">
-        <h4 class="facts-title">Culture & Etiquette: Quick Do's & Don'ts</h4>
-        <div class="facts-grid facts-grid-two-col">
-          <div class="fact-item fact-item-do">
-            <div class="fact-label">✅ DO</div>
-            <div class="fact-value">Use your right hand for greetings</div>
+      <!-- Restaurant Recommendations -->
+      <div class="dubai-section">
+        <div class="section-header-main">
+          <h3 class="section-title-main">Where to Eat</h3>
+          <p class="section-desc-main">From local flavors to international cuisine</p>
+        </div>
+
+        <div class="restaurant-grid">
+          <div class="restaurant-card">
+            <div class="restaurant-icon">🍽️</div>
+            <div class="restaurant-content">
+              <h4 class="restaurant-name">Al Hadheerah</h4>
+              <p class="restaurant-type">Traditional Emirati · $$$$</p>
+              <p class="restaurant-desc">Desert dining experience with live entertainment, traditional grills, and authentic Arabic hospitality under the stars.</p>
+            </div>
           </div>
-          <div class="fact-item fact-item-dont">
-            <div class="fact-label">❌ DON'T</div>
-            <div class="fact-value">Photograph locals without permission</div>
+
+          <div class="restaurant-card">
+            <div class="restaurant-icon">🥘</div>
+            <div class="restaurant-content">
+              <h4 class="restaurant-name">Arabian Tea House</h4>
+              <p class="restaurant-type">Middle Eastern · $$</p>
+              <p class="restaurant-desc">Charming courtyard café in Al Fahidi serving traditional dishes, fresh juices, and the best Arabic breakfast in Dubai.</p>
+            </div>
           </div>
-          <div class="fact-item fact-item-do">
-            <div class="fact-label">✅ DO</div>
-            <div class="fact-value">Dress respectfully in public areas</div>
+
+          <div class="restaurant-card">
+            <div class="restaurant-icon">🌊</div>
+            <div class="restaurant-content">
+              <h4 class="restaurant-name">Pierchic</h4>
+              <p class="restaurant-type">Seafood · $$$$</p>
+              <p class="restaurant-desc">Overwater fine dining with stunning views of the Arabian Gulf and Burj Al Arab. Perfect for special occasions.</p>
+            </div>
           </div>
-          <div class="fact-item fact-item-dont">
-            <div class="fact-label">❌ DON'T</div>
-            <div class="fact-value">Display public affection</div>
+
+          <div class="restaurant-card">
+            <div class="restaurant-icon">🍜</div>
+            <div class="restaurant-content">
+              <h4 class="restaurant-name">Ravi Restaurant</h4>
+              <p class="restaurant-type">Pakistani · $</p>
+              <p class="restaurant-desc">A Dubai institution since 1978. Incredibly affordable, authentic curries and tandoori dishes. Always bustling with locals.</p>
+            </div>
+          </div>
+
+          <div class="restaurant-card">
+            <div class="restaurant-icon">☕</div>
+            <div class="restaurant-content">
+              <h4 class="restaurant-name">Logma</h4>
+              <p class="restaurant-type">Emirati Café · $$</p>
+              <p class="restaurant-desc">Modern take on traditional Emirati cuisine. Try the karak tea and camel sliders in a contemporary setting.</p>
+            </div>
+          </div>
+
+          <div class="restaurant-card">
+            <div class="restaurant-icon">🥩</div>
+            <div class="restaurant-content">
+              <h4 class="restaurant-name">Nusr-Et Steakhouse</h4>
+              <p class="restaurant-type">Steakhouse · $$$$</p>
+              <p class="restaurant-desc">Famous Salt Bae experience with premium cuts and theatrical presentation. Reserve well in advance.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Souvenir Guide -->
+      <div class="dubai-section">
+        <div class="section-header-main">
+          <h3 class="section-title-main">Souvenir Guide</h3>
+          <p class="section-desc-main">Take home a piece of Dubai</p>
+        </div>
+
+        <div class="souvenir-grid">
+          <div class="souvenir-card">
+            <div class="souvenir-emoji">🧴</div>
+            <h4 class="souvenir-title">Arabian Perfumes & Oud</h4>
+            <p class="souvenir-where">Gold Souk, Perfume Souk</p>
+            <p class="souvenir-desc">Luxurious traditional fragrances and attars. Ask for custom blends at local perfume shops.</p>
+          </div>
+
+          <div class="souvenir-card">
+            <div class="souvenir-emoji">📿</div>
+            <h4 class="souvenir-title">Gold Jewelry</h4>
+            <p class="souvenir-where">Gold Souk, Deira</p>
+            <p class="souvenir-desc">Dubai's gold is 22K or higher. Prices based on weight—don't forget to negotiate!</p>
+          </div>
+
+          <div class="souvenir-card">
+            <div class="souvenir-emoji">🫖</div>
+            <h4 class="souvenir-title">Arabic Coffee Sets</h4>
+            <p class="souvenir-where">Souk Madinat, Traditional Markets</p>
+            <p class="souvenir-desc">Beautiful dallah coffee pots and matching cups. Perfect for serving traditional gahwa.</p>
+          </div>
+
+          <div class="souvenir-card">
+            <div class="souvenir-emoji">🧣</div>
+            <h4 class="souvenir-title">Pashmina Shawls</h4>
+            <p class="souvenir-where">Textile Souk, Dubai Mall</p>
+            <p class="souvenir-desc">Soft, elegant wraps in countless colors. Great for gifts and AC-heavy venues.</p>
+          </div>
+
+          <div class="souvenir-card">
+            <div class="souvenir-emoji">🍫</div>
+            <h4 class="souvenir-title">Dates & Arabic Sweets</h4>
+            <p class="souvenir-where">Bateel, Supermarkets, Souks</p>
+            <p class="souvenir-desc">Premium Medjool dates, baklava, and halwa. Bateel offers luxury gift boxes.</p>
+          </div>
+
+          <div class="souvenir-card">
+            <div class="souvenir-emoji">🎨</div>
+            <h4 class="souvenir-title">Traditional Handicrafts</h4>
+            <p class="souvenir-where">Al Fahidi, Souk Madinat</p>
+            <p class="souvenir-desc">Hand-woven carpets, camel leather goods, and pottery from local artisans.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Getting Around -->
+      <div class="dubai-section">
+        <div class="section-header-main">
+          <h3 class="section-title-main">Getting Around Dubai</h3>
+          <p class="section-desc-main">Navigate the city with ease</p>
+        </div>
+
+        <div class="transport-list">
+          <div class="transport-card">
+            <div class="transport-icon" style="background: linear-gradient(135deg, #E63946 0%, #F77F00 100%);">
+              <ion-icon name="subway-outline"></ion-icon>
+            </div>
+            <div class="transport-content">
+              <h4 class="transport-title">Dubai Metro</h4>
+              <p class="transport-desc">
+                <strong>Best for:</strong> Quick, affordable travel along main routes<br>
+                <strong>Lines:</strong> Red & Green Lines<br>
+                <strong>Cost:</strong> AED 3-8.50 per journey<br>
+                <strong>Tip:</strong> Get a Nol Card at any station for seamless travel.
+              </p>
+            </div>
+          </div>
+
+          <div class="transport-card">
+            <div class="transport-icon" style="background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);">
+              <ion-icon name="water-outline"></ion-icon>
+            </div>
+            <div class="transport-content">
+              <h4 class="transport-title">Water Taxi & Abra</h4>
+              <p class="transport-desc">
+                <strong>Best for:</strong> Creek crossings and scenic rides<br>
+                <strong>Traditional Abra:</strong> AED 1 per crossing<br>
+                <strong>Tip:</strong> The traditional abra across Dubai Creek is an authentic local experience.
+              </p>
+            </div>
+          </div>
+
+          <div class="transport-card">
+            <div class="transport-icon" style="background: linear-gradient(135deg, #F59E0B 0%, #EAB308 100%);">
+              <ion-icon name="car-outline"></ion-icon>
+            </div>
+            <div class="transport-content">
+              <h4 class="transport-title">Taxis & Ride-Hailing</h4>
+              <p class="transport-desc">
+                <strong>Best for:</strong> Door-to-door convenience<br>
+                <strong>Apps:</strong> Careem, Uber widely available<br>
+                <strong>Tip:</strong> Careem often offers better rates during peak hours.
+              </p>
+            </div>
+          </div>
+
+          <div class="transport-card">
+            <div class="transport-icon" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
+              <ion-icon name="bus-outline"></ion-icon>
+            </div>
+            <div class="transport-content">
+              <h4 class="transport-title">Public Buses</h4>
+              <p class="transport-desc">
+                <strong>Best for:</strong> Budget-friendly city exploration<br>
+                <strong>Cost:</strong> AED 3-7.50 per journey<br>
+                <strong>Tip:</strong> All buses are air-conditioned. Use Google Maps for routes.
+              </p>
+            </div>
+          </div>
+
+          <div class="transport-card">
+            <div class="transport-icon" style="background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);">
+              <ion-icon name="walk-outline"></ion-icon>
+            </div>
+            <div class="transport-content">
+              <h4 class="transport-title">Dubai Tram & Walking</h4>
+              <p class="transport-desc">
+                <strong>Best for:</strong> Marina, JBR, and waterfront areas<br>
+                <strong>Cost:</strong> AED 3-6.50<br>
+                <strong>Tip:</strong> Walking is pleasant Nov-Mar. Summer can exceed 40°C.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Reference Box -->
+        <div class="quick-facts-box">
+          <h4 class="quick-facts-title">Quick Reference</h4>
+          <div class="quick-facts-grid">
+            <div class="quick-fact">
+              <ion-icon name="cash-outline" class="fact-icon"></ion-icon>
+              <div>
+                <span class="fact-label">Currency</span>
+                <span class="fact-value">UAE Dirham (AED)<br>1 USD ≈ 3.67 AED</span>
+              </div>
+            </div>
+            <div class="quick-fact">
+              <ion-icon name="language-outline" class="fact-icon"></ion-icon>
+              <div>
+                <span class="fact-label">Language</span>
+                <span class="fact-value">Arabic<br>English widely spoken</span>
+              </div>
+            </div>
+            <div class="quick-fact">
+              <ion-icon name="call-outline" class="fact-icon"></ion-icon>
+              <div>
+                <span class="fact-label">Emergency</span>
+                <span class="fact-value">999 Police<br>998 Ambulance • 997 Fire</span>
+              </div>
+            </div>
+            <div class="quick-fact">
+              <ion-icon name="time-outline" class="fact-icon"></ion-icon>
+              <div>
+                <span class="fact-label">Timezone</span>
+                <span class="fact-value">GST (UTC+4)</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- COMPANY SECTION -->
     <div *ngIf="activeSection === 'company'" class="content-section">
       <div class="section-header">
         <h3 class="section-title">Holcim AMEA: Building Progress</h3>
         <p class="section-desc">Celebrating the diversity and impact of our Australia, Middle East & Africa regions.</p>
       </div>
 
-      <div class="company-overview region-map-card">
+      <div class="company-overview">
         <div class="overview-icon">🌐</div>
         <div class="overview-content">
           <h4 class="overview-title">AMEA Fun Fact Spotlight!</h4>
@@ -181,15 +422,16 @@
         </div>
       </div>
 
-      <div class="key-stats green-impact-card">
-        <h4 class="stats-title">Green Impact Meter (Last Quarter AMEA)</h4>
-        <div class="stats-grid stats-grid-two-col">
+      <div class="key-stats">
+        <h4 class="stats-title">Green Impact Meter</h4>
+        <p class="stats-subtitle">Last Quarter AMEA</p>
+        <div class="stats-grid">
           <div class="stat-item">
-            <div class="stat-value stat-value-lg">35%</div>
+            <div class="stat-value">35%</div>
             <div class="stat-label">Sustainable Products Sold</div>
           </div>
           <div class="stat-item">
-            <div class="stat-value stat-value-lg">500k+</div>
+            <div class="stat-value">500k+</div>
             <div class="stat-label">Tons CO2 Reduced</div>
           </div>
         </div>
@@ -203,11 +445,11 @@
           <img src="assets/profile-dummy-1.jpg" alt="Profile" class="profile-img"/>
           <div class="profile-info">
             <div class="profile-name">Ahmed El-Masri</div>
-            <div class="profile-role">Logistics, **Egypt** 🇪🇬</div>
+            <div class="profile-role">Logistics, Egypt 🇪🇬</div>
             <p class="profile-quote">"Proud to build the future of Cairo with ECOPact!"</p>
           </div>
         </div>
-        </div>
+      </div>
       
       <div class="section-header">
         <h4 class="section-subtitle">Strategic Priorities</h4>

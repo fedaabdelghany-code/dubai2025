@@ -1,121 +1,179 @@
-// Brand Colors
-$color-dark-blue: #1D4370;
-$color-cyan-blue: #00A9E0;
-$color-holcim-green: #94C12E;
-$color-holcim-green-dark: #7AB023;
-$color-light-gray: #f9fafb;
-$color-medium-gray: #6b7280;
-$color-border: #f3f4f6;
+// Mobile-First AMEA Resources Styles
 
 .resources-content {
-  --background: $color-light-gray;
+  --background: #f9fafb;
 }
 
 .pb-20 {
   padding-bottom: 5rem;
 }
 
-// ========================================
-// 1. Header & Tabs
-// ========================================
-
+// ============================================
+// HEADER SECTION
+// ============================================
 .header-gradient {
-  background: linear-gradient(135deg, $color-dark-blue 0%, $color-cyan-blue 100%);
-  padding: 3rem 1.5rem 3rem; 
+  background: linear-gradient(135deg, #1D4370 0%, #00A9E0 100%);
+  padding: 3rem 1.5rem 3rem;
   position: relative;
   overflow: hidden;
-  z-index: 1; 
-}
-
-.header-title {
-  color: white;
-  font-size: 28px;
-  font-size: 1.5rem;
-  margin: 0 0 20px 0;
-  position: relative;
-  z-index: 2;
-}
-
-.header-subtitle {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
+  z-index: 1;
+  
+  @media (min-width: 768px) {
+    padding: 3rem 2rem 3rem;
+  }
 }
 
 .header-overlay {
   position: absolute;
   top: 0;
   right: 0;
-  width: 20rem;
+  width: 15rem;
   height: auto;
   opacity: 0.6;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
   user-select: none;
   mix-blend-mode: soft-light;
-  transform: translate(40%, -20%);
-
-  @media (max-width: 767px) {
+  transform: translate(30%, -10%);
+  
+  @media (min-width: 480px) {
     width: 15rem;
     transform: translate(30%, -10%);
   }
-
-  @media (max-width: 480px) {
-    width: 15rem;
-    transform: translate(30%, -10%);
+  
+  @media (min-width: 768px) {
+    width: 20rem;
+    transform: translate(40%, -20%);
   }
 }
 
+.header-title {
+  position: relative;
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  z-index: 2;
+  
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+.header-subtitle {
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  margin: 0;
+  z-index: 2;
+  
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
+}
+// ============================================
+// TABS SECTION - Floating & Sticky (Holcim Style)
+// ============================================
 .tabs-container {
   padding: 0 1.5rem;
-  margin-top: -1.5rem; 
+  margin-top: -1.5rem;
   margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 10; 
+  position: sticky;
+  top: 0.75rem; // bump down a bit from top when sticky
+  z-index: 100;
+  transition: all 0.3s ease;
+
+  @media (min-width: 768px) {
+    padding: 0 2rem;
+    top: 1rem; // slightly more space on larger screens
+  }
+
+  // Optional subtle elevation when sticky
+  &.is-sticky {
+    transform: translateY(0.25rem);
+  }
 }
 
 .tabs-wrapper {
-  background: white;
+  background: #ffffff;
   border-radius: 0.75rem;
   padding: 0.25rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid $color-border;
+  display: flex;
+  box-shadow: 0 4px 8px rgba(29, 67, 112, 0.15);
+  border: 1px solid #e5e7eb;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  transition: box-shadow 0.3s ease;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    justify-content: center;
+  }
+
+  // Slightly stronger shadow when sticky
+  .tabs-container.is-sticky & {
+    box-shadow: 0 6px 12px rgba(29, 67, 112, 0.25);
+  }
 }
 
 .tab-btn {
-  padding: 0.75rem 0.5rem;
+  flex: 1;
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem;
   border-radius: 0.5rem;
   font-weight: 600;
   font-size: 0.75rem;
-  transition: all 0.2s;
+  text-transform: capitalize;
+  transition: all 0.2s ease;
   background: transparent;
-  color: $color-medium-gray;
+  color: #6b7280;
   border: none;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
+  white-space: nowrap;
 
   ion-icon {
-    font-size: 1.25rem;
+    font-size: 1rem;
+  }
+
+  &:hover:not(.active) {
+    background: #f3f4f6;
   }
 
   &.active {
-    background: $color-cyan-blue;
+    background: #1D4370; // Holcim dark blue
     color: white;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0, 169, 224, 0.25);
+  }
+
+  @media (min-width: 768px) {
+    min-width: 120px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+
+    ion-icon {
+      font-size: 1.1rem;
+    }
   }
 }
 
-// ========================================
-// 2. Base Content Styles
-// ========================================
-
+// ============================================
+// CONTENT SECTIONS
+// ============================================
 .content-section {
-  padding: 0 1.5rem;
+  padding: 1rem;
+  
+  @media (min-width: 768px) {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }
 
 .section-header {
@@ -123,86 +181,40 @@ $color-border: #f3f4f6;
 }
 
 .section-title {
-  font-size: 1.125rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: $color-dark-blue;
-  margin: 0 0 0.25rem;
+  color: #1e293b;
+  margin: 0 0 0.5rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
 }
 
 .section-subtitle {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  color: $color-dark-blue;
-  margin: 1.5rem 0 0.75rem;
+  color: #1e293b;
+  margin: 0 0 0.5rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
 }
 
 .section-desc {
-  font-size: 0.875rem;
-  color: $color-medium-gray;
+  color: #64748b;
+  font-size: 0.9rem;
   margin: 0;
-}
-
-// ========================================
-// 3. Materials Section Styles
-// ========================================
-
-.action-card {
-  background: white;
-  border-radius: 1rem;
-  padding: 1.25rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-.network-guide {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-
-  .network-content {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex: 1;
-  }
-
-  ion-icon {
-    font-size: 1.75rem;
-    color: $color-cyan-blue;
-    flex-shrink: 0;
-  }
-
-  .network-title {
-    font-weight: 600;
-    color: $color-dark-blue;
-    margin: 0 0 0.25rem;
-  }
-
-  .network-text {
-    font-size: 0.75rem;
-    color: $color-medium-gray;
-    margin: 0;
-  }
-
-  .network-btn {
-    background: $color-cyan-blue;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-
-    &:hover {
-      background: darken($color-cyan-blue, 10%);
-    }
+  
+  @media (min-width: 768px) {
+    font-size: 1rem;
   }
 }
 
+// ============================================
+// MATERIALS SECTION (Holcim Branding)
+// ============================================
 .documents-list {
   display: flex;
   flex-direction: column;
@@ -211,48 +223,57 @@ $color-border: #f3f4f6;
 }
 
 .document-card {
-  background: white;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid $color-border;
   display: flex;
   align-items: center;
   gap: 1rem;
-  transition: box-shadow 0.2s;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(29, 67, 112, 0.1);
+  transition: all 0.3s ease;
 
-  &:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  &:active {
+    transform: scale(0.98);
   }
-}
 
-.document-card-highlight {
-  background: lighten($color-holcim-green, 40%); // Light green background for summary
-  border-left: 5px solid $color-holcim-green;
-  padding: 1rem 1rem 1rem 0.75rem;
+  @media (min-width: 768px) {
+    padding: 1.25rem;
 
-  .doc-icon-summary {
-    background: $color-holcim-green;
-    ion-icon {
-      color: white;
+    &:hover {
+      box-shadow: 0 6px 16px rgba(0, 169, 224, 0.25);
+      transform: translateY(-3px);
     }
   }
 }
 
+.document-card-highlight {
+  background: linear-gradient(135deg, #E9F8EE 0%, #cfdff3 100%);
+}
+
 .doc-icon {
-  width: 3rem;
-  height: 3rem;
-  background: rgba($color-cyan-blue, 0.1);
-  border-radius: 0.5rem;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  background: #E0F4FB;
+  border-radius: 10px;
+  color: #00A9E0;
 
   ion-icon {
     font-size: 1.5rem;
-    color: $color-cyan-blue;
   }
+
+  @media (min-width: 768px) {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.doc-icon-summary {
+  background: #F9F7E0;
+  color: #6CC24A;
 }
 
 .doc-info {
@@ -261,383 +282,538 @@ $color-border: #f3f4f6;
 }
 
 .doc-title {
+  font-size: 0.95rem;
   font-weight: 600;
-  color: $color-dark-blue;
-  font-size: 0.875rem;
+  color: #1D4370;
   margin-bottom: 0.25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 }
 
 .doc-meta {
-  font-size: 0.75rem;
-  color: $color-medium-gray;
+  font-size: 0.8rem;
+  color: #64748B;
+
+  @media (min-width: 768px) {
+    font-size: 0.85rem;
+  }
 }
 
 .download-btn {
-  background: $color-holcim-green;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #1D4370;
+  color: white;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background 0.2s;
-  flex-shrink: 0;
+  transition: all 0.3s ease;
 
   ion-icon {
-    font-size: 1rem;
+    font-size: 1.25rem;
   }
 
-  &:hover {
-    background: $color-holcim-green-dark;
-  }
-}
-
-.survey-link-card {
-  text-align: center;
-  padding: 1.5rem;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-
-  p {
-    font-size: 0.875rem;
-    color: $color-medium-gray;
-    margin-bottom: 1rem;
+  &:active {
+    transform: scale(0.95);
+    background: #163456;
   }
 
-  .primary-action-btn {
-    background: $color-cyan-blue;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    cursor: pointer;
-
+  @media (min-width: 768px) {
     &:hover {
-      background: darken($color-cyan-blue, 10%);
+      background: #00A9E0;
+      transform: scale(1.05);
     }
   }
 }
 
+// ============================================
+// DUBAI SECTION (Mobile-First)
+// ============================================
+.dubai-section {
+  margin-bottom: 2.5rem;
+  
+  @media (min-width: 768px) {
+    margin-bottom: 3rem;
+  }
+}
 
-// ========================================
-// 4. Host City Section Styles
-// ========================================
+.section-header-main {
+  margin-bottom: 1.5rem;
+  
+  @media (min-width: 768px) {
+    margin-bottom: 2rem;
+  }
+}
 
-.featured-banner {
-  background: linear-gradient(135deg, $color-dark-blue 0%, $color-cyan-blue 100%);
-  border-radius: 1rem;
-  padding: 1.5rem;
+.section-title-main {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.5rem;
+  
+  @media (min-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.section-desc-main {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin: 0;
+  
+  @media (min-width: 768px) {
+    font-size: 1.05rem;
+  }
+}
+
+// Landmark Cards
+.landmark-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.landmark-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  
+  @media (min-width: 768px) {
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+.landmark-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  
+  @media (min-width: 768px) {
+    height: 240px;
+  }
+}
+
+.landmark-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.landmark-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  color: #3b82f6;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.landmark-content {
+  padding: 1.25rem;
+  
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+
+.landmark-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.75rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.landmark-description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0 0 1rem;
+  
+  @media (min-width: 768px) {
+    font-size: 0.95rem;
+  }
+}
+
+.landmark-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #f0f9ff;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #0369a1;
+  
+  ion-icon {
+    flex-shrink: 0;
+    font-size: 1rem;
+    margin-top: 0.1rem;
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 0.9rem;
+  }
+}
+
+// Restaurant Cards
+.restaurant-grid {
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.banner-icon {
-  font-size: 3rem;
-  flex-shrink: 0;
+.restaurant-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+  
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+  }
 }
 
-.banner-content {
+.restaurant-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.restaurant-content {
   flex: 1;
 }
 
-.banner-title {
-  font-size: 1.125rem;
+.restaurant-name {
+  font-size: 1.1rem;
   font-weight: 700;
-  color: white;
+  color: #1e293b;
   margin: 0 0 0.25rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.15rem;
+  }
 }
 
-.banner-text {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin: 0;
-  line-height: 1.4;
-}
-
-// Iconic Landmarks Grid
-.icon-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.icon-card {
-  background: white;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-  border: 1px solid $color-border;
-}
-
-.icon-emoji {
-  font-size: 2rem;
+.restaurant-type {
+  font-size: 0.85rem;
+  color: #3b82f6;
+  font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
-.icon-title {
-  font-weight: 600;
-  color: $color-dark-blue;
+.restaurant-desc {
   font-size: 0.875rem;
-  margin: 0 0 0.25rem;
-}
-
-.icon-detail {
-  font-size: 0.7rem;
-  color: $color-medium-gray;
+  line-height: 1.5;
+  color: #64748b;
   margin: 0;
+  
+  @media (min-width: 768px) {
+    font-size: 0.9rem;
+  }
 }
 
-// Info Grid (Your original)
-.info-grid {
+// Souvenir Cards
+.souvenir-grid {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.info-card {
-  background: white;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid $color-border;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    transform: translateY(-1px);
-  }
-}
-
-.info-icon {
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-
-.info-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.info-title {
-  font-weight: 600;
-  color: $color-dark-blue;
-  font-size: 0.875rem;
-  margin: 0 0 0.25rem;
-}
-
-.info-desc {
-  font-size: 0.75rem;
-  color: $color-medium-gray;
-  margin: 0;
-  line-height: 1.4;
-}
-
-.info-action {
-  color: #9ca3af;
-  flex-shrink: 0;
-
-  ion-icon {
-    font-size: 1rem;
-  }
-}
-
-// Quick Facts / Etiquette Section
-.quick-facts {
-  background: white;
-  border-radius: 1rem;
-  padding: 1.25rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid $color-border;
-}
-
-.facts-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: $color-dark-blue;
-  margin: 0 0 1rem;
-}
-
-.facts-grid-two-col {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.5rem;
-
-  @media (min-width: 600px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-}
-
-.fact-item {
-  text-align: center;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
+  gap: 1rem;
   
-  .fact-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    margin-bottom: 0.25rem;
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
-
-  .fact-value {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: $color-dark-blue;
+  
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.fact-item-do {
-  background: lighten($color-holcim-green, 45%); // Light green for DO
-  .fact-label {
-    color: $color-holcim-green-dark;
+.souvenir-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  
+  &:active {
+    transform: scale(0.98);
   }
-}
-
-.fact-item-dont {
-  background: #FFEBEB; // Light red/pink for DON'T
-  .fact-label {
-    color: #CC4444; 
-  }
-}
-
-
-// ========================================
-// 5. Company Section Styles (Holcim AMEA)
-// ========================================
-
-// Fun Fact Map / Regional Recognition
-.company-overview.region-map-card {
-  background: $color-dark-blue; // Dark blue background
-  .overview-icon {
-    font-size: 3rem;
-  }
-  .overview-title {
-    color: white;
-  }
-  .overview-text {
-    color: rgba(255, 255, 255, 0.9);
-  }
-  .fact-link {
-    color: $color-holcim-green; // Green link
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    margin-top: 0.5rem;
-
-    ion-icon {
-        font-size: 1rem;
+  
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     }
   }
 }
 
-// Green Impact Meter
-.key-stats.green-impact-card {
-  background: white;
-  margin-bottom: 1.5rem;
+.souvenir-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
 
-  .stats-grid-two-col {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .stat-item {
-    background: lighten($color-holcim-green, 40%); // Light green background
-  }
-  .stat-value-lg {
-    font-size: 1.75rem;
-    color: $color-holcim-green-dark;
+.souvenir-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.25rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.1rem;
   }
 }
 
-// People Carousel
-.people-carousel {
-  overflow-x: scroll;
+.souvenir-where {
+  font-size: 0.8rem;
+  color: #3b82f6;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.souvenir-desc {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #64748b;
+  margin: 0;
+}
+
+// Transport Cards
+.transport-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  
+  @media (min-width: 768px) {
+    gap: 1.25rem;
+  }
+}
+
+.transport-card {
   display: flex;
   gap: 1rem;
-  padding-bottom: 1rem; /* Space for scrollbar */
-}
-
-.profile-card {
   background: white;
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid $color-border;
-  flex: 0 0 70%; // Card width: 70% of container
-  max-width: 250px;
-  text-align: center;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+  
+  @media (min-width: 768px) {
+    gap: 1.5rem;
+    padding: 1.5rem;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+  }
 }
 
-.profile-img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto 0.75rem;
-  border: 3px solid $color-cyan-blue;
+.transport-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: white;
+  
+  ion-icon {
+    font-size: 1.75rem;
+  }
+  
+  @media (min-width: 768px) {
+    width: 64px;
+    height: 64px;
+    
+    ion-icon {
+      font-size: 2rem;
+    }
+  }
 }
 
-.profile-name {
+.transport-content {
+  flex: 1;
+}
+
+.transport-title {
+  font-size: 1.1rem;
   font-weight: 700;
-  color: $color-dark-blue;
-  font-size: 1rem;
+  color: #1e293b;
+  margin: 0 0 0.75rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.transport-desc {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #475569;
+  margin: 0;
+  
+  strong {
+    color: #1e293b;
+    font-weight: 600;
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 0.9rem;
+  }
+}
+
+// Quick Facts Box
+.quick-facts-box {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 2px solid #bae6fd;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  
+  @media (min-width: 768px) {
+    padding: 2rem;
+  }
+}
+
+.quick-facts-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0c4a6e;
+  margin: 0 0 1.25rem;
+  text-align: center;
+  
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+.quick-facts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.quick-fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  
+  @media (min-width: 768px) {
+    padding: 1.25rem;
+  }
+}
+
+.fact-icon {
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  color: #0284c7;
+  margin-top: 0.1rem;
+}
+
+.fact-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin-bottom: 0.25rem;
 }
 
-.profile-role {
-  font-size: 0.75rem;
-  color: $color-medium-gray;
-  margin-bottom: 0.5rem;
+.fact-value {
+  display: block;
+  font-size: 0.9rem;
+  color: #1e293b;
+  line-height: 1.5;
   
-  strong {
-      color: $color-dark-blue;
+  @media (min-width: 768px) {
+    font-size: 0.95rem;
   }
 }
 
-.profile-quote {
-  font-style: italic;
-  font-size: 0.8rem;
-  color: $color-medium-gray;
-}
-
-// Original Company Overview
+// ============================================
+// COMPANY SECTION
+// ============================================
 .company-overview {
-  background: linear-gradient(135deg, $color-holcim-green 0%, $color-holcim-green-dark 100%);
-  border-radius: 1rem;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-radius: 16px;
   padding: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  
+  @media (min-width: 768px) {
+    padding: 2rem;
+  }
 }
 
 .overview-icon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   flex-shrink: 0;
 }
 
@@ -646,33 +822,81 @@ $color-border: #f3f4f6;
 }
 
 .overview-title {
-  font-size: 1.125rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: white;
-  margin: 0 0 0.25rem;
+  color: #1e293b;
+  margin: 0 0 0.5rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+  }
 }
 
 .overview-text {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.95);
-  margin: 0;
-  line-height: 1.4;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0 0 1rem;
+  
+  @media (min-width: 768px) {
+    font-size: 0.95rem;
+  }
 }
 
-// Key Stats (Re-used for Regional Impact)
+.fact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #3b82f6;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  
+  ion-icon {
+    font-size: 1.1rem;
+  }
+  
+  &:active {
+    transform: translateX(4px);
+  }
+  
+  @media (min-width: 768px) {
+    &:hover {
+      transform: translateX(4px);
+      color: #2563eb;
+    }
+  }
+}
+
 .key-stats {
-  background: white;
-  border-radius: 1rem;
-  padding: 1.25rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid $color-border;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  
+  @media (min-width: 768px) {
+    padding: 2rem;
+  }
 }
 
 .stats-title {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: $color-dark-blue;
-  margin: 0 0 1rem;
+  color: #065f46;
+  text-align: center;
+  margin: 0 0 0.25rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.stats-subtitle {
+  font-size: 0.85rem;
+  color: #059669;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .stats-grid {
@@ -684,19 +908,171 @@ $color-border: #f3f4f6;
 .stat-item {
   text-align: center;
   padding: 1rem;
-  background: $color-light-gray;
-  border-radius: 0.75rem;
+  background: white;
+  border-radius: 12px;
+  
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+  }
 }
 
 .stat-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: $color-cyan-blue;
-  margin-bottom: 0.25rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #059669;
+  margin-bottom: 0.5rem;
+  
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+  }
 }
 
 .stat-label {
-  font-size: 0.75rem;
-  color: $color-medium-gray;
+  font-size: 0.85rem;
+  color: #64748b;
   font-weight: 500;
+  
+  @media (min-width: 768px) {
+    font-size: 0.9rem;
+  }
+}
+
+.people-carousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  -webkit-overflow-scrolling: touch;
+  
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+  }
+}
+
+.profile-card {
+  flex-shrink: 0;
+  width: 280px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  @media (min-width: 768px) {
+    width: 320px;
+  }
+}
+
+.profile-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.profile-info {
+  padding: 1.25rem;
+}
+
+.profile-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.profile-role {
+  font-size: 0.85rem;
+  color: #3b82f6;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.profile-quote {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  
+  @media (min-width: 768px) {
+    gap: 1rem;
+  }
+}
+
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+  
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+    
+    &:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+  }
+}
+
+.info-icon {
+  flex-shrink: 0;
+  font-size: 2rem;
+}
+
+.info-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.info-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.25rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.1rem;
+  }
+}
+
+.info-desc {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.info-action {
+  flex-shrink: 0;
+  color: #94a3b8;
+  
+  ion-icon {
+    font-size: 1.5rem;
+  }
 }

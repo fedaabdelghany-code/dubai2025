@@ -24,19 +24,18 @@
       </div>
     </div>
 
-    <!-- Day Selector - Floating Tabs -->
-    <div class="day-selector">
-      <div class="day-selector-wrapper">
-        <button
-          *ngFor="let day of ['1', '2', '3']"
-          class="day-btn"
-          [class.active]="selectedDay === day"
-          (click)="setSelectedDay(day)">
-          Day {{day}}
-        </button>
-      </div>
-    </div>
-
+<!-- Day Selector - Holcim Floating Tabs -->
+<div class="tabs-container">
+  <div class="tabs-wrapper">
+    <button
+      *ngFor="let day of ['1', '2', '3']"
+      class="tab-btn"
+      [class.active]="selectedDay === day"
+      (click)="setSelectedDay(day)">
+      Day {{ day }}
+    </button>
+  </div>
+</div>
 <!-- Sessions List -->
 <div class="sessions-container">
   <ng-container *ngIf="filteredSessions.length > 0; else noSessions">
