@@ -9,6 +9,12 @@
   height: 100%;
 }
 
+ion-item, ion-input {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 .login-wrapper {
   display: flex;
   justify-content: center;

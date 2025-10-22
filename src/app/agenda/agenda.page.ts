@@ -32,7 +32,6 @@ interface Session {
   templateUrl: './agenda.page.html',
   styleUrls: ['./agenda.page.scss'],
   imports: [IonModal, IonContent, IonIcon, CommonModule, DatePipe, FormsModule],
-
 })
 export class AgendaPage implements OnInit {
 goToLocation(arg0: string) {

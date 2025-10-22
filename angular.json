@@ -36,6 +36,11 @@
     "glob": "**/*.svg",
     "input": "node_modules/flag-icons/flags/4x3",
     "output": "flags/4x3"
+  },
+  {
+    "glob": "manifest.webmanifest",
+    "input": "src",
+    "output": "/"
   }
 ],            "styles": [
               "src/global.scss",
