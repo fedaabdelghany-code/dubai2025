@@ -4,9 +4,9 @@
     <div class="header-gradient">
       <div class="header-container">
         <div class="header-content">
-          <p class="event-label">AMEA STRATEGY 2025</p>
-          <h1 class="day-title">Day {{ currentDay }}</h1>
-          <p class="date-text">Ahlan, Feda!</p>
+          <p class="event-label">AMEA REGIONAL MEETING 2025</p>
+          <h1 class="day-title">DAY {{ currentDay }}</h1>
+          <p class="date-text">AHLAN, FEDA!</p>
         </div>
         <img src="assets/calig.png" alt="" class="header-overlay" />
       </div>
@@ -222,16 +222,10 @@
                   <div class="time-label">
                     {{ session.startTime.toDate() | date: 'shortTime' }}
                   </div>
-                  <div class="room">{{ session.location }}</div>
+                  <!-- <div class="room">{{ session.location }}</div> -->
                 </div>
                 <div class="session-details">
                   <div class="session-name">{{ session.title }}</div>
-                  <div
-                    class="session-speaker"
-                    *ngIf="shouldDisplaySpeaker(session)"
-                  >
-                    {{ session.speaker?.name }}
-                  </div>
                 </div>
               </div>
             </ng-container>

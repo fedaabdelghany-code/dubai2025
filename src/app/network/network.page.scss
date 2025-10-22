@@ -8,11 +8,10 @@
 
 // Header
 .header-gradient {
-  background: linear-gradient(135deg, #1D4370 0%, #00A9E0 100%);
-  padding: 3rem 1.5rem 3rem; // Increased bottom padding
+  background: linear-gradient(to bottom right, #041739 0%, #041739 40%, #1d4370 100%);
+  padding: 3rem 1.5rem 2rem;
   position: relative;
-  overflow: hidden; // Changed from hidden to visible
-  z-index: 1; // Lower z-index so tabs float above
+  overflow: hidden;
 }
 
 .header-overlay {
@@ -298,11 +297,11 @@
   color: white;
   font-weight: 700;
   font-size: 0.875rem;
-  background: linear-gradient(135deg, #1D4370 0%, #00A9E0 100%);
+    background: linear-gradient(135deg, #041739, #041739);
   flex-shrink: 0;
 
   &.connected {
-    background: linear-gradient(135deg, #00A9E0 0%, #0088B8 100%);
+    background: linear-gradient(135deg, #041739, #041739);
   }
 }
 

@@ -12,12 +12,11 @@
 // HEADER SECTION
 // ============================================
 .header-gradient {
-  background: linear-gradient(135deg, #1D4370 0%, #00A9E0 100%);
-  padding: 3rem 1.5rem 3rem;
+  background: linear-gradient(to bottom right, #041739 0%, #041739 40%, #1d4370 100%);
+  padding: 3rem 1.5rem 2rem;
   position: relative;
   overflow: hidden;
-  z-index: 1;
-  
+
   @media (min-width: 768px) {
     padding: 3rem 2rem 3rem;
   }
@@ -858,8 +857,8 @@
 .fact-card {
   padding: 1.5rem;
   border-radius: 14px;
-  background: linear-gradient(135deg, #e0f4fb, #f0f9ed);
-  color: #1D4370;
+  background: linear-gradient(135deg, #1D4370, #1D4370);
+  color: #ffffff;
   h5 {
     margin: 0 0 0.5rem;
     font-size: 1rem;
@@ -875,7 +874,7 @@
 .closing-statement {
   text-align: center;
   p {
-    color: #475569;
+    color: #0d1e35;
     font-size: 1rem;
     max-width: 650px;
     margin: 0 auto;

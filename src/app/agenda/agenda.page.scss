@@ -33,11 +33,11 @@
 }
 
 .header-gradient {
-  background: linear-gradient(135deg, #1D4370 0%, #00A9E0 100%);
-  padding: 3rem 1.5rem 3rem;
+  background: linear-gradient(to bottom right, #041739 0%, #041739 40%, #1d4370 100%);
+  padding: 3rem 1.5rem 2rem;
   position: relative;
   overflow: hidden;
-  z-index: 1;
+
   
   @media (min-width: 768px) {
     padding: 3rem 2rem 3rem;

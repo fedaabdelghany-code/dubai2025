@@ -7,6 +7,8 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { environment } from './environments/environment';
+import { isDevMode } from '@angular/core';
+import { provideServiceWorker } from '@angular/service-worker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -15,6 +17,9 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => getFirestore()), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 });

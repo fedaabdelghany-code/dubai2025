@@ -9,7 +9,7 @@
       "endTime": "2025-10-20T22:00:00",
       "location": "Helipad Arena",
       "isGeneral": true,
-      "color": "#6FCF97",
+      "color": "#94c12e",
       "speaker": {
         "name": null,
         "title": null,
@@ -26,7 +26,7 @@
       "endTime": "2025-10-21T08:45:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#56CCF2",
+      "color": "#041739",
       "speaker": {
         "name": "Hotel H&S Representative",
         "title": "Health & Safety Representative",
@@ -43,7 +43,7 @@
       "endTime": "2025-10-21T08:50:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#219653",
+      "color": "#4bb05b",
       "speaker": {
         "name": "Ali S.",
         "title": "Country CEO - UAE",
@@ -60,7 +60,7 @@
       "endTime": "2025-10-21T08:50:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#56CCF2",
+      "color": "#041739",
       "speaker": {
         "name": "Gulan S.",
         "title": "Event Coordinator",
@@ -77,7 +77,7 @@
       "endTime": "2025-10-21T09:10:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#219653",
+      "color": "#4bb05b",
       "speaker": {
         "name": "Martin K. & Miljan G.",
         "title": "Regional Leadership",
@@ -94,7 +94,7 @@
       "endTime": "2025-10-21T09:15:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#5DADE2",
+      "color": "#04bbf1",
       "speaker": {
         "name": "B.K. & Karen T.",
         "title": "People & Culture Team",
@@ -111,7 +111,7 @@
       "endTime": "2025-10-21T11:00:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#1B4F72",
+      "color": "#007fad",
       "speaker": {
         "name": "Grant E.",
         "title": "Regional Director",
@@ -128,7 +128,7 @@
       "endTime": "2025-10-21T11:00:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#4FA3A5",
+      "color": "#1d4370",
       "speaker": {
         "name": "Khaled D.",
         "title": "Country CEO - Egypt",
@@ -145,7 +145,7 @@
       "endTime": "2025-10-21T11:00:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#4FA3A5",
+      "color": "#1d4370",
       "speaker": {
         "name": "George A.",
         "title": "Country CEO - Australia",
@@ -162,7 +162,7 @@
       "endTime": "2025-10-21T11:00:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#4FA3A5",
+      "color": "#1d4370",
       "speaker": {
         "name": "Adham E.",
         "title": "Country CEO - Algeria",
@@ -179,7 +179,7 @@
       "endTime": "2025-10-21T11:00:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#4FA3A5",
+      "color": "#1d4370",
       "speaker": {
         "name": "Khalid S.",
         "title": "Country CEO - Morocco",
@@ -196,7 +196,7 @@
       "endTime": "2025-10-21T11:00:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#4FA3A5",
+      "color": "#1d4370",
       "speaker": {
         "name": "Ali S.",
         "title": "Country CEO - UAE",
@@ -213,7 +213,7 @@
       "endTime": "2025-10-21T11:00:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#7F8C8D",
+      "color": "#d0d0d0",
       "speaker": {
         "name": "Grant E. & Virginie D.",
         "title": "Regional Leadership",
@@ -230,7 +230,7 @@
       "endTime": "2025-10-21T12:15:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#00A99D",
+      "color": "#94c12e",
       "speaker": {
         "name": "Najib R. / Daniel R.",
         "title": "Sustainability Experts",
@@ -247,7 +247,7 @@
       "endTime": "2025-10-21T12:15:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#00A99D",
+      "color": "#94c12e",
       "speaker": {
         "name": "Moumita C. / Daniel R.",
         "title": "Operations & Sustainability Experts",
@@ -264,7 +264,7 @@
       "endTime": "2025-10-21T12:15:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#00A99D",
+      "color": "#94c12e",
       "speaker": {
         "name": "Medhat I. / Daniel R.",
         "title": "Operations & Sustainability Experts",
@@ -281,7 +281,7 @@
       "endTime": "2025-10-21T14:15:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#00A99D",
+      "color": "#94c12e",
       "speaker": {
         "name": "George A. & Tony P. / Alfonso P.",
         "title": "Circular Construction Experts",
@@ -298,7 +298,7 @@
       "endTime": "2025-10-21T14:15:00",
       "location": "Booth 1",
       "isGeneral": false,
-      "color": "#00A99D",
+      "color": "#94c12e",
       "speaker": {
         "name": "Khalid S., Khaled D. / Roze W.",
         "title": "CCUS Experts",
@@ -315,7 +315,7 @@
       "endTime": "2025-10-21T14:15:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": false,
-      "color": "#00A99D",
+      "color": "#94c12e",
       "speaker": {
         "name": "Sergiu S., Greg P., Ramy H. / Wilfried C.",
         "title": "Sustainable Solutions Team",
@@ -332,7 +332,7 @@
       "endTime": "2025-10-21T14:35:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#7F8C8D",
+      "color": "#d0d0d0",
       "speaker": {
         "name": "All",
         "title": "All Participants",
@@ -349,7 +349,7 @@
       "endTime": "2025-10-21T14:50:00",
       "location": "Helipad Arena",
       "isGeneral": true,
-      "color": "#6FCF97",
+      "color": "#94c12e",
       "speaker": {
         "name": null,
         "title": null,
@@ -366,7 +366,7 @@
       "endTime": "2025-10-21T15:40:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#2E86C1",
+      "color": "#4bb05b",
       "speaker": {
         "name": "Javier A.",
         "title": "Health & Safety Director",
@@ -383,7 +383,7 @@
       "endTime": "2025-10-21T15:40:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#2E86C1",
+      "color": "#4bb05b",
       "speaker": {
         "name": "Nicolas G.",
         "title": "Digital & AI Lead",
@@ -400,7 +400,7 @@
       "endTime": "2025-10-21T15:40:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#2E86C1",
+      "color": "#4bb05b",
       "speaker": {
         "name": "Iqbal C.",
         "title": "Commercial Director",
@@ -417,7 +417,7 @@
       "endTime": "2025-10-21T15:40:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#2E86C1",
+      "color": "#4bb05b",
       "speaker": {
         "name": "Manoj C.",
         "title": "Global Sourcing Director",
@@ -434,7 +434,7 @@
       "endTime": "2025-10-21T15:40:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#7F8C8D",
+      "color": "#d0d0d0",
       "speaker": {
         "name": "All",
         "title": "All Participants",
@@ -451,7 +451,7 @@
       "endTime": "2025-10-21T16:10:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#1B4F72",
+      "color": "#007fad",
       "speaker": {
         "name": "Rajesh S.",
         "title": "Financial Director",
@@ -468,7 +468,7 @@
       "endTime": "2025-10-21T16:40:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#219653",
+      "color": "#4bb05b",
       "speaker": {
         "name": "Group Leadership Team",
         "title": "Group Leadership",
@@ -485,7 +485,7 @@
       "endTime": "2025-10-21T16:50:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#4FA3A5",
+      "color": "#1d4370",
       "speaker": {
         "name": "Country CEOs",
         "title": "Country CEOs",
@@ -502,7 +502,7 @@
       "endTime": "2025-10-21T17:00:00",
       "location": "Baraha Ballroom 1 & 2",
       "isGeneral": true,
-      "color": "#56CCF2",
+      "color": "#041739",
       "speaker": {
         "name": "Martin K.",
         "title": "Regional Director",
@@ -519,7 +519,7 @@
       "endTime": "2025-10-21T22:00:00",
       "location": "The Promenade",
       "isGeneral": true,
-      "color": "#6FCF97",
+      "color": "#94c12e",
       "speaker": {
         "name": "Holcim Chairman",
         "title": "Chairman - Holcim Ltd.",
@@ -536,7 +536,7 @@
       "endTime": "2025-10-22T16:00:00",
       "location": "Off-site",
       "isGeneral": false,
-      "color": "#5D6D7E",
+      "color": "#04bbf1",
       "speaker": {
         "name": "Group 1: Group Leadership Team & AMEA Country CEOs",
         "title": "Leadership Team",
@@ -553,7 +553,7 @@
       "endTime": "2025-10-22T15:00:00",
       "location": "Baraha Ballroom and Break out Rooms",
       "isGeneral": false,
-      "color": "#2980B9",
+      "color": "#007fad",
       "speaker": {
         "name": "Edelio B., Antonio C.",
         "title": "Innovation Experts",
@@ -570,7 +570,7 @@
       "endTime": "2025-10-22T15:00:00",
       "location": "Baraha Ballroom and Break out Rooms",
       "isGeneral": false,
-      "color": "#2980B9",
+      "color": "#007fad",
       "speaker": {
         "name": "Veronika E., Isabel T.",
         "title": "Sustainability Experts",
@@ -587,7 +587,7 @@
       "endTime": "2025-10-22T15:00:00",
       "location": "Baraha Ballroom and Break out Rooms",
       "isGeneral": false,
-      "color": "#2980B9",
+      "color": "#007fad",
       "speaker": {
         "name": "Gilles K.",
         "title": "RMX Expert",
@@ -604,7 +604,7 @@
       "endTime": "2025-10-22T15:00:00",
       "location": "Baraha Ballroom and Break out Rooms",
       "isGeneral": false,
-      "color": "#2980B9",
+      "color": "#007fad",
       "speaker": {
         "name": "Alexia S.",
         "title": "Branding Expert",
@@ -621,7 +621,7 @@
       "endTime": "2025-10-22T15:00:00",
       "location": "Baraha Ballroom and Break out Rooms",
       "isGeneral": false,
-      "color": "#2980B9",
+      "color": "#007fad",
       "speaker": {
         "name": "Daniel R.",
         "title": "CDM Expert",
@@ -638,7 +638,7 @@
       "endTime": "2025-10-22T15:00:00",
       "location": "Baraha Ballroom and Break out Rooms",
       "isGeneral": false,
-      "color": "#2980B9",
+      "color": "#007fad",
       "speaker": {
         "name": "Group 2 Team",
         "title": "Communications Experts",
@@ -655,7 +655,7 @@
       "endTime": "2025-10-22T15:00:00",
       "location": "Baraha Ballroom and Break out Rooms",
       "isGeneral": false,
-      "color": "#2980B9",
+      "color": "#007fad",
       "speaker": {
         "name": "Group Experts",
         "title": "Operations Experts",

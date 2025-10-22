@@ -9,7 +9,7 @@ ion-content {
 
 // Header
 .header-gradient {
-  background: linear-gradient(to bottom right, #1D4370 0%, #1D4370 40%, #00A9E0 100%);
+  background: linear-gradient(to bottom right, #041739 0%, #041739 40%, #1d4370 100%);
   padding: 3rem 1.5rem 2rem;
   position: relative;
   overflow: hidden;
@@ -109,7 +109,7 @@ ion-content {
   }
 
   &.live {
-    border-left: 4px solid #27ae60; // Green accent for live
+    border-left: 4px solid #4bb05b; // Green accent for live
   }
 
   // untouched no-session
@@ -159,7 +159,7 @@ ion-content {
     /* 🟢 LIVE NOW badge with pulsing dot */
     &.live {
       background: #e8f9e9;
-      color: #138808;
+      color: #4bb05b;
       border: 1px solid rgba(19, 136, 8, 0.25);
       padding-left: 1.5rem;
 
@@ -172,7 +172,7 @@ ion-content {
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background-color: #27ae60;
+        background-color: #4bb05b;
         box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.5);
         animation: pulse 1.4s infinite;
       }
@@ -247,7 +247,7 @@ ion-content {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-    background: linear-gradient(135deg, #1d4370, #00a9e0);
+    background: linear-gradient(135deg, #041739, #041739);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -331,19 +331,19 @@ ion-content {
       margin-bottom: 0.5rem;
 
       &.qr {
-        background: linear-gradient(135deg, #00A9E0 0%, #0092c4 100%);
+        background: linear-gradient(135deg, #007fad 0%, #007fad 100%);
       }
 
       &.photos {
-                background: linear-gradient(135deg, #94C12E 0%, #7da825 100%);
+background: linear-gradient(135deg, #4bb05b 0%, #4bb05b 100%); 
+      }
+
+      &.venue {                      background: linear-gradient(135deg, #94C12E 0%, #94C12E 100%);
+
 
       }
 
-      &.venue {       background: linear-gradient(135deg, #1f8f28 0%, #0c7218 100%);
-
-      }
-
-      &.networking {background: linear-gradient(135deg, #062974 0%, #1f48a2 100%); 
+      &.networking {background: linear-gradient(135deg, #1D4370 0%, #1d4370 100%); 
       }
 
       ion-icon {
