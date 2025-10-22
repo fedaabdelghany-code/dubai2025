@@ -54,9 +54,10 @@ type MessageType = 'today' | 'over' | null;
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonModal, IonContent, IonIcon, CommonModule, DatePipe, RouterModule],
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  imports: [IonModal, IonContent, IonIcon, CommonModule, DatePipe, RouterModule],
+
 })
 export class HomePage implements OnInit, OnDestroy {
   /* Public observables / properties used by the template */

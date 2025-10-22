@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
-import { IonContent, IonIcon } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { addIcons } from 'ionicons';
+
+import { 
+  documentOutline, 
+  downloadOutline, 
+  businessOutline,
+  locationOutline 
+} from 'ionicons/icons';
 
 interface Document {
   title: string;
@@ -27,7 +35,7 @@ interface CompanyInfo {
   standalone: true,
   templateUrl: 'resources.page.html',
   styleUrls: ['resources.page.scss'],
-  imports: [IonContent, IonIcon, CommonModule]
+  imports: [IonicModule, CommonModule]
 })
 export class ResourcesPage {
   activeSection: 'materials' | 'host' | 'company' = 'materials';
@@ -36,62 +44,62 @@ export class ResourcesPage {
     { 
       title: 'AMEA Leadership Keynote Deck', 
       date: 'Oct 7, 2025', 
-      size: '4.1 MB', // Slightly larger file for a main deck
+      size: '4.1 MB',
       category: 'session'
     },
     { 
-      title: 'ME&A Market Growth Forecast Q4', // Specific to Middle East & Africa
+      title: 'ME&A Market Growth Forecast Q4',
       date: 'Oct 8, 2025', 
       size: '1.8 MB',
       category: 'session'
     },
     { 
-      title: 'Regional Delegate Handbook', // Renamed for relevance
+      title: 'Regional Delegate Handbook',
       date: 'Oct 6, 2025', 
       size: '5.2 MB',
       category: 'general'
     },
     { 
-      title: 'Sustainability Roadmap (AMEA)', // Explicitly AMEA
+      title: 'Sustainability Roadmap (AMEA)',
       date: 'Oct 8, 2025', 
       size: '3.1 MB',
-      category: 'company' // Changed category
+      category: 'company'
     }
   ];
 
   hostCityInfo: HostInfo[] = [
     {
-      icon: '🏛️', // More cultural icon
-      title: 'Venue & Facilities Guide', // Renamed for more practical use
+      icon: '🏛️',
+      title: 'Venue & Facilities Guide',
       description: 'Your guide to the conference center and on-site amenities',
       action: 'View Map'
     },
     {
-      icon: '💡', // New info card
-      title: 'Local Business Etiquette', // Very relevant for the AMEA region
+      icon: '💡',
+      title: 'Local Business Etiquette',
       description: 'Quick tips on cultural norms and business communication in the UAE',
       action: 'Read Guide'
     },
     {
       icon: '🍽️',
-      title: 'Top Culinary Experiences', // Focused on experience
+      title: 'Top Culinary Experiences',
       description: 'Explore the best Emirati, Arabic, and international dining in Dubai',
       action: 'Explore'
     },
     {
       icon: '🚕',
-      title: 'Transportation & Safety', // Added safety
+      title: 'Transportation & Safety',
       description: 'Official conference transport options and essential safety contacts',
       action: 'View Guide'
     },
     {
-      icon: '🐪', // Unique local icon
-      title: 'Cultural Highlights', // Focused on culture
+      icon: '🐪',
+      title: 'Cultural Highlights',
       description: 'Desert safaris, cultural centers, and local excursions',
       action: 'Discover'
     },
     {
-      icon: '📞', // New info card
+      icon: '📞',
       title: 'Emergency Contact List', 
       description: 'Direct numbers for medical, security, and conference support',
       action: 'Call Now'
@@ -100,18 +108,18 @@ export class ResourcesPage {
 
   companyInfo: CompanyInfo[] = [
     {
-      icon: '📈', // More business-focused icon
+      icon: '📈',
       title: 'AMEA Market Performance',
       description: 'Latest financial highlights and regional growth drivers for Holcim'
     },
     {
-      icon: '🌐', // Icon for global/regional
+      icon: '🌐',
       title: 'Regional Leadership Team',
       description: 'Meet the AMEA Executive Committee and their areas of focus'
     },
     {
       icon: '🏗️',
-      title: 'Flagship AMEA Projects', // Specific to regional impact
+      title: 'Flagship AMEA Projects',
       description: 'Showcasing key construction and sustainability projects across the region'
     },
     {
@@ -119,15 +127,22 @@ export class ResourcesPage {
       title: 'Green Building Solutions',
       description: 'Our ECOPact and ECOPlanet product deployment and impact in the AMEA region'
     },
-    
     {
-      icon: '🔒', // Added a security/compliance-related card
+      icon: '🔒',
       title: 'Compliance & Ethics',
       description: 'Regional policies and resources for maintaining ethical business conduct'
     }
   ];
 
-  constructor() {}
+  constructor() {
+    // Register icons
+    addIcons({
+      'document-outline': documentOutline,
+      'download-outline': downloadOutline,
+      'business-outline': businessOutline,
+      'location-outline': locationOutline
+    });
+  }
 
   setActiveSection(section: 'materials' | 'host' | 'company') {
     this.activeSection = section;

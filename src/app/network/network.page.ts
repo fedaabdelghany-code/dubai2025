@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonIcon, IonButton } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { BrowserMultiFormatReader } from '@zxing/browser';
 import { Result } from '@zxing/library';
@@ -23,7 +23,7 @@ interface Person {
   standalone: true,
   templateUrl: './network.page.html',
   styleUrls: ['./network.page.scss'],
-  imports: [IonContent, IonIcon, IonButton, CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class NetworkPage implements OnInit {
   @ViewChild('videoPreview', { static: false }) videoElement!: ElementRef<HTMLVideoElement>;
