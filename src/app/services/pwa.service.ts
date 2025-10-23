@@ -1,39 +1,58 @@
+// src/app/services/pwa.service.ts
 import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PwaService {
-  private deferredPrompt: any;
-  public installPromptShown = false;
+  private deferredPrompt: any = null;
+  private isIos = false;
+  private isInStandaloneMode = false;
 
-  constructor(private platform: Platform) {
-    this.initPwaPrompt();
+  constructor() {
+    // Detect iOS Safari
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    this.isIos = /iphone|ipad|ipod/.test(userAgent);
+
+    // Detect if already installed
+    this.isInStandaloneMode = ('standalone' in window.navigator) && (window.navigator as any).standalone;
+
+    // Capture install event for Android/Chrome
+    window.addEventListener('beforeinstallprompt', (event: Event) => {
+      event.preventDefault();
+      this.deferredPrompt = event;
+      console.log('beforeinstallprompt captured');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA installed successfully');
+      this.deferredPrompt = null;
+    });
   }
 
-  private initPwaPrompt() {
-    if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
-      window.addEventListener('beforeinstallprompt', (e: any) => {
-        e.preventDefault();
-        this.deferredPrompt = e;
-      });
+  canInstall(): boolean {
+    // Android case
+    if (this.deferredPrompt) return true;
+
+    // iOS case: show instruction if not standalone
+    if (this.isIos && !this.isInStandaloneMode) return true;
+
+    return false;
+  }
+
+  isIosDevice(): boolean {
+    return this.isIos;
+  }
+
+  async promptInstall(): Promise<void> {
+    // Android install
+    if (this.deferredPrompt) {
+      this.deferredPrompt.prompt();
+      const { outcome } = await this.deferredPrompt.userChoice;
+      console.log(`User response: ${outcome}`);
+      this.deferredPrompt = null;
+    } else {
+      console.log('No install prompt available');
     }
-  }
-
-  public async promptInstall(): Promise<boolean> {
-    if (!this.deferredPrompt) {
-      return false;
-    }
-
-    this.deferredPrompt.prompt();
-    const { outcome } = await this.deferredPrompt.userChoice;
-    
-    this.deferredPrompt = null;
-    return outcome === 'accepted';
-  }
-
-  public canInstall(): boolean {
-    return !!this.deferredPrompt;
   }
 }

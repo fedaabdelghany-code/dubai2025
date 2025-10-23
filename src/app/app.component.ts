@@ -1,47 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-import { IonApp, IonRouterOutlet, AlertController } from '@ionic/angular/standalone';
 import { PwaService } from './services/pwa.service';
+import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";  
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [IonApp, IonRouterOutlet],
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  standalone: true,
-  imports: [IonApp, IonRouterOutlet]
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private pwaService: PwaService,
-    private alertController: AlertController
-  ) {}
+  isIos = false;
+  showInstallBanner = false;
+  deferredPrompt: any;
 
-  async ngOnInit() {
-    // Show install prompt after a delay
-    setTimeout(() => {
-      this.showInstallPrompt();
-    }, 5000);
+  constructor(private pwaService: PwaService) {}
+
+  ngOnInit() {
+    this.checkInstallSupport();
+    this.handleBeforeInstallPrompt();
   }
 
-  async showInstallPrompt() {
-    if (this.pwaService.canInstall()) {
-      const alert = await this.alertController.create({
-        header: 'Install App',
-        message: 'Install this app on your device for a better experience!',
-        buttons: [
-          {
-            text: 'Not Now',
-            role: 'cancel'
-          },
-          {
-            text: 'Install',
-            handler: () => {
-              this.pwaService.promptInstall();
-            }
-          }
-        ]
-      });
+  // ✅ Detect iOS vs Android and standalone
+  checkInstallSupport() {
+    const ua = window.navigator.userAgent.toLowerCase();
+    this.isIos = /iphone|ipad|ipod/.test(ua);
+    const isStandalone =
+      (window.navigator as any).standalone ||
+      window.matchMedia('(display-mode: standalone)').matches;
 
-      await alert.present();
+    const dismissed = localStorage.getItem('installBannerDismissed') === 'true';
+    if (!isStandalone && !dismissed) {
+      this.showInstallBanner = true;
     }
+  }
+
+  // ✅ Android event handler
+  handleBeforeInstallPrompt() {
+    window.addEventListener('beforeinstallprompt', (event: any) => {
+      event.preventDefault();
+      this.deferredPrompt = event;
+      this.showInstallBanner = true;
+    });
+  }
+
+  // ✅ Trigger the native prompt
+  installPwa() {
+    if (this.deferredPrompt) {
+      this.deferredPrompt.prompt();
+      this.deferredPrompt.userChoice.finally(() => {
+        this.deferredPrompt = null;
+        this.showInstallBanner = false;
+      });
+    }
+  }
+
+  dismissIosBanner() {
+    this.showInstallBanner = false;
+    localStorage.setItem('installBannerDismissed', 'true');
   }
 }

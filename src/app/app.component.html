@@ -1,3 +1,32 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  <!-- iOS Install Banner -->
+  <div *ngIf="isIos && showInstallBanner" class="install-banner ios">
+    <div class="banner-content">
+      <img src="assets/icons/icon-192x192.png" alt="App Logo" class="logo" />
+      <div class="text">
+        <h3>Install AMEA 2025</h3>
+        <p>Tap the <strong>Share</strong> icon in Safari, then <strong>Add to Home Screen</strong>.</p>
+      </div>
+      <div class="actions">
+        <button (click)="dismissIosBanner()" class="close">×</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Android Install Banner -->
+  <div *ngIf="!isIos && showInstallBanner" class="install-banner">
+    <div class="banner-content">
+      <img src="assets/icons/icon-192x192.png" alt="App Logo" class="logo" />
+      <div class="text">
+        <h3>Install AMEA 2025</h3>
+        <p>Add this app to your home screen for a better experience.</p>
+      </div>
+      <div class="actions">
+        <button (click)="installPwa()">Install</button>
+        <button (click)="dismissIosBanner()" class="close">×</button>
+      </div>
+    </div>
+  </div>
 </ion-app>
