@@ -1,27 +1,18 @@
+/* === Base Layout === */
 .login-content {
   --background: #f8fafc;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* this ensures full height inside ion-content */
   height: 100%;
-}
-
-ion-item, ion-input {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
 }
 
 .login-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 100%;
-  min-height: 100vh; /* ensures full viewport height */
+  min-height: 100vh;
   padding: 1.5rem;
   box-sizing: border-box;
 }
@@ -33,9 +24,10 @@ ion-item, ion-input {
   width: 100%;
   max-width: 400px;
   text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 169, 224, 0.15);
+  box-shadow: 0 8px 24px rgba(4, 23, 57, 0.15);
 }
 
+/* === Logo & Text === */
 .login-logo {
   width: 70px;
   height: 70px;
@@ -44,7 +36,7 @@ ion-item, ion-input {
 }
 
 .login-title {
-  color: #1d4370;
+  color: #041739;
   font-weight: 700;
   margin-bottom: 0.25rem;
   font-size: 1.4rem;
@@ -56,37 +48,28 @@ ion-item, ion-input {
   margin-bottom: 1.75rem;
 }
 
-.login-form {
-  margin-bottom: 1rem;
-}
-
-.login-item {
-  --highlight-color-focused: #00a9e0;
-  --color: #1d4370;
-  margin-bottom: 1rem;
-  border-radius: 0.75rem;
-  --background: #f1f9ff;
-}
-
-ion-icon {
-  color: #00a9e0;
-  font-size: 1.2rem;
-}
-
-ion-input {
-  color: #1d4370;
-}
-
-.login-btn {
-  margin-top: 1.25rem;
-  --background: linear-gradient(90deg, #1d4370, #00a9e0);
-  --background-activated: linear-gradient(90deg, #00a9e0, #00b050);
-  font-weight: 600;
-  color: white;
-  box-shadow: 0 4px 12px rgba(0, 169, 224, 0.4);
+/* === Google Button === */
+ion-button.login-btn {
+  --background: #ffffff;
+  --color: #041739;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 169, 224, 0.2);
   border-radius: 1.75rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  ion-icon {
+    font-size: 1.2rem;
+    color: #ea4335; /* Google red icon */
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(4, 23, 57, 0.25);
+  }
 }
 
+/* === Animations === */
 .animate-fade-in {
   animation: fadeIn 0.8s ease-in-out;
 }
@@ -102,10 +85,10 @@ ion-input {
   }
 }
 
-/* --- Custom Toast Styles --- */
+/* === Toast Styles === */
 .modern-toast {
-  --background: rgba(29, 67, 112, 0.9);
-  --color: #fff;
+  --background: rgba(4, 23, 57, 0.95);
+  --color: #ffffff;
   --border-radius: 2rem;
   --box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   --padding-start: 0.75rem;
@@ -118,7 +101,6 @@ ion-input {
   animation: slideDown 0.3s ease-out;
 }
 
-/* specific color accents */
 .modern-toast.warning {
   --background: rgba(0, 169, 224, 0.9);
 }
@@ -138,7 +120,7 @@ ion-input {
   }
 }
 
-/* --- Modern Loading Spinner --- */
+/* === Loading Spinner === */
 .modern-loading {
   --background: rgba(255, 255, 255, 0.85);
   --backdrop-opacity: 0.25;
@@ -164,7 +146,7 @@ ion-input {
 
 .custom-loading span {
   font-size: 0.95rem;
-  color: #1d4370;
+  color: #041739;
   font-weight: 500;
 }
 
@@ -172,4 +154,12 @@ ion-input {
   to {
     transform: rotate(360deg);
   }
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  object-fit: contain;
+  border-radius: 50%;
 }

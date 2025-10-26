@@ -6,13 +6,27 @@
   
   <base href="/"/>
   
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <!-- PERFORMANCE: Preconnect to critical origins (saves ~1.1s) -->
+  <link rel="preconnect" href="https://www.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link rel="dns-prefetch" href="https://apis.google.com">
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  
+  <!-- PERFORMANCE: Defer non-critical scripts -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
   
   <meta name="color-scheme" content="light dark"/>
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  
+  <!-- ACCESSIBILITY FIX: Remove user-scalable=no (accessibility issue) -->
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"/>
+  
   <meta name="format-detection" content="telephone=no"/>
   <meta name="msapplication-tap-highlight" content="no"/>
+  
+  <!-- SEO: Add meta description (currently missing) -->
+  <meta name="description" content="AMEA 2025 Conference - Connect, network, and explore event schedules, venues, and sessions."/>
   
   <!-- PWA Theme Color -->
   <meta name="theme-color" content="#1d4370"/>
@@ -30,6 +44,32 @@
   
   <!-- Manifest -->
   <link rel="manifest" href="manifest.webmanifest">
+  
+  <!-- PERFORMANCE: Inline critical CSS to prevent layout shift -->
+  <style>
+    /* Prevent layout shift during initial load */
+    app-root {
+      display: block;
+      min-height: 100vh;
+    }
+    
+    /* Reserve space for quick-actions to prevent CLS */
+    .quick-actions {
+      min-height: 200px;
+    }
+    
+    /* Optimize font loading */
+    @font-face {
+      font-display: swap;
+    }
+    
+    /* Loading state to prevent flash */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+  </style>
 </head>
 
 <body>

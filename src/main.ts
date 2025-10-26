@@ -9,6 +9,7 @@ import { routes } from './app/app.routes';
 import { environment } from './environments/environment';
 import { isDevMode } from '@angular/core';
 import { provideServiceWorker } from '@angular/service-worker';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -17,12 +18,10 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }),
+    provideFirestore(() => getFirestore()),
+    // provideServiceWorker('ngsw-worker.js', {
+    //   enabled: !isDevMode(),
+    //   registrationStrategy: 'registerWhenStable:30000'
+    // }),
   ],
-});
+}).then(() => defineCustomElements(window));

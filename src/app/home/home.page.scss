@@ -298,6 +298,8 @@ ion-content {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
+    min-height: 200px; /* Set actual height */
+
   margin-bottom: 1.25rem;
 
   .action-card {
@@ -411,6 +413,11 @@ background: linear-gradient(135deg, #4bb05b 0%, #4bb05b 100%);
     color: #0088B8;
   }
 }
+
+@font-face {
+  font-display: swap;
+}
+
 
 // Agenda Specific Styles
 .agenda-sessions {

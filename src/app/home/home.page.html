@@ -127,12 +127,6 @@
       <ng-template #noSession>
         <div class="session-card no-session" [ngClass]="messageType">
           <div class="card-content">
-            <img
-              src="assets/strat.png"
-              alt="Conference End"
-              class="announcement-image"
-              *ngIf="messageType === 'over'"
-            />
 
             <h3 class="session-title" *ngIf="messageType === 'today'">
               All Caught Up for Today

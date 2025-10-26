@@ -9,86 +9,86 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
-/* Core CSS required for Ionic components to work properly */
+/* =========================================
+   ✅ CORE IONIC STYLES
+   ========================================= */
 @import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Optional utilities */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+/* Dark Mode (system preferred) */
+@import "@ionic/angular/css/palettes/dark.system.css";
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* =========================================
+   ✅ GLOBAL IONIC ELEMENT FIXES
+   ========================================= */
 
+/* Ensures inputs render properly on all devices and builds */
+ion-item,
+ion-input,
+ion-label {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: #1d4370 !important;
+}
 
+ion-input::part(native),
+input {
+  color: #1d4370 !important;
+  opacity: 1 !important;
+}
+
+ion-item {
+  --background: #f1f9ff !important;
+  --highlight-color-focused: #00a9e0 !important;
+  border-radius: 0.75rem !important;
+}
+
+/* =========================================
+   ✅ TOAST STYLES (Unified)
+   ========================================= */
 .toast-success {
   --background: #28a745;
   --color: #fff;
 }
+
 .toast-error {
   --background: #dc3545;
   --color: #fff;
 }
+
 .toast-warning {
   --background: #ffc107;
   --color: #000;
 }
+
 .toast-info {
   --background: #007bff;
   --color: #fff;
 }
 
-// Toast styles
-.toast-success {
-  --background: #28a745;
-  --color: #fff;
-}
-
-.toast-error {
-  --background: #dc3545;
-  --color: #fff;
-}
-
-.toast-warning {
-  --background: #ffc107;
-  --color: #000;
-}
-
-.toast-info {
-  --background: #007bff;
-  --color: #fff;
-}
-/* ✨ Modern bright spinner overlay */
+/* =========================================
+   ✅ MODERN SPINNER OVERLAY
+   ========================================= */
 .spinner-only {
-  --backdrop-color: #ffffff; /* lighter base */
-  --backdrop-opacity: 0.6;   /* softer fade */
+  --backdrop-color: #ffffff;
+  --backdrop-opacity: 0.6;
   --background: transparent;
   --spinner-color: #ffffff;
-  --width: auto;
-  --height: auto;
-  --min-width: 0;
-  --min-height: 0;
 
   backdrop-filter: blur(3px);
   animation: fadeIn 0.3s ease-in-out;
 
-  /* Remove the loading box entirely */
   .loading-wrapper {
     background: transparent !important;
     box-shadow: none !important;
@@ -96,7 +96,6 @@
     padding: 0 !important;
   }
 
-  /* Spinner style */
   ion-spinner {
     width: 64px;
     height: 64px;
@@ -106,22 +105,14 @@
   }
 }
 
-.fi {
-  background-size: contain;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  position: relative;
-  display: inline-block;
-  width: 1.33333em;
-  line-height: 1em;
+.spinner-only::part(content),
+.spinner-only::part(inner) {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
-.fi-eg {
-  background-image: url('/flags/4x3/eg.svg');
-}
-/* Add other country codes as needed */
-
-/* Smooth spin animation */
+/* Animations */
 @keyframes smoothSpin {
   0% {
     transform: rotate(0deg);
@@ -136,7 +127,6 @@
   }
 }
 
-/* Fade in overlay animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -148,18 +138,30 @@
   }
 }
 
-/* Support Ionic Shadow Parts (for newer versions) */
-.spinner-only::part(content),
-.spinner-only::part(inner) {
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
+/* =========================================
+   ✅ COUNTRY FLAGS
+   ========================================= */
+.fi {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  display: inline-block;
+  width: 1.33333em;
+  line-height: 1em;
 }
 
+.fi-eg {
+  background-image: url('/flags/4x3/eg.svg');
+}
+
+/* =========================================
+   ✅ TAB BAR STYLES
+   ========================================= */
 ion-tab-bar {
-  --background: #ffffff; /* keep background white */
-  --color: #6b7280; /* default gray for inactive icons/text */
-  --color-selected: #1D4370; /* ✅ Holcim dark blue for active tab */
+  --background: #ffffff;
+  --color: #6b7280;
+  --color-selected: #1d4370;
   --border: none;
   border-top: 1px solid #e5e7eb;
 }
@@ -171,10 +173,41 @@ ion-tab-button {
     font-size: 1.4rem;
   }
 
-  &.tab-selected {
-    ion-icon {
-      transform: scale(1.1);
-      transition: transform 0.2s ease;
-    }
+  &.tab-selected ion-icon {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
   }
+}
+/* =========================================
+   ✅ CRITICAL: Production Input Fix
+   ========================================= */
+ion-input {
+  display: block !important;
+  min-height: 40px !important;
+  --padding-top: 10px !important;
+  --padding-bottom: 10px !important;
+  
+  &::part(native) {
+    min-height: 40px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #1d4370 !important;
+    padding: 10px 0 !important;
+    display: block !important;
+  }
+}
+
+ion-item {
+  display: block !important;
+  min-height: 56px !important;
+  --min-height: 56px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+ion-label {
+  display: block !important;
+  opacity: 1 !important;
+  visibility : visible !important;
+  color: #1d4370 !important;
 }

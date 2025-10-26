@@ -1,57 +1,66 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { getApp } from '@angular/fire/app';
+import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { NotificationService } from '../services/notification.service'; // ✅ Import the service
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-sso',
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule],
   templateUrl: './sso.page.html',
   styleUrls: ['./sso.page.scss'],
 })
 export class SsoPage {
-  email = '';
-  password = '';
-
   private auth = inject(Auth);
   private router = inject(Router);
-  private notify = inject(NotificationService); // ✅ Inject here
+  private notify = inject(NotificationService);
 
-  constructor() {
-    const app = getApp();
-    console.log('Firebase app name:', app.name);
-  }
+  async signInWithGoogle() {
+    console.log('[SSO] Google Sign-In Flow started');
 
-  async login() {
-    if (!this.email || !this.password) {
-      return this.notify.showToast(
-        'Please enter both email and password.',
-        'warning'
-      );
-    }
-
-    await this.notify.showLoading();
-
+    const provider = new GoogleAuthProvider();
+    
     try {
-      await signInWithEmailAndPassword(this.auth, this.email, this.password);
-      await this.notify.hideLoading();
-      this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
-    } catch (err: any) {
-      await this.notify.hideLoading();
-      this.notify.showToast(this.formatError(err.message), 'error');
+      console.log('[SSO] Opening popup...');
+      const result = await signInWithPopup(this.auth, provider);
+      console.log('[SSO] ✅ Popup completed successfully');
+      
+      const user = result.user;
+
+      if (user) {
+        console.log('[SSO] User signed in:', user.email);
+        this.notify.showToast(`Welcome, ${user.displayName}!`, 'success');
+        
+        console.log('[SSO] Navigating to /tabs/home');
+        await this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
+        console.log('[SSO] Navigation completed');
+      }
+    } catch (error: any) {
+      console.error('[SSO] ❌ Sign-in error:', error);
+      console.error('[SSO] Error code:', error.code);
+      console.error('[SSO] Error message:', error.message);
+      
+      const message = this.formatError(error.code || error.message);
+      this.notify.showToast(message, 'warning');
     }
   }
 
   private formatError(message: string): string {
-    if (message.includes('auth/invalid-credential'))
-      return 'Invalid email or password.';
-    if (message.includes('auth/too-many-requests'))
-      return 'Too many attempts. Please try again later.';
-    return 'Login failed. Please try again.';
+    if (!message) return 'Unknown error occurred.';
+
+    if (message.includes('popup-closed-by-user'))
+      return 'Sign-in cancelled. Please try again.';
+    if (message.includes('auth/network-request-failed'))
+      return 'Network error. Please check your connection.';
+    if (message.includes('auth/unauthorized-domain'))
+      return 'Unauthorized domain. Please contact support.';
+    if (message.includes('auth/popup-blocked'))
+      return 'Popup was blocked. Please enable popups and try again.';
+    if (message.includes('auth/internal-error'))
+      return 'Internal authentication error. Try again later.';
+
+    return 'Sign-in failed. Please try again.';
   }
 }
