@@ -1,22 +1,30 @@
-<ion-content [fullscreen]="true" class="login-content">
-  <div class="login-wrapper">
-    <div class="login-card animate-fade-in">
-      <img src="assets/logo.png" alt="Holcim Logo" class="login-logo" />
+<ion-content class="sso-content">
+  <!-- Your existing SSO content here -->
+  <div class="sso-container">
+    <!-- Your login UI -->
+    <div class="login-section">
+      <h1>Welcome to Holcim</h1>
+      <p>Sign in to continue</p>
+      
+      <ion-button 
+        expand="block" 
+        (click)="signInWithGoogle()"
+        [disabled]="isLoading"
+      >
+        <ion-icon name="logo-google" slot="start"></ion-icon>
+        Sign in with Google
+      </ion-button>
+    </div>
+  </div>
 
-      <h2 class="login-title">AMEA REGIONAL MEETING 2025</h2>
-      <p class="login-subtitle">
-        Sign in with your Holcim Google account to continue
-      </p>
-
-<ion-button
-  expand="block"
-  shape="round"
-  class="login-btn"
-  (click)="signInWithGoogle()"
->
-  <img src="assets/google.png" alt="Google logo" class="google-icon" slot="start" />
-  Sign in with Google
-</ion-button>
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="loading-content">
+      <div class="spinner-container">
+        <ion-spinner name="crescent" color="light"></ion-spinner>
+      </div>
+      <h2 class="loading-title">{{ loadingMessage }}</h2>
+      <p class="loading-subtitle">Taking you to your dashboard...</p>
     </div>
   </div>
 </ion-content>

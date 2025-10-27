@@ -295,3 +295,62 @@ ion-toast {
   }
 }
 
+ion-tab-bar {
+  --background: #ffffff;
+  --border: 1px solid #e5e7eb;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+  height: 68px; // ⬆️ slightly taller for mobile touch targets
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+ion-tab-button {
+  --color: #6b7280;
+  --color-selected: #1D4370;
+  --ripple-color: rgba(0, 169, 224, 0.15);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s ease;
+
+  ion-icon {
+    font-size: 1.5rem; // ⬆️ larger default icon size for mobile
+    margin-bottom: 0.2rem;
+    transition: transform 0.2s ease;
+  }
+
+  ion-label {
+    font-size: 0.85rem; // ⬆️ slightly larger text
+    letter-spacing: 0.01rem;
+  }
+
+  &.tab-selected {
+    ion-icon {
+      transform: scale(1.1);
+      color: #1D4370;
+    }
+
+    ion-label {
+      color: #1D4370;
+    }
+  }
+
+  @media (min-width: 480px) {
+    ion-icon {
+      font-size: 1.6rem;
+    }
+    ion-label {
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    ion-icon {
+      font-size: 1.4rem;
+    }
+    ion-label {
+      font-size: 0.75rem;
+    }
+    height: 60px; // slightly shorter for desktop
+  }
+}

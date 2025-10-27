@@ -17,6 +17,9 @@ export class SsoPage {
   private router = inject(Router);
   private notify = inject(NotificationService);
 
+  isLoading = false;
+  loadingMessage = '';
+
   async signInWithGoogle() {
     console.log('[SSO] Google Sign-In Flow started');
 
@@ -28,19 +31,31 @@ export class SsoPage {
       console.log('[SSO] ✅ Popup completed successfully');
       
       const user = result.user;
-
+      
       if (user) {
         console.log('[SSO] User signed in:', user.email);
-        this.notify.showToast(`Welcome, ${user.displayName}!`, 'success');
+        
+        // Show loading spinner
+        this.isLoading = true;
+        this.loadingMessage = `Welcome, ${user.displayName || 'User'}!`;
+                
+        // Add a small delay to ensure smooth transition
+        await new Promise(resolve => setTimeout(resolve, 800));
         
         console.log('[SSO] Navigating to /tabs/home');
         await this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
         console.log('[SSO] Navigation completed');
+        
+        // Reset loading state (though page will unmount)
+        this.isLoading = false;
       }
     } catch (error: any) {
       console.error('[SSO] ❌ Sign-in error:', error);
       console.error('[SSO] Error code:', error.code);
       console.error('[SSO] Error message:', error.message);
+      
+      // Hide loading on error
+      this.isLoading = false;
       
       const message = this.formatError(error.code || error.message);
       this.notify.showToast(message, 'warning');

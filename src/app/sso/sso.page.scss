@@ -1,80 +1,119 @@
-/* === Base Layout === */
-.login-content {
-  --background: #f8fafc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
+// Holcim Brand Colors
+$holcim-dark-blue: #041739;
+$holcim-light-blue: #1d4370;
+$holcim-green: #7ab023;
 
-.login-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 100vh;
-  padding: 1.5rem;
-  box-sizing: border-box;
-}
-
-.login-card {
-  background: #ffffff;
-  border-radius: 1.75rem;
-  padding: 2.5rem 2rem;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 8px 24px rgba(4, 23, 57, 0.15);
-}
-
-/* === Logo & Text === */
-.login-logo {
-  width: 70px;
-  height: 70px;
-  margin-bottom: 1rem;
-  object-fit: contain;
-}
-
-.login-title {
-  color: #041739;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-  font-size: 1.4rem;
-}
-
-.login-subtitle {
-  color: #4b5563;
-  font-size: 0.95rem;
-  margin-bottom: 1.75rem;
-}
-
-/* === Google Button === */
-ion-button.login-btn {
+.sso-content {
   --background: #ffffff;
-  --color: #041739;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 169, 224, 0.2);
-  border-radius: 1.75rem;
-  font-weight: 600;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
 
-  ion-icon {
-    font-size: 1.2rem;
-    color: #ea4335; /* Google red icon */
+.sso-container {
+  // Your existing SSO styles
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login-section {
+  text-align: center;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $holcim-dark-blue;
+    margin-bottom: 0.5rem;
   }
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(4, 23, 57, 0.25);
+  p {
+    color: $holcim-light-blue;
+    margin-bottom: 2rem;
+  }
+
+  ion-button {
+    --background: $holcim-green;
+    --background-hover: lighten($holcim-green, 5%);
+    --border-radius: 0.75rem;
+    height: 3.25rem;
+    font-weight: 600;
+    margin-top: 1rem;
+
+    &[disabled] {
+      opacity: 0.6;
+    }
   }
 }
 
-/* === Animations === */
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-in-out;
+// Loading Overlay
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, $holcim-dark-blue 0%, $holcim-light-blue 100%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
+.loading-content {
+  text-align: center;
+  padding: 2rem;
+  animation: slideUp 0.5s ease-out;
+}
+
+.spinner-container {
+  margin-bottom: 2rem;
+
+  ion-spinner {
+    width: 64px;
+    height: 64px;
+    --color: #ffffff;
+  }
+}
+
+.loading-title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  animation: fadeInText 0.6s ease-out 0.2s both;
+}
+
+.loading-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  margin: 0;
+  animation: fadeInText 0.6s ease-out 0.4s both;
+}
+
+// Animations
 @keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInText {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -85,81 +124,16 @@ ion-button.login-btn {
   }
 }
 
-/* === Toast Styles === */
-.modern-toast {
-  --background: rgba(4, 23, 57, 0.95);
-  --color: #ffffff;
-  --border-radius: 2rem;
-  --box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  --padding-start: 0.75rem;
-  --padding-end: 1rem;
-  --min-height: 48px;
-  backdrop-filter: blur(12px);
-  text-align: center;
-  font-weight: 500;
-  font-size: 0.9rem;
-  animation: slideDown 0.3s ease-out;
-}
-
-.modern-toast.warning {
-  --background: rgba(0, 169, 224, 0.9);
-}
-
-.modern-toast.danger {
-  --background: rgba(220, 38, 38, 0.9);
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-15px);
-    opacity: 0;
+// Pulse animation for spinner (optional enhancement)
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
   }
-  to {
-    transform: translateY(0);
-    opacity: 1;
+  50% {
+    transform: scale(1.05);
   }
 }
 
-/* === Loading Spinner === */
-.modern-loading {
-  --background: rgba(255, 255, 255, 0.85);
-  --backdrop-opacity: 0.25;
-  border-radius: 1.25rem;
-}
-
-.custom-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.custom-loading .spinner {
-  width: 44px;
-  height: 44px;
-  border: 3px solid rgba(0, 169, 224, 0.25);
-  border-top-color: #00a9e0;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-.custom-loading span {
-  font-size: 0.95rem;
-  color: #041739;
-  font-weight: 500;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.google-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-  object-fit: contain;
-  border-radius: 50%;
+.spinner-container {
+  animation: pulse 2s ease-in-out infinite;
 }
