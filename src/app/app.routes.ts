@@ -20,4 +20,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./venue/venue.page').then((m) => m.VenuePage),
   },
+  {
+    path: 'hse-induction',
+    loadComponent: () => import('./hse-induction/hse-induction.page').then( m => m.HseInductionPage)
+  },
+
 ];

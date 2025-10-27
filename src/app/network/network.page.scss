@@ -7,37 +7,82 @@
 }
 
 // Header
+// ============================================
+// HEADER SECTION  (mobile-first)
+// ============================================
 .header-gradient {
   background: linear-gradient(to bottom right, #041739 0%, #041739 40%, #1d4370 100%);
-  padding: 3rem 1.5rem 2rem;
+  padding: 4.5rem 1.25rem 3rem;  // ⬆️ more vertical padding on mobile
   position: relative;
   overflow: hidden;
+
+  @media (min-width: 480px) {
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  @media (min-width: 768px) {
+    padding: 3rem 2rem 3rem; // revert to web/tablet comfort spacing
+  }
 }
 
 .header-overlay {
   position: absolute;
   top: 0;
   right: 0;
-  height: 100%;
-  opacity: 0.1;
+  width: 13rem;
+  height: auto;
+  opacity: 0.55;
+  z-index: 0;
   pointer-events: none;
-  z-index: 0; // Behind everything in header
+  user-select: none;
+  mix-blend-mode: soft-light;
+  transform: translate(25%, -10%);
+
+  @media (min-width: 480px) {
+    width: 15rem;
+    transform: translate(30%, -10%);
+  }
+
+  @media (min-width: 768px) {
+    width: 20rem;
+    transform: translate(40%, -20%);
+  }
 }
 
 .header-title {
   position: relative;
   color: white;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
+  line-height: 1.3;
   font-weight: 700;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.4rem;
   z-index: 2;
-  
+
+  @media (min-width: 480px) {
+    font-size: 1.6rem;
+  }
+
   @media (min-width: 768px) {
     font-size: 1.75rem;
   }
 }
 
-// Search
+.header-subtitle {
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0;
+  z-index: 2;
+
+  @media (min-width: 480px) {
+    font-size: 0.9rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
+}// Search
 .search-container {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 0.75rem;

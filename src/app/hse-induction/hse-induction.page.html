@@ -1,0 +1,115 @@
+<ion-content class="hse-content">
+  <!-- Compact Header -->
+  <div class="header-bar">
+    <div class="header-title-compact">HSE INDUCTION</div>
+    <ion-button class="close-btn" fill="clear" (click)="goHome()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Video Hero Section -->
+  <div class="video-hero">
+    <div class="video-container">
+      <video
+        #hseVideo
+        preload="metadata"
+        controls
+        playsinline
+        (timeupdate)="onTimeUpdate()"
+        (ended)="onVideoEnded()"
+        (seeking)="onSeekAttempt()"
+      >
+        <source src="assets/demo1.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      
+      <!-- Progress Indicator Overlay -->
+      <div class="progress-overlay" *ngIf="!isComplete">
+        <div class="progress-ring">
+          <svg width="60" height="60">
+            <circle cx="30" cy="30" r="26" stroke="#e5e7eb" stroke-width="3" fill="none"/>
+            <circle 
+              cx="30" cy="30" r="26" 
+              stroke="#7ab023" 
+              stroke-width="3" 
+              fill="none"
+              [style.stroke-dasharray]="163"
+              [style.stroke-dashoffset]="163 - (watchProgress * 1.63)"
+              style="transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset 0.3s ease;"
+            />
+          </svg>
+          <span class="progress-text">{{watchProgress}}%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video Info Card -->
+    <div class="info-card">
+      <div class="info-header">
+        <ion-icon name="shield-checkmark-outline" class="shield-icon"></ion-icon>
+        <div>
+          <h2 class="info-title">Safety First</h2>
+          <p class="info-subtitle">Watch the complete induction video</p>
+        </div>
+      </div>
+
+      <!-- Status Message -->
+      <div class="status-message" [class.complete]="isComplete">
+        <ion-icon [name]="isComplete ? 'checkmark-circle' : 'information-circle'" class="status-icon"></ion-icon>
+        <p *ngIf="!isComplete">
+          Please watch the entire video. You cannot skip ahead.
+        </p>
+        <p *ngIf="isComplete">
+          <strong>Induction Complete!</strong> You're ready to proceed.
+        </p>
+      </div>
+
+      <!-- Video Progress Bar -->
+      <div class="progress-bar" *ngIf="!isComplete">
+        <div class="progress-track">
+          <div class="progress-fill" [style.width.%]="watchProgress"></div>
+        </div>
+        <span class="progress-label">{{watchProgress}}% completed</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="actions">
+    <ion-button
+      expand="block"
+      class="primary-btn"
+      [disabled]="!isComplete"
+      (click)="markComplete()"
+    >
+      <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+      Mark Complete & Continue
+    </ion-button>
+
+    <ion-button
+      expand="block"
+      fill="clear"
+      class="secondary-btn"
+      (click)="goHome()"
+    >
+      Exit to Home
+    </ion-button>
+  </div>
+
+  <!-- Key Points Section (Optional) -->
+  <div class="key-points" *ngIf="isComplete">
+    <h3 class="key-points-title">Remember These Key Points:</h3>
+    <div class="point-item">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <span>Always wear appropriate PPE</span>
+    </div>
+    <div class="point-item">
+      <ion-icon name="people-outline"></ion-icon>
+      <span>Report hazards immediately</span>
+    </div>
+    <div class="point-item">
+      <ion-icon name="checkmark-done-outline"></ion-icon>
+      <span>Follow all safety procedures</span>
+    </div>
+  </div>
+</ion-content>

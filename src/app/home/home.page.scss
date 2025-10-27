@@ -8,48 +8,82 @@ ion-content {
 }
 
 // Header
+// ============================================
+// HEADER SECTION  (mobile-first)
+// ============================================
 .header-gradient {
   background: linear-gradient(to bottom right, #041739 0%, #041739 40%, #1d4370 100%);
-  padding: 3rem 1.5rem 2rem;
+  padding: 4.5rem 1.25rem 3rem;  // ⬆️ more vertical padding on mobile
   position: relative;
   overflow: hidden;
-}
 
-.header-container {
-  max-width: 28rem;
-  margin: 0 auto;
-  position: relative;
-}
+  @media (min-width: 480px) {
+    padding: 4rem 1.5rem 3rem;
+  }
 
-.header-content {
-  position: relative;
-  z-index: 2;
+  @media (min-width: 768px) {
+    padding: 3rem 2rem 3rem; // revert to web/tablet comfort spacing
+  }
 }
 
 .header-overlay {
   position: absolute;
   top: 0;
   right: 0;
-  width: 15rem;
+  width: 13rem;
   height: auto;
-  opacity: 0.6;
-  z-index: 1;
+  opacity: 0.55;
+  z-index: 0;
   pointer-events: none;
   user-select: none;
   mix-blend-mode: soft-light;
-  transform: translate(40%, -30%);
-  
-  @media (max-width: 767px) {
-    width: 13rem;
-    transform: translate(40%, -30%);
+  transform: translate(25%, -10%);
+
+  @media (min-width: 480px) {
+    width: 15rem;
+    transform: translate(30%, -10%);
   }
-  
-  @media (max-width: 480px) {
-    width: 13rem;
-    transform: translate(40%, -30%);
+
+  @media (min-width: 768px) {
+    width: 20rem;
+    transform: translate(40%, -20%);
   }
 }
 
+.header-title {
+  position: relative;
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  z-index: 2;
+
+  @media (min-width: 480px) {
+    font-size: 1.6rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+.header-subtitle {
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0;
+  z-index: 2;
+
+  @media (min-width: 480px) {
+    font-size: 0.9rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
+}
 .event-label {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.875rem;
@@ -346,6 +380,9 @@ background: linear-gradient(135deg, #4bb05b 0%, #4bb05b 100%);
       }
 
       &.networking {background: linear-gradient(135deg, #1D4370 0%, #1d4370 100%); 
+      }
+
+      &.hse {background: linear-gradient(135deg, #4bb05b 0%, #4bb05b 100%); 
       }
 
       ion-icon {
@@ -906,4 +943,21 @@ ion-header {
 /* If you want the color to change on hover/tap (optional) */
 .deeplink-text:hover {
   color: darken(#00A9E0, 10%); 
+}
+
+.logout-btn {
+  position: absolute;
+  top: 90px;
+  right: 8px;
+  color: white;
+  font-size: 1.4rem;
+  z-index: 100;
+  
+  ion-icon {
+    font-size: 1.4rem;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
-import { IonContent, IonIcon, IonModal } from '@ionic/angular/standalone';
+import { IonContent, IonIcon, IonModal, IonButton } from '@ionic/angular/standalone';
+import { Auth, signOut } from '@angular/fire/auth';
+
 import {
   Firestore,
   collection,
@@ -56,7 +58,7 @@ type MessageType = 'today' | 'over' | null;
   standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonModal, IonContent, IonIcon, CommonModule, DatePipe, RouterModule],
+  imports: [IonButton, IonModal, IonContent, IonIcon, CommonModule, DatePipe, RouterModule],
 })
 export class HomePage implements OnInit, OnDestroy {
   /* Public observables / properties used by the template */
@@ -72,7 +74,7 @@ export class HomePage implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private readonly TICK_MS = 1000;
 
-  constructor(private router: Router, private firestore: Firestore) {}
+  constructor(private router: Router, private firestore: Firestore, private auth: Auth ) {}
 
   ngOnInit() {
     const sessions$ = this.loadSessionsObservable();
@@ -421,4 +423,19 @@ export class HomePage implements OnInit, OnDestroy {
   navigateToVenue() {
     this.router.navigate(['/venue']);
   }
+
+  logoutUser() {
+    signOut(this.auth)
+      .then(() => {
+        console.log('[SSO] User signed out');
+        this.router.navigateByUrl('/login', { replaceUrl: true });
+      })
+      .catch((err) => console.error('[SSO] Logout error:', err));
+  }
+
+  openHSEInduction() {
+  this.router.navigate(['/hse-induction']);
+}
+
+
 }

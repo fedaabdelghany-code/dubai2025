@@ -8,6 +8,12 @@
           <h1 class="day-title">DAY {{ currentDay }}</h1>
           <p class="date-text">AHLAN, FEDA!</p>
         </div>
+
+            <!-- Logout Icon (top-right corner) -->
+    <ion-button fill="clear" class="logout-btn" (click)="logoutUser()">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </ion-button>
+
         <img src="assets/calig.png" alt="" class="header-overlay" />
       </div>
     </div>
@@ -188,6 +194,17 @@
             <div class="action-desc">Connect</div>
           </div>
         </div>
+
+        <div class="action-card" (click)="openHSEInduction()">
+  <div class="action-content">
+    <div class="action-icon hse">
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+    </div>
+    <div class="action-title">HSE Induction</div>
+    <div class="action-desc">Safety briefing</div>
+  </div>
+</div>
+
       </div>
 
       <!-- My Agenda -->
