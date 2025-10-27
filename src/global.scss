@@ -211,3 +211,87 @@ ion-label {
   visibility : visible !important;
   color: #1d4370 !important;
 }
+
+// Add this to your global.scss or theme/variables.scss file
+
+// Force light mode for entire app
+:root {
+  color-scheme: light !important;
+}
+
+// Override Ionic's dark mode variables
+body {
+  --ion-background-color: #ffffff !important;
+  --ion-background-color-rgb: 255, 255, 255 !important;
+  
+  --ion-text-color: #000000 !important;
+  --ion-text-color-rgb: 0, 0, 0 !important;
+  
+  --ion-color-step-50: #f2f2f2 !important;
+  --ion-color-step-100: #e6e6e6 !important;
+  --ion-color-step-150: #d9d9d9 !important;
+  --ion-color-step-200: #cccccc !important;
+  --ion-color-step-250: #bfbfbf !important;
+  --ion-color-step-300: #b3b3b3 !important;
+  --ion-color-step-350: #a6a6a6 !important;
+  --ion-color-step-400: #999999 !important;
+  --ion-color-step-450: #8c8c8c !important;
+  --ion-color-step-500: #808080 !important;
+  --ion-color-step-550: #737373 !important;
+  --ion-color-step-600: #666666 !important;
+  --ion-color-step-650: #595959 !important;
+  --ion-color-step-700: #4d4d4d !important;
+  --ion-color-step-750: #404040 !important;
+  --ion-color-step-800: #333333 !important;
+  --ion-color-step-850: #262626 !important;
+  --ion-color-step-900: #191919 !important;
+  --ion-color-step-950: #0d0d0d !important;
+
+  // Card and item backgrounds
+  --ion-item-background: #ffffff !important;
+  --ion-card-background: #ffffff !important;
+  --ion-toolbar-background: #ffffff !important;
+}
+
+// Force white background on all pages
+ion-content {
+  --background: #ffffff !important;
+}
+
+// Ensure all modals and overlays are light
+ion-modal,
+ion-popover,
+ion-alert,
+ion-action-sheet,
+ion-loading,
+ion-toast {
+  --background: #ffffff !important;
+  --ion-background-color: #ffffff !important;
+}
+
+// Override any dark mode media queries
+@media (prefers-color-scheme: dark) {
+  body {
+    --ion-background-color: #ffffff !important;
+    --ion-background-color-rgb: 255, 255, 255 !important;
+    --ion-text-color: #000000 !important;
+    --ion-text-color-rgb: 0, 0, 0 !important;
+  }
+
+  ion-content {
+    --background: #ffffff !important;
+  }
+
+  // Ensure toolbars and headers stay light
+  ion-toolbar,
+  ion-header {
+    --background: #ffffff !important;
+  }
+
+  // Cards and items
+  ion-card,
+  ion-item {
+    --background: #ffffff !important;
+  }
+}
+
