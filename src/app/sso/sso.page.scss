@@ -1,95 +1,286 @@
 // Holcim Brand Colors
 $holcim-dark-blue: #041739;
+$holcim-medium-blue: #0a2a5a;
 $holcim-light-blue: #1d4370;
+$holcim-accent-blue: #2c5aa0;
 $holcim-green: #7ab023;
 
+// Mobile-first approach
 .sso-content {
-  --background: #ffffff;
+  --background: transparent;
   position: relative;
+  overflow: hidden;
 }
 
 .sso-container {
-  // Your existing SSO styles
-  padding: 2rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   min-height: 100vh;
+  position: relative;
+  background: linear-gradient(135deg, $holcim-dark-blue 0%, $holcim-medium-blue 50%, $holcim-light-blue 100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+  }
+
+  // Animated background pattern (optimized for mobile)
+  &::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: moveBackground 25s linear infinite;
+    opacity: 0.4;
+  }
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(122, 176, 35, 0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+// Decorative floating circles (mobile optimized)
+.decorative-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  animation: float 20s ease-in-out infinite;
+
+  &.circle-1 {
+    width: 180px;
+    height: 180px;
+    top: -60px;
+    right: -60px;
+    animation-delay: 0s;
+  }
+
+  &.circle-2 {
+    width: 140px;
+    height: 140px;
+    bottom: -40px;
+    left: -40px;
+    animation-delay: -10s;
+  }
 }
 
 .login-section {
   text-align: center;
+  width: 100%;
+  max-width: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  padding: 2.5rem 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 16px 48px rgba(4, 23, 57, 0.25), 
+              0 0 1px rgba(255, 255, 255, 0.5) inset;
+  animation: slideInUp 0.8s ease-out;
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  .logo-container {
+    margin-bottom: 1.5rem;
+
+    .app-logo {
+      font-size: 3.5rem;
+      color: $holcim-dark-blue;
+      animation: fadeInScale 0.8s ease-out;
+      filter: drop-shadow(0 4px 12px rgba(4, 23, 57, 0.15));
+    }
+  }
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.625rem;
     font-weight: 700;
     color: $holcim-dark-blue;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+    animation: fadeInText 0.8s ease-out 0.2s both;
   }
 
-  p {
+  .subtitle {
     color: $holcim-light-blue;
     margin-bottom: 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    animation: fadeInText 0.8s ease-out 0.3s both;
   }
 
-  ion-button {
-    --background: $holcim-green;
-    --background-hover: lighten($holcim-green, 5%);
-    --border-radius: 0.75rem;
-    height: 3.25rem;
+  .google-btn {
+    --background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    --background-hover: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    --color: #3c4043;
+    --border-radius: 0.875rem;
+    --box-shadow: 0 4px 16px rgba(4, 23, 57, 0.15);
+    height: 3.5rem;
     font-weight: 600;
+    font-size: 1rem;
     margin-top: 1rem;
+    border: 1px solid rgba(4, 23, 57, 0.1);
+    animation: fadeInText 0.8s ease-out 0.4s both;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    // Shine effect
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      transition: left 0.5s;
+    }
+
+    &:active:not([disabled])::before {
+      left: 100%;
+    }
+
+    ion-icon {
+      font-size: 1.375rem;
+      margin-right: 0.625rem;
+    }
+
+    &:active:not([disabled]) {
+      transform: scale(0.98);
+      --box-shadow: 0 2px 8px rgba(4, 23, 57, 0.2);
+    }
 
     &[disabled] {
       opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .footer-text {
+    margin-top: 2rem;
+    animation: fadeInText 0.8s ease-out 0.5s both;
+
+    p {
+      font-size: 0.8125rem;
+      color: rgba(4, 23, 57, 0.6);
+      margin: 0;
     }
   }
 }
 
-// Loading Overlay
+// Enhanced Loading Overlay (mobile optimized)
 .loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, $holcim-dark-blue 0%, $holcim-light-blue 100%);
+  background: linear-gradient(135deg, $holcim-dark-blue 0%, $holcim-medium-blue 50%, $holcim-light-blue 100%);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
   animation: fadeIn 0.3s ease-in-out;
+
+  // Animated background particles
+  &::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: moveBackground 25s linear infinite;
+    opacity: 0.3;
+  }
 }
 
 .loading-content {
   text-align: center;
-  padding: 2rem;
+  padding: 1.5rem;
   animation: slideUp 0.5s ease-out;
+  position: relative;
+  z-index: 1;
+
+  .logo-container-loading {
+    margin-bottom: 1.25rem;
+    animation: fadeInScale 0.6s ease-out;
+
+    .app-logo-loading {
+      font-size: 3rem;
+      color: white;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+    }
+  }
 }
 
 .spinner-container {
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
+  animation: pulse 2s ease-in-out infinite;
 
   ion-spinner {
-    width: 64px;
-    height: 64px;
+    width: 52px;
+    height: 52px;
     --color: #ffffff;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
   }
 }
 
 .loading-title {
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   font-weight: 700;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.625rem 0;
   animation: fadeInText 0.6s ease-out 0.2s both;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 0 1rem;
 }
 
 .loading-subtitle {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1rem;
-  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9375rem;
+  margin: 0 0 1.75rem 0;
   animation: fadeInText 0.6s ease-out 0.4s both;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+// Animated loading dots
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  animation: fadeInText 0.6s ease-out 0.6s both;
+
+  span {
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    animation: dotPulse 1.4s ease-in-out infinite;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
 }
 
 // Animations
@@ -104,7 +295,18 @@ $holcim-green: #7ab023;
 
 @keyframes slideUp {
   from {
-    transform: translateY(20px);
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(40px);
     opacity: 0;
   }
   to {
@@ -124,16 +326,220 @@ $holcim-green: #7ab023;
   }
 }
 
-// Pulse animation for spinner (optional enhancement)
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.08);
   }
 }
 
-.spinner-container {
-  animation: pulse 2s ease-in-out infinite;
+@keyframes dotPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes moveBackground {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(40px, 40px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  33% {
+    transform: translate(20px, -20px) scale(1.05);
+    opacity: 0.6;
+  }
+  66% {
+    transform: translate(-15px, 15px) scale(0.95);
+    opacity: 0.5;
+  }
+}
+
+// Tablet breakpoint (min-width: 768px)
+@media (min-width: 768px) {
+  .sso-container {
+    padding: 2rem;
+  }
+
+  .login-section {
+    max-width: 420px;
+    padding: 3.25rem 2.25rem;
+    border-radius: 1.75rem;
+
+    .logo-container .app-logo {
+      font-size: 4.25rem;
+    }
+
+    h1 {
+      font-size: 1.875rem;
+      br {
+        display: none; // Remove line break on larger screens
+      }
+    }
+
+    .subtitle {
+      font-size: 1.0625rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .google-btn {
+      height: 3.75rem;
+      font-size: 1.0625rem;
+
+      ion-icon {
+        font-size: 1.5rem;
+        margin-right: 0.75rem;
+      }
+
+      // Enable hover effects on desktop
+      &:hover:not([disabled]) {
+        --box-shadow: 0 6px 20px rgba(4, 23, 57, 0.25);
+        transform: translateY(-2px);
+      }
+
+      &:hover:not([disabled])::before {
+        left: 100%;
+      }
+    }
+
+    .footer-text p {
+      font-size: 0.875rem;
+    }
+  }
+
+  .decorative-circle {
+    &.circle-1 {
+      width: 280px;
+      height: 280px;
+      top: -90px;
+      right: -90px;
+    }
+
+    &.circle-2 {
+      width: 200px;
+      height: 200px;
+      bottom: -50px;
+      left: -50px;
+    }
+  }
+
+  .loading-content {
+    padding: 2rem;
+
+    .logo-container-loading .app-logo-loading {
+      font-size: 3.5rem;
+    }
+  }
+
+  .spinner-container ion-spinner {
+    width: 56px;
+    height: 56px;
+  }
+
+  .loading-title {
+    font-size: 1.625rem;
+  }
+
+  .loading-subtitle {
+    font-size: 1.0625rem;
+  }
+}
+
+// Large desktop (min-width: 1024px)
+@media (min-width: 1024px) {
+  .decorative-circle.circle-1 {
+    width: 320px;
+    height: 320px;
+    top: -100px;
+    right: -100px;
+  }
+
+  .decorative-circle.circle-2 {
+    width: 220px;
+    height: 220px;
+  }
+
+  // Add third circle back on large screens
+  .sso-container::after {
+    content: '';
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 10%;
+    animation: float 20s ease-in-out infinite;
+    animation-delay: -14s;
+    pointer-events: none;
+  }
+}
+
+// Accessibility - Reduce motion for users who prefer it
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .sso-container::before,
+  .loading-overlay::before,
+  .decorative-circle {
+    animation: none !important;
+  }
+}
+
+// Optimize for very small screens (iPhone SE, etc.)
+@media (max-width: 375px) {
+  .login-section {
+    padding: 2rem 1.25rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .logo-container .app-logo {
+      font-size: 3rem;
+    }
+
+    .google-btn {
+      height: 3.25rem;
+      font-size: 0.9375rem;
+    }
+  }
+
+  .loading-title {
+    font-size: 1.25rem;
+  }
+
+  .loading-subtitle {
+    font-size: 0.875rem;
+  }
 }

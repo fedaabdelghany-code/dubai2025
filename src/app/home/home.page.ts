@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { IonContent, IonIcon, IonModal, IonButton } from '@ionic/angular/standalone';
 import { Auth, signOut } from '@angular/fire/auth';
+import { DataService } from '../services/data.service';
 
 import {
   Firestore,
@@ -74,42 +75,36 @@ export class HomePage implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private readonly TICK_MS = 1000;
 
-  constructor(private router: Router, private firestore: Firestore, private auth: Auth ) {}
+  constructor(private router: Router, private firestore: Firestore, private auth: Auth, private data: DataService ) {}
 
-  ngOnInit() {
-    const sessions$ = this.loadSessionsObservable();
-    const tick$ = interval(this.TICK_MS);
+ngOnInit() {
+  const sessions$ = this.data.sessions$;
+  this.announcements$ = this.data.announcements$;
 
-    // Derive primary/secondary session reactively
-    combineLatest([sessions$, tick$])
-      .pipe(
-        map(([sessions]) => {
-          // Calculate current day dynamically from sessions
-          this.currentDay = this.calculateCurrentDayFromSessions(sessions);
-          return this.evaluateSessions(sessions);
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(({ primary, secondary, messageType }) => {
-        this.primarySession = primary;
-        this.secondarySession = secondary;
-        this.messageType = messageType;
-      });
+  const tick$ = interval(this.TICK_MS);
 
-    // Load UI lists
-    this.todaySessions$ = sessions$.pipe(
-      map((sessions) => {
-        const currentDay = this.calculateCurrentDayFromSessions(sessions);
-        const todaySessions = sessions.filter((s) => 
-          this.normalizeDay(s.day) === currentDay.toString()
-        );
-        return todaySessions.slice(0, 3);
+  combineLatest([sessions$, tick$])
+    .pipe(
+      map(([sessions]) => {
+        this.currentDay = this.calculateCurrentDayFromSessions(sessions);
+        return this.evaluateSessions(sessions);
       }),
-      shareReplay(1)
-    );
+      takeUntil(this.destroy$)
+    )
+    .subscribe(({ primary, secondary, messageType }) => {
+      this.primarySession = primary;
+      this.secondarySession = secondary;
+      this.messageType = messageType;
+    });
 
-    this.loadAnnouncements();
-  }
+  this.todaySessions$ = sessions$.pipe(
+    map((sessions) => {
+      const currentDay = this.calculateCurrentDayFromSessions(sessions);
+      return sessions.filter(s => this.normalizeDay(s.day) === currentDay.toString()).slice(0, 3);
+    }),
+    shareReplay(1)
+  );
+}
 
   ngOnDestroy() {
     this.destroy$.next();

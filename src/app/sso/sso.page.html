@@ -1,30 +1,52 @@
 <ion-content class="sso-content">
-  <!-- Your existing SSO content here -->
-  <div class="sso-container">
-    <!-- Your login UI -->
+  <div class="sso-container" [class.hidden]="isLoading">
+    <div class="background-overlay"></div>
+    
     <div class="login-section">
-      <h1>Welcome to Holcim</h1>
-      <p>Sign in to continue</p>
+      <div class="logo-container">
+        <ion-icon name="business" class="app-logo"></ion-icon>
+      </div>
+      
+      <h1>AMEA Regional<br>Meeting 2025</h1>
+      <p class="subtitle">Sign in to access the event</p>
       
       <ion-button 
         expand="block" 
+        class="google-btn"
         (click)="signInWithGoogle()"
         [disabled]="isLoading"
       >
         <ion-icon name="logo-google" slot="start"></ion-icon>
-        Sign in with Google
+        Continue with Google
       </ion-button>
+
+ 
     </div>
+
+    <!-- Decorative elements -->
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
   </div>
 
   <!-- Loading Overlay -->
   <div class="loading-overlay" *ngIf="isLoading">
     <div class="loading-content">
+      <div class="logo-container-loading">
+        <ion-icon name="business" class="app-logo-loading"></ion-icon>
+      </div>
+      
       <div class="spinner-container">
         <ion-spinner name="crescent" color="light"></ion-spinner>
       </div>
+      
       <h2 class="loading-title">{{ loadingMessage }}</h2>
-      <p class="loading-subtitle">Taking you to your dashboard...</p>
+      <p class="loading-subtitle">Preparing your dashboard...</p>
+      
+      <div class="loading-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </div>
 </ion-content>
