@@ -19,8 +19,7 @@ import {
   alertCircleOutline, 
   peopleOutline, 
   checkmarkDoneOutline,
-  informationCircle 
-} from 'ionicons/icons';
+  informationCircle, handRightOutline, locationOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-hse-induction',
@@ -50,15 +49,7 @@ export class HseInductionPage {
     private router: Router,
     private alertCtrl: AlertController
   ) {
-    addIcons({
-      closeOutline,
-      shieldCheckmarkOutline,
-      checkmarkCircleOutline,
-      alertCircleOutline,
-      peopleOutline,
-      checkmarkDoneOutline,
-      informationCircle
-    });
+    addIcons({closeOutline,checkmarkCircleOutline,alertCircleOutline,peopleOutline,handRightOutline,locationOutline,shieldCheckmarkOutline,checkmarkDoneOutline,informationCircle});
   }
 
   onTimeUpdate() {

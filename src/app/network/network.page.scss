@@ -114,450 +114,38 @@
   }
 }
 
-// ============================================
-// TABS SECTION - Floating & Sticky (Holcim Style)
-// ============================================
-.tabs-container {
-  padding: 0 1.5rem;
-  margin-top: -1.5rem;
-  margin-bottom: 1.5rem;
-  position: sticky;
-  top: 0.75rem; // bump down a bit from top when sticky
-  z-index: 100;
-  transition: all 0.3s ease;
 
-  @media (min-width: 768px) {
-    padding: 0 2rem;
-    top: 1rem; // slightly more space on larger screens
-  }
-
-  // Optional subtle elevation when sticky
-  &.is-sticky {
-    transform: translateY(0.25rem);
-  }
-}
-
-.tabs-wrapper {
-  background: #ffffff;
-  border-radius: 0.75rem;
-  padding: 0.25rem;
-  display: flex;
-  box-shadow: 0 4px 8px rgba(29, 67, 112, 0.15);
-  border: 1px solid #e5e7eb;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  transition: box-shadow 0.3s ease;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (min-width: 768px) {
-    justify-content: center;
-  }
-
-  // Slightly stronger shadow when sticky
-  .tabs-container.is-sticky & {
-    box-shadow: 0 6px 12px rgba(29, 67, 112, 0.25);
-  }
-}
-
-.tab-btn {
-  flex: 1;
-  min-width: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.625rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 0.75rem;
-  text-transform: capitalize;
-  transition: all 0.2s ease;
-  background: transparent;
-  color: #6b7280;
-  border: none;
-  cursor: pointer;
-  white-space: nowrap;
-
-  ion-icon {
-    font-size: 1rem;
-  }
-
-  &:hover:not(.active) {
-    background: #f3f4f6;
-  }
-
-  &.active {
-    background: #1D4370; // Holcim dark blue
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 169, 224, 0.25);
-  }
-
-  @media (min-width: 768px) {
-    min-width: 120px;
-    padding: 0.75rem 1rem;
-    font-size: 0.875rem;
-
-    ion-icon {
-      font-size: 1.1rem;
-    }
-  }
-}
-// QR Actions
-.qr-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin: 1.5rem auto;
-
-  .qr-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    border-radius: 12px;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-
-    &.primary {
-      background: #7AB023;
-      color: white;
-    }
-
-    &.secondary {
-      background: #e5f3fa;
-      color: #00A9E0;
-    }
-
-    ion-icon {
-      font-size: 1.2rem;
-    }
-  }
-}
-
-/* Fullscreen Scanner Overlay */
-.scanner-overlay {
+ion-fab.fab-bottom-right {
+  right: 20px;
+  bottom: 25px;
   position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-
-  video {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .overlay-ui {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .close-btn {
-    position: absolute;
-    top: 2rem;
-    right: 1.5rem;
-    background: rgba(255, 255, 255, 0.15);
-    border: none;
-    border-radius: 50%;
-    padding: 0.6rem;
-    backdrop-filter: blur(6px);
-    color: white;
-    font-size: 1.4rem;
-    z-index: 10000;
-  }
-
-  .scan-frame {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 250px;
-    height: 250px;
-    border: 3px solid rgba(0, 169, 224, 0.9);
-    border-radius: 16px;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 20px rgba(0, 169, 224, 0.4);
-  }
-
-  .scan-text {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 1rem;
-    text-align: center;
-  }
 }
 
-.scan-result {
-  text-align: center;
-  margin-top: 1rem;
-  font-weight: 500;
-}
-
-/* People List */
-.people-container {
-  padding: 0 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.person-card {
-  background: white;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid #f3f4f6;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  transition: box-shadow 0.2s;
-
-  &:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Allow wrapping when the container gets narrow */
-  flex-wrap: wrap;
-}
-
-.avatar {
-  width: 3rem;
-  height: 3rem;
+ion-fab-button {
+  --background: #0a2a5a; /* Holcim medium blue */
+  --color: white;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 0.875rem;
-    background: linear-gradient(135deg, #041739, #041739);
-  flex-shrink: 0;
-
-  &.connected {
-    background: linear-gradient(135deg, #041739, #041739);
-  }
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.person-info {
-  flex: 1;
-  min-width: 0; /* important for text wrapping in flex layouts */
-  overflow: hidden;
+ion-fab-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.person-name {
-  font-weight: 600;
-  color: #1D4370;
-  font-size: 0.875rem;
-  margin: 0 0 0.25rem;
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+ion-icon {
+  font-size: 1.8rem;
 }
 
-.person-title {
-  font-size: 0.75rem;
-  color: #4b5563;
-  margin: 0;
-  white-space: normal; /* was nowrap */
-  overflow-wrap: break-word;
-  word-break: break-word;
+.new-post-modal {
+  --width: 100%;
+  --height: 100%;
+  --border-radius: 0;
 }
 
-.person-country {
-  font-size: 0.75rem;
-  color: #6b7280;
-  margin: 0.25rem 0 0;
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-
-
-.connect-btn {
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 0.75rem;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s;
-  flex-shrink: 0;
-  background: #00A9E0;
-  color: white;
-
-  &:hover {
-    background: #0088B8;
-  }
-
-  &.connected {
-    background: #7AB023;
-    color: #ffffff;
-  }
-}
-
-// QR View
-.qr-view {
-  padding: 3rem 1.5rem 0;
-}
-
-.qr-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.qr-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1D4370;
-  margin: 0;
-}
-
-.close-btn {
-  color: #6b7280;
-  font-weight: 500;
-  font-size: 0.875rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: color 0.2s;
-
-  &:hover {
-    color: #00A9E0;
-  }
-}
-
-// QR Card
-.qr-card {
-  background: white;
-  border-radius: 1.5rem;
-  padding: 2rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f3f4f6;
-  margin-bottom: 1.5rem;
-}
-
-.qr-code-container {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.qr-code-wrapper {
-  background: #f9fafb;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  display: inline-block;
-  margin-bottom: 1rem;
-  border: 1px solid #e5e7eb;
-}
-
-.qr-code-box {
-  width: 12rem;
-  height: 12rem;
-  background: white;
-  border-radius: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #e5e7eb;
-}
-
-.qr-icon {
-  font-size: 8rem;
-  color: #1D4370;
-}
-
-.qr-description {
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin: 0;
-}
-
-// User Details
-.user-details {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #f3f4f6;
-}
-
-.detail-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.detail-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: #f3f4f6;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-
-  ion-icon {
-    font-size: 1.25rem;
-    color: #1D4370;
-  }
-
-  &.emoji {
-    font-size: 1.125rem;
-    background: #f3f4f6;
-  }
-}
-
-.detail-content {
-  flex: 1;
-}
-
-.detail-label {
-  font-size: 0.75rem;
-  color: #6b7280;
-  margin-bottom: 0.125rem;
-}
-
-.detail-value {
-  font-weight: 600;
-  color: #1D4370;
-  font-size: 0.875rem;
-}
-
-// Scanner Button
-.scanner-btn {
-  width: 100%;
-  background: #94C12E;
-  color: white;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  font-weight: 700;
-  font-size: 0.875rem;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-
-  &:hover {
-    background: #7AB023;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-}
 
 .header-overlay {
   position: absolute;
@@ -584,14 +172,157 @@
   }
 }
 
-.fi {
-  width: 22px;
-  height: 16px;
-  vertical-align: middle;
-  border-radius: 2px;
+
+.feed-container {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
-.person-country {
+
+/* NEW POST */
+.new-post-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(29, 67, 112, 0.1);
+}
+
+.new-post-header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.avatar-sm {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 0.9rem;
+  color: #1d4370;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+}
+
+.new-post-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+
+  .photo-btn {
+    background: #e5f3fa;
+    color: #1d4370;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .post-btn {
+    background: #7ab023;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    font-weight: 600;
+  }
+}
+
+.preview img {
+  width: 100%;
+  margin-top: 0.75rem;
+  border-radius: 0.75rem;
+}
+
+/* POSTS */
+.post-card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(29, 67, 112, 0.12);
+  padding: 1rem;
+}
+
+.post-header {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.75rem;
+
+  h3 {
+    font-weight: 600;
+    color: #1d4370;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .timestamp {
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+}
+
+.post-caption {
+  margin: 0.75rem 0;
+  color: #041739;
+}
+
+.post-image {
+  width: 100%;
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.post-actions {
+  display: flex;
+  gap: 1.5rem;
+  button {
+    background: none;
+    border: none;
+    color: #1d4370;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    ion-icon {
+      font-size: 1.2rem;
+      color: #00a9e0;
+    }
+  }
+}
+
+.comments-section {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+
+  .comment-item {
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+    color: #041739;
+  }
+
+  .add-comment {
+    display: flex;
+    input {
+      flex: 1;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      font-size: 0.85rem;
+      outline: none;
+    }
+  }
 }

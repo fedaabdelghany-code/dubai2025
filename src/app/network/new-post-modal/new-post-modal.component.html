@@ -1,0 +1,85 @@
+<ion-header class="header-clean">
+  <ion-toolbar class="toolbar-clean">
+    <ion-buttons slot="start">
+      <ion-button class="cancel-btn" (click)="closeModal()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title class="page-title">Create Post</ion-title>
+    <ion-buttons slot="end">
+      <ion-button 
+        class="post-btn" 
+        (click)="createPost()"
+        [disabled]="!caption.trim() || isLoading">
+        {{ isLoading ? 'Posting...' : 'Post' }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content-wrapper">
+    <!-- User Section -->
+    <div class="user-section">
+      <img 
+        [src]="userPhoto" 
+        [alt]="userName" 
+        class="avatar"
+        referrerpolicy="no-referrer"
+        (error)="onImageError($event)" />
+      <div class="user-meta">
+        <h3>{{ userName }}</h3>
+      </div>
+    </div>
+
+    <!-- Caption Input -->
+    <textarea
+      class="post-textarea"
+      [(ngModel)]="caption"
+      placeholder="What's on your mind?"
+      maxlength="2000"
+      [disabled]="isLoading"
+    ></textarea>
+
+    <!-- Character Counter -->
+    <div 
+      class="caption-counter"
+      [class.warning]="caption.length > 1800"
+      [class.error]="caption.length >= 2000">
+      {{ caption.length }}/2000
+    </div>
+
+    <!-- Photo Preview -->
+    <div class="photo-preview" *ngIf="photoURL">
+      <img 
+        [src]="photoURL" 
+        alt="Preview"
+        referrerpolicy="no-referrer" />
+      <ion-button 
+        class="remove-photo" 
+        fill="clear" 
+        (click)="removePhoto()"
+        [disabled]="isLoading">
+        <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- Upload Area -->
+    <div class="upload-area" (click)="triggerUpload()" *ngIf="!photoURL">
+      <ion-icon name="image-outline"></ion-icon>
+      <span>Add Photo</span>
+    </div>
+
+    <!-- Hidden File Input -->
+    <input
+      type="file"
+      id="photoUpload"
+      accept="image/*"
+      (change)="onPhotoSelected($event)"
+      style="display: none"
+    />
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+</ion-content>

@@ -1,227 +1,168 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { BrowserMultiFormatReader } from '@zxing/browser';
-import { Result } from '@zxing/library';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
-import { map, Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { NewPostModalComponent } from './new-post-modal/new-post-modal.component';
 
-interface Person {
+interface Post {
   id: string;
-  name: string;
-  title: string;
-  country: string;
-  photoURL?: string | null;
-  flag: string;
-  connected: boolean;
-  role: 'attendee' | 'speaker';
+  userName: string;
+  userPhoto?: string;
+  caption: string;
+  photoURL?: string;
+  likes: number;
+  liked: boolean;
+  comments: { userName: string; text: string }[];
+  timestamp: Date;
+  showComments?: boolean;
+  newComment?: string;
 }
 
 @Component({
   selector: 'app-network',
   standalone: true,
+  imports: [CommonModule, IonicModule, FormsModule],
   templateUrl: './network.page.html',
   styleUrls: ['./network.page.scss'],
-  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class NetworkPage implements OnInit {
-  @ViewChild('videoPreview', { static: false }) videoElement!: ElementRef<HTMLVideoElement>;
-
-  private scanner = new BrowserMultiFormatReader();
-  private currentStream: MediaStream | null = null;
-
-  scanning = false;
-  scanResult: string | null = null;
-  showQR = false;
   searchQuery = '';
+  currentUserName = 'Feda Abdelghany';
+  currentUserPhoto = 'assets/profilepics/khalid_samaka.jpg';
 
-  networkTab: 'attendees' | 'speakers' | 'connections' = 'attendees';
-  
-  // Observables for reactive filtering
-  private allPeople$ = new BehaviorSubject<Person[]>([]);
-  private searchQuery$ = new BehaviorSubject<string>('');
-  private networkTab$ = new BehaviorSubject<'attendees' | 'speakers' | 'connections'>('attendees');
-  
-  people$: Observable<Person[]>;
+  newPost: Partial<Post> = { caption: '', photoURL: '' };
+  allPosts: Post[] = [];
+  filteredPosts: Post[] = [];
 
-  constructor(private firestore: Firestore) {
-    // Combine all filters reactively
-    this.people$ = combineLatest([
-      this.allPeople$,
-      this.searchQuery$,
-      this.networkTab$
-    ]).pipe(
-      map(([people, query, tab]) => {
-        let filtered = people;
+  constructor(private modalCtrl: ModalController) {}
 
-        // Apply search filter
-        if (query.trim()) {
-          const lowerQuery = query.toLowerCase();
-          filtered = filtered.filter((p) =>
-            p.name.toLowerCase().includes(lowerQuery) ||
-            p.title.toLowerCase().includes(lowerQuery) ||
-            p.country.toLowerCase().includes(lowerQuery)
-          );
-        }
+  ngOnInit() {
+    // ✅ Dummy Feed Data
+    this.allPosts = [
+      {
+        id: '1',
+        userName: 'Ahmed Youssef',
+        userPhoto: 'assets/profilepics/adham_elmahdy.jpeg',
+        caption: 'Excited to be part of the Holcim sustainability workshop this week! 🌿',
+        photoURL: 'assets/zuhra.jpg',
+        likes: 12,
+        liked: false,
+        comments: [
+          { userName: 'Sara Ali', text: 'Looks great!' },
+          { userName: 'Mohamed Nabil', text: 'See you there!' },
+        ],
+        timestamp: new Date('2025-10-20T09:00:00'),
+      },
+      {
+        id: '2',
+        userName: 'Leila Mansour',
+        userPhoto: 'assets/profilepics/ali_said.jpeg',
+        caption:
+          'Another successful day at the Sokhna Plant – proud of our team’s performance and teamwork! 💪',
+        photoURL: 'assets/mall.webp',
+        likes: 23,
+        liked: false,
+        comments: [{ userName: 'Omar Farouk', text: 'Amazing results, Leila!' }],
+        timestamp: new Date('2025-10-21T14:30:00'),
+      },
+      {
+        id: '3',
+        userName: 'John Anderson',
+        userPhoto: 'assets/profilepics/grant_earnshaw.jpg',
+        caption: 'Innovation is at the core of what we do. Testing new green materials today!',
+        photoURL: 'assets/palm.jpg',
+        likes: 18,
+        liked: false,
+        comments: [],
+        timestamp: new Date('2025-10-22T11:45:00'),
+      },
+    ];
 
-        // Apply tab filter
-        if (tab === 'attendees') {
-          filtered = filtered.filter((p) => p.role === 'attendee');
-        } else if (tab === 'speakers') {
-          filtered = filtered.filter((p) => p.role === 'speaker');
-        } else if (tab === 'connections') {
-          filtered = filtered.filter((p) => p.connected);
-        }
+    this.refreshFeed();
+  }
 
-        return filtered;
-      })
+  /** 🔍 Filter Posts */
+  onSearchChange(query: string) {
+    this.filteredPosts = this.allPosts.filter(
+      (p) =>
+        p.caption.toLowerCase().includes(query.toLowerCase()) ||
+        p.userName.toLowerCase().includes(query.toLowerCase())
     );
   }
 
-  ngOnInit() {
-    this.loadPeople();
+  /** 🆕 Create Post directly */
+  createPost() {
+    if (!this.newPost.caption?.trim()) return;
+
+    const newPost: Post = {
+      id: (this.allPosts.length + 1).toString(),
+      userName: this.currentUserName,
+      userPhoto: this.currentUserPhoto,
+      caption: this.newPost.caption,
+      photoURL: this.newPost.photoURL,
+      likes: 0,
+      liked: false,
+      comments: [],
+      timestamp: new Date(),
+    };
+
+    this.allPosts.unshift(newPost);
+    this.refreshFeed();
+    this.newPost = { caption: '', photoURL: '' };
   }
 
-  // Fetch users dynamically from Firestore
-  private loadPeople() {
-    const usersRef = collection(this.firestore, 'users');
-    collectionData(usersRef, { idField: 'id' }).pipe(
-      map((users: any[]) =>
-        users.map((u) => ({
-          id: u.id,
-          name: u.displayName || 'Unknown User',
-          title: u.position || 'Attendee',
-          country: u.country || 'Unknown',
-          photoURL: u.photoURL || null,
-          flag: this.getCountryCode(u.country),
-          connected: false,
-          role: this.isSpeaker(u.position) ? 'speaker' as const : 'attendee' as const,
-        }))
-      )
-    ).subscribe((people) => {
-      this.allPeople$.next(people);
+  /** ❤️ Like / Unlike */
+  toggleLike(post: Post) {
+    post.liked = !post.liked;
+    post.likes += post.liked ? 1 : -1;
+  }
+
+  /** 💬 Show / Hide Comments */
+  toggleComments(post: Post) {
+    post.showComments = !post.showComments;
+  }
+
+  /** ➕ Add Comment */
+  addComment(post: Post) {
+    if (!post.newComment?.trim()) return;
+    post.comments.push({
+      userName: this.currentUserName,
+      text: post.newComment,
     });
+    post.newComment = '';
   }
 
-  // Simple rule: treat as speaker if position contains 'Director', 'Manager', or 'VP'
-  private isSpeaker(position: string): boolean {
-    const keywords = ['director', 'manager', 'vp', 'chief', 'head'];
-    return keywords.some((k) => position?.toLowerCase().includes(k));
+  /** 🧭 Open Fullscreen Modal for New Post */
+async openNewPostModal() {
+  const modal = await this.modalCtrl.create({
+    component: NewPostModalComponent,
+    cssClass: 'full-screen-modal',
+    showBackdrop: true,
+  });
+
+  await modal.present();
+
+  const { data } = await modal.onDidDismiss();
+  if (data) {
+    const newPost = {
+      id: (this.allPosts.length + 1).toString(),
+      userName: this.currentUserName,
+      userPhoto: this.currentUserPhoto,
+      caption: data.caption,
+      photoURL: data.photoURL,
+      likes: 0,
+      liked: false,
+      comments: [],
+      timestamp: new Date(),
+    };
+    this.allPosts.unshift(newPost);
+    this.filteredPosts = [...this.allPosts];
   }
-
-  // Quick flag generator
-public getCountryCode(country: string): string {
-  const map: Record<string, string> = {
-    // Existing Countries
-    Egypt: 'eg',
-    Singapore: 'sg',
-    India: 'in',
-    Philippines: 'ph',
-    UAE: 'ae',
-    'United States': 'us',
-    France: 'fr',
-    Germany: 'de',
-    Switzerland: 'ch',
-    Italy: 'it',
-    Spain: 'es',
-    Canada: 'ca',
-    Australia: 'au',
-    Nigeria: 'ng',
-    Kenya: 'ke',
-
-    // New Countries Added
-    Algeria: 'dz',
-    Azerbaijan: 'az',
-    Bangladesh: 'bd',
-    China: 'cn',
-    Iraq: 'iq',
-    'Ivory Coast': 'ci', // Use the official country name with correct code
-    Morocco: 'ma',
-    'New Zealand': 'nz',
-    Oman: 'om',
-    Qatar: 'qa',
-  };
-  
-  // Use 'un' for any country not found, including "CEM AMEA" and "Region"
-  return map[country] || 'un'; 
 }
-  // Tab switching
-  setNetworkTab(tab: 'attendees' | 'speakers' | 'connections') {
-    this.networkTab = tab;
-    this.networkTab$.next(tab);
-  }
 
-  // Real-time search
-  onSearchChange(query: string) {
-    this.searchQuery = query;
-    this.searchQuery$.next(query);
-  }
-
-  toggleConnection(person: Person) {
-    person.connected = !person.connected;
-    // Trigger update by emitting current people
-    this.allPeople$.next(this.allPeople$.value);
-  }
-
-  getInitials(name: string): string {
-    return name.split(' ').map((n) => n[0]).join('');
-  }
-
-  toggleQR(show: boolean) {
-    this.showQR = show;
-  }
-
-  async switchToScanMode() {
-    if (this.scanning) return;
-    this.scanResult = null;
-    this.scanning = true;
-
-    setTimeout(async () => {
-      try {
-        const devices = await BrowserMultiFormatReader.listVideoInputDevices();
-        if (!devices || devices.length === 0) {
-          alert('No camera found.');
-          this.scanning = false;
-          return;
-        }
-
-        const backCamera =
-          devices.find((d) => d.label.toLowerCase().includes('back')) || devices[0];
-
-        this.currentStream = await navigator.mediaDevices.getUserMedia({
-          video: { deviceId: backCamera.deviceId },
-        });
-
-        const video = this.videoElement.nativeElement;
-        video.srcObject = this.currentStream;
-        await video.play();
-
-        this.scanner.decodeFromVideoDevice(backCamera.deviceId, video, (result) => {
-          if (result) {
-            this.scanResult = result.getText();
-            this.stopScan();
-            if (this.scanResult) this.handleScanResult(this.scanResult);
-          }
-        });
-      } catch (err) {
-        console.error('Camera error:', err);
-        alert('Could not access camera.');
-        this.scanning = false;
-      }
-    });
-  }
-
-  stopScan() {
-    this.scanning = false;
-    if (this.currentStream) {
-      this.currentStream.getTracks().forEach((t) => t.stop());
-      this.currentStream = null;
-    }
-  }
-
-  handleScanResult(result: string) {
-    if (result.startsWith('http')) window.open(result, '_blank');
-    else alert('Scanned: ' + result);
+  /** 🔄 Helper: Refresh and Sort Feed */
+  private refreshFeed() {
+    this.allPosts.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+    this.filteredPosts = [...this.allPosts];
   }
 }

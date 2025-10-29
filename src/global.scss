@@ -354,3 +354,9 @@ ion-tab-button {
     height: 60px; // slightly shorter for desktop
   }
 }
+
+.full-screen-modal .modal-wrapper {
+  height: 100% !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+}

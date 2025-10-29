@@ -1,13 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { PwaService } from './services/pwa.service';
 import { AuthService } from './services/auth.service';
 import { IonApp, IonRouterOutlet } from "@ionic/angular/standalone";  
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [IonApp, IonRouterOutlet],
+  imports: [IonApp, IonRouterOutlet, CommonModule, RouterModule],
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })

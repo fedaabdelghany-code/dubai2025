@@ -50,8 +50,8 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+        provideFirestore(() => getFirestore()),
+provideAuth(() => getAuth()),
 
     // ✅ Still valid in Angular 20.x
     {

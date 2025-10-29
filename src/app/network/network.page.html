@@ -1,167 +1,84 @@
 <ion-content [fullscreen]="true" class="network-content">
-  <!-- Main Network View -->
-  <div *ngIf="!showQR" class="pb-20">
-    <!-- Header -->
-    <div class="header-gradient">
-      <h2 class="header-title">NETWORK</h2>
-      <img src="assets/calig.png" alt="" class="header-overlay" />
 
-      <!-- Search Bar -->
-      <div class="search-container">
-        <ion-icon name="search-outline" class="search-icon"></ion-icon>
-        <input 
-          type="text" 
-          placeholder="Search..."
-          class="search-input"
-          [(ngModel)]="searchQuery"
-          (input)="onSearchChange(searchQuery)"
+  <!-- HEADER -->
+  <div class="header-gradient">
+    <h2 class="header-title">NETWORK</h2>
+    <img src="assets/calig.png" alt="" class="header-overlay" />
+
+    <!-- SEARCH BAR -->
+    <div class="search-container">
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <input
+        type="text"
+        placeholder="Search posts or people..."
+        class="search-input"
+        [(ngModel)]="searchQuery"
+        (input)="onSearchChange(searchQuery)"
+      />
+    </div>
+  </div>
+
+  <!-- FEED CONTAINER -->
+  <div class="feed-container">
+
+    <!-- POSTS FEED -->
+    <div *ngFor="let post of filteredPosts" class="post-card">
+      <div class="post-header">
+        <img
+          [src]="post.userPhoto || 'assets/default-avatar.png'"
+          class="avatar-sm"
+          alt="User Photo"
         />
+        <div class="post-user-info">
+          <h3>{{ post.userName }}</h3>
+          <p class="timestamp">{{ post.timestamp | date: 'medium' }}</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Tabs -->
-    <div class="tabs-container">
-      <div class="tabs-wrapper">
-        <button
-          class="tab-btn"
-          [class.active]="networkTab === 'attendees'"
-          (click)="setNetworkTab('attendees')">
-          Attendees
+      <p class="post-caption">{{ post.caption }}</p>
+
+      <img
+        *ngIf="post.photoURL"
+        [src]="post.photoURL"
+        alt="Post Image"
+        class="post-image"
+      />
+
+      <div class="post-actions">
+        <button (click)="toggleLike(post)">
+          <ion-icon [name]="post.liked ? 'heart' : 'heart-outline'"></ion-icon>
+          {{ post.likes }}
         </button>
-        <button
-          class="tab-btn"
-          [class.active]="networkTab === 'speakers'"
-          (click)="setNetworkTab('speakers')">
-          Speakers
-        </button>
-        <button
-          class="tab-btn"
-          [class.active]="networkTab === 'connections'"
-          (click)="setNetworkTab('connections')">
-          Connections
+
+        <button (click)="toggleComments(post)">
+          <ion-icon name="chatbubble-outline"></ion-icon>
+          {{ post.comments.length }}
         </button>
       </div>
-    </div>
 
-    <!-- QR Actions -->
-    <div class="qr-actions">
-      <button class="qr-btn primary" (click)="toggleQR(true)">
-        <ion-icon name="qr-code-outline"></ion-icon>
-        <span>Show My QR</span>
-      </button>
-
-      <button class="qr-btn secondary" (click)="switchToScanMode()">
-        <ion-icon name="scan-outline"></ion-icon>
-        <span>Scan QR</span>
-      </button>
-    </div>
-
-    <!-- Fullscreen QR Scanner -->
-    <div class="scanner-overlay" *ngIf="scanning">
-      <video #videoPreview autoplay playsinline></video>
-
-      <div class="overlay-ui">
-        <button class="close-btn" (click)="stopScan()">
-          <ion-icon name="close-outline"></ion-icon>
-        </button>
-
-        <div class="scan-frame"></div>
-        <p class="scan-text">Align QR code within the frame</p>
-      </div>
-    </div>
-
-    <!-- Scan Result -->
-    <div *ngIf="scanResult" class="scan-result">
-      <p>Scanned: {{ scanResult }}</p>
-    </div>
-
-    <!-- People List -->
-    <div class="people-container">
-      <div 
-        *ngFor="let person of people$ | async" 
-        class="person-card">
-        
-        <div 
-          class="avatar"
-          [class.connected]="person.connected">
-          {{getInitials(person.name)}}
+      <!-- COMMENTS SECTION -->
+      <div *ngIf="post.showComments" class="comments-section">
+        <div *ngFor="let comment of post.comments" class="comment-item">
+          <strong>{{ comment.userName }}</strong> {{ comment.text }}
         </div>
 
-        <div class="person-info">
-          <h3 class="person-name">{{person.name}}</h3>
-          <p class="person-title">{{person.title}}</p>
-
-          <p class="person-country">
-            <span
-              class="fi"
-              [style.background-image]="'url(assets/flags/4x3/' + getCountryCode(person.country) + '.svg)'"
-              style="background-size: cover; display:inline-block; width: 20px; height: 15px; margin-right: 6px;"
-            ></span>
-            {{person.country}}
-          </p>
+        <div class="add-comment">
+          <input
+            type="text"
+            [(ngModel)]="post.newComment"
+            placeholder="Write a comment..."
+            (keydown.enter)="addComment(post)"
+          />
         </div>
-
-        <button 
-          class="connect-btn"
-          [class.connected]="person.connected"
-          (click)="toggleConnection(person)">
-          {{person.connected ? 'Connected' : 'Connect'}}
-        </button>
       </div>
     </div>
   </div>
 
-  <!-- QR Code View -->
-  <div *ngIf="showQR" class="qr-view pb-20">
-    <div class="qr-header">
-      <h2 class="qr-title">Digital Business Card</h2>
-      <button class="close-btn" (click)="toggleQR(false)">
-        Close
-      </button>
-    </div>
+  <!-- FLOATING ACTION BUTTON -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-bottom-right">
+    <ion-fab-button (click)="openNewPostModal()">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
-    <!-- QR Card -->
-    <div class="qr-card">
-      <div class="qr-code-container">
-        <div class="qr-code-wrapper">
-          <div class="qr-code-box">
-            <ion-icon name="qr-code-outline" class="qr-icon"></ion-icon>
-          </div>
-        </div>
-        <p class="qr-description">Scan to exchange contact information</p>
-      </div>
-
-      <div class="user-details">
-        <div class="detail-item">
-          <div class="detail-icon">
-            <ion-icon name="person-outline"></ion-icon>
-          </div>
-          <div class="detail-content">
-            <div class="detail-label">Name</div>
-            <div class="detail-value">John Anderson</div>
-          </div>
-        </div>
-
-        <div class="detail-item">
-          <div class="detail-icon emoji">💼</div>
-          <div class="detail-content">
-            <div class="detail-label">Position</div>
-            <div class="detail-value">Director of Marketing</div>
-          </div>
-        </div>
-
-        <div class="detail-item">
-          <div class="detail-icon emoji">🌍</div>
-          <div class="detail-content">
-            <div class="detail-label">Country</div>
-            <div class="detail-value">Egypt</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <button class="scanner-btn" (click)="switchToScanMode()">
-      Switch to Scanner Mode
-    </button>
-  </div>
 </ion-content>
