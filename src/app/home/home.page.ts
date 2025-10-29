@@ -4,6 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { IonContent, IonIcon, IonModal, IonButton } from '@ionic/angular/standalone';
 import { Auth, signOut } from '@angular/fire/auth';
 import { DataService } from '../services/data.service';
+import { onAuthStateChanged, User } from '@angular/fire/auth';
 
 import {
   Firestore,
@@ -70,6 +71,8 @@ export class HomePage implements OnInit, OnDestroy {
   public messageType: MessageType = null;
   public currentDay = 1;
   public showQR = false;
+  displayName: string | null = null;
+
 
   /* Internal */
   private destroy$ = new Subject<void>();
@@ -83,6 +86,15 @@ ngOnInit() {
 
   const tick$ = interval(this.TICK_MS);
 
+
+onAuthStateChanged(this.auth, (user: User | null) => {
+  if (user && user.displayName) {
+    this.displayName = this.formatDisplayName(user.displayName);
+  } else {
+    this.displayName = null;
+  }
+});
+  
   combineLatest([sessions$, tick$])
     .pipe(
       map(([sessions]) => {
@@ -115,6 +127,15 @@ ngOnInit() {
    * Calculate current day based on sessions themselves (not hardcoded dates)
    * Returns the day number (1, 2, 3, etc.) based on which day's sessions are active
    */
+
+  private formatDisplayName(name: string): string {
+  return name
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
   private calculateCurrentDayFromSessions(sessions: Session[]): number {
     if (!sessions || sessions.length === 0) return 1;
 

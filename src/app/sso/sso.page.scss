@@ -10,6 +10,10 @@ $holcim-green: #7ab023;
   --background: transparent;
   position: relative;
   overflow: hidden;
+    --overflow: hidden; /* disables ion-content scroll */
+  height: 100vh; /* ensure full viewport height */
+  contain: strict; /* improves layout containment */
+
 }
 
 .sso-container {
@@ -543,3 +547,4 @@ $holcim-green: #7ab023;
     font-size: 0.875rem;
   }
 }
+
