@@ -68,6 +68,7 @@ ion-content {
   }
 }
 
+
 .header-subtitle {
   position: relative;
   color: rgba(255, 255, 255, 0.9);
@@ -114,6 +115,76 @@ ion-content {
   max-width: 28rem;
   margin: -1.5rem auto 0;
   padding: 0 1.5rem 1.5rem;
+}
+
+
+.hotel-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .card-content {
+    padding: 1.75rem 2.25rem; // more breathing room horizontally
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .card-title-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    .wifi-icon {
+      font-size: 1.4rem;
+      padding: 0.4rem;
+      background: rgba(28, 67, 112, 0.1); // Holcim blue tint
+      color: #0a2a5a;
+      border-radius: 50%;
+    }
+  }
+
+  .card-title {
+    color: #0a2a5a;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.3px;
+  }
+
+  .wifi-details {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #1f2937;
+
+    p {
+      margin: 0.4rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      ion-icon {
+        font-size: 1rem;
+        color: #2c5aa0; // cohesive blue tone
+      }
+
+      strong {
+        color: #0a2a5a;
+        font-weight: 600;
+      }
+    }
+  }
 }
 
 /* ========================================

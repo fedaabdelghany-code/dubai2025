@@ -185,6 +185,68 @@
     }
   }
 }
+
+// Keep all your existing styles, then add these:
+
+.sub-tabs-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0 0.25rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  animation: slideDown 0.25s ease-out;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    justify-content: center;
+    gap: 0.75rem;
+  }
+}
+
+.sub-tab-btn {
+  flex: 1;
+  min-width: 85px;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.8rem;
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover:not(.active) {
+    background: #f3f4f6;
+  }
+
+  &.active {
+    background: #eff6ff;
+    color: #1D4370;
+    font-weight: 600;
+  }
+
+  @media (min-width: 768px) {
+    min-width: 100px;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.85rem;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 // ============================================
 // CONTENT SECTIONS
 // ============================================
@@ -227,7 +289,9 @@
 .section-desc {
   color: #64748b;
   font-size: 0.9rem;
+  font-weight: 600;
   margin: 0;
+  padding-bottom: 1rem;
   
   @media (min-width: 768px) {
     font-size: 1rem;

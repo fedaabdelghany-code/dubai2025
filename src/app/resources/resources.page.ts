@@ -14,7 +14,8 @@ interface Document {
   title: string;
   date: string;
   size: string;
-  category: 'session' | 'company' | 'general';
+  category: 'general' | 'plenary' | 'workshops';
+  url: string; // Added for clickable links
 }
 
 interface HostInfo {
@@ -39,31 +40,76 @@ interface CompanyInfo {
 })
 export class ResourcesPage {
   activeSection: 'materials' | 'host' | 'company' = 'materials';
+  activeMaterialsTab: 'general' | 'plenary' | 'workshops' = 'general';
 
   documents: Document[] = [
+    // General Materials
+    { 
+      title: 'Regional Delegate Handbook', 
+      date: 'Oct 6, 2025', 
+      size: '5.2 MB',
+      category: 'general',
+      url: 'https://example.com/handbook.pdf'
+    },
+    { 
+      title: 'Conference Agenda & Schedule',
+      date: 'Oct 5, 2025', 
+      size: '1.2 MB',
+      category: 'general',
+      url: 'https://example.com/agenda.pdf'
+    },
+    { 
+      title: 'Welcome Pack & FAQs',
+      date: 'Oct 4, 2025', 
+      size: '2.8 MB',
+      category: 'general',
+      url: 'https://example.com/welcome.pdf'
+    },
+    
+    // Plenary Materials
     { 
       title: 'AMEA Leadership Keynote Deck', 
       date: 'Oct 7, 2025', 
       size: '4.1 MB',
-      category: 'session'
+      category: 'plenary',
+      url: 'https://example.com/keynote.pdf'
     },
     { 
       title: 'ME&A Market Growth Forecast Q4',
       date: 'Oct 8, 2025', 
       size: '1.8 MB',
-      category: 'session'
-    },
-    { 
-      title: 'Regional Delegate Handbook',
-      date: 'Oct 6, 2025', 
-      size: '5.2 MB',
-      category: 'general'
+      category: 'plenary',
+      url: 'https://example.com/forecast.pdf'
     },
     { 
       title: 'Sustainability Roadmap (AMEA)',
       date: 'Oct 8, 2025', 
       size: '3.1 MB',
-      category: 'company'
+      category: 'plenary',
+      url: 'https://example.com/sustainability.pdf'
+    },
+    
+    // Workshop Materials
+    { 
+      title: 'Innovation Workshop - Session 1',
+      date: 'Oct 9, 2025', 
+      size: '2.4 MB',
+      category: 'workshops',
+      url: 'https://example.com/workshop1.pdf'
+    },
+    { 
+      title: 'Leadership Development Materials',
+      date: 'Oct 9, 2025', 
+      size: '3.6 MB',
+      category: 'workshops',
+      url: 'https://example.com/leadership.pdf'
+    },
+    { 
+      title: 'Digital Transformation Workshop',
+      date: 'Oct 10, 2025', 
+      size: '4.8 MB',
+      category: 'workshops',
+      url: 'https://example.com/digital.pdf'
     }
   ];
 
@@ -146,11 +192,23 @@ export class ResourcesPage {
 
   setActiveSection(section: 'materials' | 'host' | 'company') {
     this.activeSection = section;
+    // Reset to default when switching back to materials
+    if (section === 'materials' && !this.activeMaterialsTab) {
+      this.activeMaterialsTab = 'general';
+    }
   }
 
-  downloadDocument(doc: Document) {
-    console.log('Downloading:', doc.title);
-    // Implement download logic
+  setActiveMaterialsTab(tab: 'general' | 'plenary' | 'workshops') {
+    this.activeMaterialsTab = tab;
+  }
+
+  // Filter documents by active materials tab
+  get filteredDocuments(): Document[] {
+    return this.documents.filter(doc => doc.category === this.activeMaterialsTab);
+  }
+
+  openDocument(doc: Document) {
+    window.open(doc.url, '_blank');
   }
 
   openHostInfo(info: HostInfo) {

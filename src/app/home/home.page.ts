@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
-import { IonContent, IonIcon, IonModal, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonIcon, IonModal, IonButton, IonCardTitle, IonCard, IonCardHeader, IonCardContent } from '@ionic/angular/standalone';
 import { Auth, signOut } from '@angular/fire/auth';
 import { DataService } from '../services/data.service';
 import { onAuthStateChanged, User } from '@angular/fire/auth';
@@ -60,7 +60,7 @@ type MessageType = 'today' | 'over' | null;
   standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonButton, IonModal, IonContent, IonIcon, CommonModule, DatePipe, RouterModule],
+  imports: [IonCardContent, IonCardHeader, IonCard, IonCardTitle, IonButton, IonModal, IonContent, IonIcon, CommonModule, DatePipe, RouterModule],
 })
 export class HomePage implements OnInit, OnDestroy {
   /* Public observables / properties used by the template */
