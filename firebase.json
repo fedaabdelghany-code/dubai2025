@@ -76,7 +76,21 @@
             "value": "public, max-age=0, must-revalidate"
           }
         ]
+      },
+       {
+        "source": "/assets/notification-worker.js",
+        "headers": [
+          {
+            "key": "Service-Worker-Allowed",
+            "value": "/"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/javascript"
+          }
+        ]
       }
     ]
   }
 }
+

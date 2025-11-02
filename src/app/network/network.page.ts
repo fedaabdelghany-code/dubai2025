@@ -31,7 +31,12 @@ export class NetworkPage implements OnInit, OnDestroy {
   allPosts: PostDisplay[] = [];
   filteredPosts: PostDisplay[] = [];
   
+  // Loading state for skeleton loader
+  isLoading = true;
+  private hasInitialLoad = false;
+  
   private postsSubscription?: Subscription;
+  private authCheckTimeout?: any;
 
   constructor(
     private modalCtrl: ModalController,
@@ -40,8 +45,18 @@ export class NetworkPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    // Set a timeout to ensure skeleton shows for at least 500ms on mobile
+    this.authCheckTimeout = setTimeout(() => {
+      if (!this.hasInitialLoad) {
+        console.log('Auth check timeout - stopping loader');
+        this.isLoading = false;
+      }
+    }, 5000); // 5 second timeout
+
     // Get current user info from Google SSO
     this.auth.onAuthStateChanged((user) => {
+      console.log('Auth state changed:', user ? 'User found' : 'No user');
+      
       if (user) {
         this.currentUserId = user.uid;
         this.currentUserName = user.displayName || 'Anonymous';
@@ -49,20 +64,35 @@ export class NetworkPage implements OnInit, OnDestroy {
         
         // Subscribe to real-time posts
         this.subscribeToPost();
+      } else {
+        console.log('No authenticated user');
+        this.isLoading = false;
+        this.hasInitialLoad = true;
+        if (this.authCheckTimeout) {
+          clearTimeout(this.authCheckTimeout);
+        }
       }
     });
   }
 
   ngOnDestroy() {
     this.postsSubscription?.unsubscribe();
+    if (this.authCheckTimeout) {
+      clearTimeout(this.authCheckTimeout);
+    }
   }
 
   /**
    * Subscribe to real-time posts from Firestore
    */
   private subscribeToPost() {
+    console.log('Subscribing to posts...');
+    this.isLoading = true;
+    
     this.postsSubscription = this.postService.getPosts().subscribe({
       next: (posts) => {
+        console.log('Posts received:', posts.length);
+        
         // Transform posts to include UI state
         this.allPosts = posts.map((post) => ({
           ...post,
@@ -71,9 +101,31 @@ export class NetworkPage implements OnInit, OnDestroy {
           newComment: '',
         }));
         this.refreshFeed();
+        
+        // Mark as loaded and hide skeleton
+        if (!this.hasInitialLoad) {
+          this.hasInitialLoad = true;
+          // Add small delay to ensure smooth transition on mobile
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 300);
+        } else {
+          this.isLoading = false;
+        }
+
+        // Clear timeout since we got data
+        if (this.authCheckTimeout) {
+          clearTimeout(this.authCheckTimeout);
+        }
       },
       error: (error) => {
         console.error('Error fetching posts:', error);
+        this.isLoading = false;
+        this.hasInitialLoad = true;
+        
+        if (this.authCheckTimeout) {
+          clearTimeout(this.authCheckTimeout);
+        }
       },
     });
   }
@@ -200,5 +252,26 @@ export class NetworkPage implements OnInit, OnDestroy {
    */
   private refreshFeed() {
     this.filteredPosts = [...this.allPosts];
+  }
+
+  /**
+   * Manual refresh for pull-to-refresh (optional)
+   */
+  async doRefresh(event?: any) {
+    try {
+      // Re-subscribe will trigger fresh data
+      this.subscribeToPost();
+      
+      if (event) {
+        setTimeout(() => {
+          event.target.complete();
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Error refreshing:', error);
+      if (event) {
+        event.target.complete();
+      }
+    }
   }
 }

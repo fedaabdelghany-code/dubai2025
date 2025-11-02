@@ -14,12 +14,20 @@
   <link rel="dns-prefetch" href="https://unpkg.com">
   
   <!-- PERFORMANCE: Defer non-critical scripts -->
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
-  
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   <meta name="color-scheme" content="light"/>
   
-  
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "e4848b1f-7e63-4dce-a616-0cdf07c79b4e",
+    });
+  });
+</script>
   <!-- ACCESSIBILITY FIX: Remove user-scalable=no (accessibility issue) -->
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"/>
   
@@ -76,5 +84,6 @@
 <body>
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
+  
 </body>
 </html>

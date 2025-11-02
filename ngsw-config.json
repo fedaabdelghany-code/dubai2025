@@ -15,6 +15,18 @@
       }
     },
     {
+  "name": "ionicons",
+  "installMode": "lazy",
+  "updateMode": "prefetch",
+  "resources": {
+    "urls": [
+      "https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js",
+      "https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ]
+  }
+}
+,
+    {
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",

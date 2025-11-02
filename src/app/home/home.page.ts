@@ -4,6 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { IonContent, IonIcon, IonModal, IonButton, IonCardTitle, IonCard, IonCardHeader, IonCardContent } from '@ionic/angular/standalone';
 import { Auth, signOut } from '@angular/fire/auth';
 import { DataService } from '../services/data.service';
+import { NotificationService } from '../services/pwa-notification.service';
 import { onAuthStateChanged, User } from '@angular/fire/auth';
 
 import {
@@ -73,68 +74,134 @@ export class HomePage implements OnInit, OnDestroy {
   public showQR = false;
   displayName: string | null = null;
 
+  // Notification properties
+  notificationsEnabled = false;
+  notificationPermission: string = 'default';
 
   /* Internal */
   private destroy$ = new Subject<void>();
   private readonly TICK_MS = 1000;
 
-  constructor(private router: Router, private firestore: Firestore, private auth: Auth, private data: DataService ) {}
+  constructor(
+    private router: Router, 
+    private firestore: Firestore, 
+    private auth: Auth, 
+    private data: DataService,
+    private notificationService: NotificationService
+  ) {}
 
-ngOnInit() {
-  const sessions$ = this.data.sessions$;
-  this.announcements$ = this.data.announcements$;
+  ngOnInit() {
+    const sessions$ = this.data.sessions$;
+    this.announcements$ = this.data.announcements$;
 
-  const tick$ = interval(this.TICK_MS);
+    const tick$ = interval(this.TICK_MS);
 
-
-onAuthStateChanged(this.auth, (user: User | null) => {
-  if (user && user.displayName) {
-    this.displayName = this.formatDisplayName(user.displayName);
-  } else {
-    this.displayName = null;
-  }
-});
-  
-  combineLatest([sessions$, tick$])
-    .pipe(
-      map(([sessions]) => {
-        this.currentDay = this.calculateCurrentDayFromSessions(sessions);
-        return this.evaluateSessions(sessions);
-      }),
-      takeUntil(this.destroy$)
-    )
-    .subscribe(({ primary, secondary, messageType }) => {
-      this.primarySession = primary;
-      this.secondarySession = secondary;
-      this.messageType = messageType;
+    onAuthStateChanged(this.auth, (user: User | null) => {
+      if (user && user.displayName) {
+        this.displayName = this.formatDisplayName(user.displayName);
+      } else {
+        this.displayName = null;
+      }
     });
 
-  this.todaySessions$ = sessions$.pipe(
-    map((sessions) => {
-      const currentDay = this.calculateCurrentDayFromSessions(sessions);
-      return sessions.filter(s => this.normalizeDay(s.day) === currentDay.toString()).slice(0, 3);
-    }),
-    shareReplay(1)
-  );
-}
+    // Schedule notifications only when sessions change (not on every tick)
+    sessions$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((sessions) => {
+        if (this.notificationService.isNotificationEnabled()) {
+          this.notificationService.scheduleSessionNotifications(sessions);
+        }
+      });
+    
+    // Update UI every second but don't reschedule notifications
+    combineLatest([sessions$, tick$])
+      .pipe(
+        map(([sessions]) => {
+          this.currentDay = this.calculateCurrentDayFromSessions(sessions);
+          return this.evaluateSessions(sessions);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(({ primary, secondary, messageType }) => {
+        this.primarySession = primary;
+        this.secondarySession = secondary;
+        this.messageType = messageType;
+      });
+
+    this.todaySessions$ = sessions$.pipe(
+      map((sessions) => {
+        const currentDay = this.calculateCurrentDayFromSessions(sessions);
+        return sessions.filter(s => this.normalizeDay(s.day) === currentDay.toString()).slice(0, 3);
+      }),
+      shareReplay(1)
+    );
+
+    // Check notification status on init
+    this.checkNotificationStatus();
+  }
+
+  ionViewWillEnter() {
+    // Re-check notification status when page becomes visible
+    this.checkNotificationStatus();
+  }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  /**
-   * Calculate current day based on sessions themselves (not hardcoded dates)
-   * Returns the day number (1, 2, 3, etc.) based on which day's sessions are active
-   */
+  // ---------- Notification Methods ----------
+
+  checkNotificationStatus() {
+    this.notificationPermission = this.notificationService.getPermissionStatus();
+    this.notificationsEnabled = this.notificationService.isNotificationEnabled();
+  }
+
+  async enableNotifications() {
+    const granted = await this.notificationService.requestPermission();
+    
+    if (granted) {
+      this.notificationsEnabled = true;
+      this.notificationService.setNotificationPreference(true);
+      this.notificationService.loadAndScheduleAllSessions();
+      
+      // Show test notification
+      await this.notificationService.testNotification();
+    } else {
+      this.notificationsEnabled = false;
+      alert('Please enable notifications in your browser/device settings to receive session reminders.');
+    }
+    
+    this.checkNotificationStatus();
+  }
+
+  disableNotifications() {
+    this.notificationsEnabled = false;
+    this.notificationService.setNotificationPreference(false);
+    this.notificationService.clearAllNotifications();
+  }
+
+  async toggleNotifications() {
+    if (this.notificationsEnabled) {
+      this.disableNotifications();
+    } else {
+      await this.enableNotifications();
+    }
+  }
+
+  testNotification() {
+    this.notificationService.testNotification();
+  }
+
+  // ---------- Original Methods ----------
 
   private formatDisplayName(name: string): string {
-  return name
-    .toLowerCase()
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
+    return name
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
 
   private calculateCurrentDayFromSessions(sessions: Session[]): number {
     if (!sessions || sessions.length === 0) return 1;
@@ -220,26 +287,17 @@ onAuthStateChanged(this.auth, (user: User | null) => {
     return sortedDays[sortedDays.length - 1];
   }
 
-  /**
-   * Normalize day field to just the number (handles "1", "Day 1", "day 1", etc.)
-   */
   private normalizeDay(day: string | undefined): string {
     if (!day) return '1';
     return day.toString().toLowerCase().replace(/[^0-9]/g, '');
   }
 
-  /**
-   * Load sessions from Firestore ordered by startTime asc.
-   */
   private loadSessionsObservable(): Observable<Session[]> {
     const sessionsRef = collection(this.firestore, 'sessions');
     const q = query(sessionsRef, orderBy('startTime', 'asc'));
     return collectionData(q, { idField: 'id' }) as Observable<Session[]>;
   }
 
-  /**
-   * Core logic: determines which sessions are LIVE/UP NEXT for current day only
-   */
   private evaluateSessions(sessions: Session[]): {
     primary: Session | null;
     secondary: Session | null;
@@ -323,7 +381,6 @@ onAuthStateChanged(this.auth, (user: User | null) => {
 
   // ---------- Helper utilities ----------
 
-  /** Safely convert Firestore Timestamp or Date-like to JS Date */
   private toDate(tsOrDate: any): Date {
     if (!tsOrDate) return new Date(NaN);
     if (tsOrDate instanceof Timestamp) return tsOrDate.toDate();
@@ -332,7 +389,6 @@ onAuthStateChanged(this.auth, (user: User | null) => {
     return new Date(tsOrDate);
   }
 
-  /** Local date string 'YYYY-MM-DD' */
   private toLocalDateStr(d: Date): string {
     const year = d.getFullYear();
     const mm = `${d.getMonth() + 1}`.padStart(2, '0');
@@ -450,8 +506,6 @@ onAuthStateChanged(this.auth, (user: User | null) => {
   }
 
   openHSEInduction() {
-  this.router.navigate(['/hse-induction']);
-}
-
-
+    this.router.navigate(['/hse-induction']);
+  }
 }

@@ -1167,3 +1167,177 @@ ion-header {
     opacity: 0.8;
   }
 }
+
+// Add this to your home.page.scss
+
+.notification-card {
+  margin: 16px;
+  background: var(--ion-card-background, #fff);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .card-title-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .title-icon {
+      font-size: 24px;
+      color: var(--ion-color-primary);
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ion-text-color);
+    }
+  }
+
+  .notification-toggle {
+    display: flex;
+    align-items: center;
+  }
+
+  // Toggle Switch Styling
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 28px;
+
+      &:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.3s;
+        border-radius: 50%;
+      }
+    }
+
+    input:checked + .toggle-slider {
+      background-color: var(--ion-color-primary);
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(22px);
+    }
+
+    input:focus + .toggle-slider {
+      box-shadow: 0 0 1px var(--ion-color-primary);
+    }
+  }
+
+  // Notification Info
+  .notification-info {
+    margin-top: 12px;
+  }
+
+  .info-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(var(--ion-color-primary-rgb), 0.1);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--ion-color-primary);
+    line-height: 1.4;
+
+    ion-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    span {
+      flex: 1;
+    }
+
+    &.success {
+      background: rgba(var(--ion-color-success-rgb), 0.1);
+      color: var(--ion-color-success);
+    }
+
+    &.warning {
+      background: rgba(var(--ion-color-warning-rgb), 0.1);
+      color: var(--ion-color-warning);
+    }
+  }
+
+  .test-notification-btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
+    background: var(--ion-color-light);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ion-color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:active {
+      transform: scale(0.98);
+      background: var(--ion-color-light-shade);
+    }
+
+    ion-icon {
+      font-size: 18px;
+    }
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .notification-card {
+    background: var(--ion-card-background, #1e1e1e);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    .test-notification-btn {
+      background: var(--ion-color-dark);
+
+      &:active {
+        background: var(--ion-color-dark-shade);
+      }
+    }
+  }
+}

@@ -39,13 +39,13 @@
 <!-- Sessions List -->
 <div class="sessions-container">
   <ng-container *ngIf="filteredSessions.length > 0; else noSessions">
-    <div
-      *ngFor="let session of filteredSessions"
-      class="session-card"
-      #sessionCard
-      [id]="session.id"
-      [style.border-left-color]="session.color"
-    >
+<div
+  *ngFor="let session of filteredSessions; let i = index"
+  class="session-card"
+  #sessionCard
+  [id]="session.id ?? ('session-' + i)"
+  [style.border-left-color]="session.color"
+>
       <!-- Session Time Badge -->
       <div class="time-badge" [style.background-color]="session.color">
         <ion-icon name="time-outline" class="time-icon"></ion-icon>

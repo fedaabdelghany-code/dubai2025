@@ -1,10 +1,11 @@
-import { Component, OnInit, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, ElementRef, QueryList, ViewChildren, ViewChild } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { IonContent, IonIcon, IonModal } from '@ionic/angular/standalone';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NotificationService } from '../services/pwa-notification.service';
 
 interface Session {
   id: string;
@@ -42,6 +43,8 @@ throw new Error('Method not implemented.');
 }
   selectedDay = '1';
   @ViewChildren('sessionCard') sessionCards!: QueryList<ElementRef>;
+  @ViewChild(IonContent, { static: false }) content!: IonContent;
+
   private targetSessionId: string | null = null;
   private fromHome = false;
 
@@ -56,7 +59,9 @@ throw new Error('Method not implemented.');
     private firestore: Firestore,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+     private notificationService: NotificationService // Add this
+
   ) {}
 
   ionViewWillEnter() {
@@ -99,6 +104,12 @@ throw new Error('Method not implemented.');
     collectionData(sessionsRef, { idField: 'id' }).subscribe((data: any[]) => {
       this.sessions = data || [];
 
+      // Re-schedule notifications whenever sessions are loaded
+      // (only if notifications are enabled)
+      if (this.notificationService.isNotificationEnabled()) {
+        this.notificationService.scheduleSessionNotifications(this.sessions);
+      }
+
       if (this.targetSessionId) {
         const target = this.sessions.find((s) => s.id === this.targetSessionId);
         if (target) {
@@ -116,22 +127,41 @@ throw new Error('Method not implemented.');
     });
   }
 
-  private waitAndScrollToSessionIfNeeded(sessionId: string | null, retries = 12) {
-    if (!sessionId) return;
-    const target = this.sessionCards?.find(
-      (card) => card.nativeElement.id === sessionId
-    );
+private waitAndScrollToSessionIfNeeded(sessionId: string | null, retries = 12) {
+  if (!sessionId) return;
 
-    if (target && target.nativeElement) {
-      target.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      target.nativeElement.classList.add('highlight');
-      setTimeout(() => target.nativeElement.classList.remove('highlight'), 2200);
-      this.targetSessionId = null;
-    } else if (retries > 0) {
-      setTimeout(() => this.waitAndScrollToSessionIfNeeded(sessionId, retries - 1), 200);
-    }
+  const target = this.sessionCards?.find(
+    (card) => card.nativeElement.id === sessionId
+  );
+
+  if (target && target.nativeElement) {
+    const el = target.nativeElement;
+    
+    // Wait for layout to stabilize
+    setTimeout(() => {
+      // Get viewport height
+      const viewportHeight = window.innerHeight;
+      
+      // Get element's position and height
+      const elementTop = el.offsetTop;
+      const elementHeight = el.offsetHeight;
+      
+      // Calculate center position: element's top + half element height - half viewport height
+      const centerY = elementTop + (elementHeight / 2) - (viewportHeight / 2);
+      
+      // Use Ionic's scrollToPoint method (works reliably in PWA)
+      this.content.scrollToPoint(0, centerY, 500).then(() => {
+        // Add highlight after scroll completes
+        el.classList.add('highlight');
+        setTimeout(() => el.classList.remove('highlight'), 2200);
+      });
+    }, 200); // Increased delay for PWA stability
+
+    this.targetSessionId = null;
+  } else if (retries > 0) {
+    setTimeout(() => this.waitAndScrollToSessionIfNeeded(sessionId, retries - 1), 250);
   }
-
+}
   setSelectedDay(day: string) {
     this.selectedDay = day;
     this.applyFilters();

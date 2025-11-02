@@ -695,19 +695,19 @@
 
 // Highlight animation for scrolled sessions
 .session-card.highlight {
-  animation: highlight-pulse 2s ease;
+  animation: highlight-pulse 2s ease-out;
 }
 
 @keyframes highlight-pulse {
   0%, 100% {
     background-color: transparent;
+    transform: scale(1);
   }
   50% {
-    background-color: rgba(102, 126, 234, 0.1);
-    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+    background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+    transform: scale(1.02);
   }
 }
-
 // Responsive adjustments
 @media (max-width: 768px) {
   .material-card {

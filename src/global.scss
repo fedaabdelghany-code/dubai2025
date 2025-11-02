@@ -319,6 +319,14 @@ ion-tab-button {
     transition: transform 0.2s ease;
   }
 
+  ion-icon {
+  display: inline-block;
+  font-size: 22px;
+  vertical-align: middle;
+  color: inherit;
+}
+
+
   ion-label {
     font-size: 0.85rem; // ⬆️ slightly larger text
     letter-spacing: 0.01rem;

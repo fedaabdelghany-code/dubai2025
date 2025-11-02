@@ -15,6 +15,8 @@ import { DataService } from './app/services/data.service';
 import { firstValueFrom } from 'rxjs';
 import { SplashScreen } from '@capacitor/splash-screen';
 
+defineCustomElements(window);
+
 /**
  * ✅ Preload Firestore data before app navigation
  */
