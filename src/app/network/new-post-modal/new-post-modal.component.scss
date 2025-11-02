@@ -19,7 +19,8 @@
   --min-height: 56px;
   display: flex;
   align-items: center;
-  padding-top: 8px; // Extra breathing room on mobile
+  justify-content: space-between; // Equal spacing
+  padding-top: 8px;
   padding-bottom: 8px;
 
   @media (min-width: 768px) {
@@ -32,10 +33,12 @@
 
 .page-title {
   font-weight: 600;
-  font-size: 1.0625rem; // Slightly larger on mobile for readability
+  font-size: 1.0625rem;
   color: #0a2a5a;
   letter-spacing: -0.01em;
   text-align: center;
+  flex: 1; // Takes center space
+  margin: 0 16px; // Space from buttons
 
   @media (min-width: 768px) {
     font-size: 1rem;
@@ -47,15 +50,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 60px; // Equal minimum width for both
 }
 
 .cancel-btn {
   color: #0a2a5a;
   font-weight: 500;
-  font-size: 0.9375rem; // Larger tap target on mobile
+  font-size: 0.9375rem;
   text-transform: none;
-  padding: 8px 4px; // More tap area
-  min-width: auto;
+  padding: 8px 4px;
   height: 40px;
   
   &:hover {
@@ -70,25 +73,22 @@
 }
 
 .post-btn {
-  color: #ffffff;
-  background: #0a2a5a;
-  border-radius: 20px;
-  font-weight: 600;
+  color: #0a2a5a;
+  font-weight: 600; // Slightly bolder than cancel
   font-size: 0.9375rem;
   text-transform: none;
-  padding: 0 20px; // More padding on mobile
-  height: 40px; // Larger touch target
-  min-width: 70px;
+  padding: 8px 4px;
+  height: 40px;
+  background: transparent;
+  border: none;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(10, 42, 90, 0.15);
 
   &:hover {
-    background: #0d3470;
-    box-shadow: 0 2px 6px rgba(10, 42, 90, 0.25);
+    color: #0d3470;
   }
 
   &:active {
-    transform: scale(0.97);
+    transform: scale(0.95);
   }
 
   &[disabled] {
@@ -98,9 +98,8 @@
 
   @media (min-width: 768px) {
     font-size: 0.875rem;
-    padding: 0 16px;
+    padding: 0;
     height: 32px;
-    min-width: 60px;
   }
 }
 
@@ -109,7 +108,7 @@
   padding: 16px;
   max-width: 600px;
   margin: 0 auto;
-  padding-bottom: calc(20px + env(safe-area-inset-bottom)); // Bottom safe area
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
 
   @media (min-width: 768px) {
     padding: 24px 20px;
@@ -132,7 +131,7 @@
 }
 
 .avatar {
-  width: 44px; // Slightly smaller on mobile
+  width: 44px;
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
@@ -167,13 +166,13 @@
 /* Textarea - Mobile Optimized */
 .post-textarea {
   width: 100%;
-  font-size: 1rem; // Native iOS size to prevent zoom
+  font-size: 1rem;
   line-height: 1.6;
   color: #1a1a1a;
   border: none;
   resize: none;
   outline: none;
-  min-height: 120px; // Shorter on mobile
+  min-height: 120px;
   background: transparent;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 0;
@@ -202,7 +201,7 @@
 
   img {
     width: 100%;
-    max-height: 350px; // Slightly shorter on mobile
+    max-height: 350px;
     object-fit: cover;
     display: block;
 
@@ -215,7 +214,7 @@
     position: absolute;
     top: 12px;
     right: 12px;
-    width: 36px; // Larger touch target on mobile
+    width: 36px;
     height: 36px;
     display: flex;
     align-items: center;
@@ -253,7 +252,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 18px 20px; // Taller touch target
+  padding: 18px 20px;
   border: 2px dashed #d1d5db;
   border-radius: 12px;
   background: #ffffff;
@@ -263,10 +262,10 @@
   font-size: 0.9375rem;
   transition: all 0.2s ease;
   position: relative;
-  min-height: 56px; // Minimum touch target size
+  min-height: 56px;
 
   ion-icon {
-    font-size: 1.5rem; // Larger on mobile
+    font-size: 1.5rem;
   }
 
   &:hover {
@@ -337,6 +336,6 @@
 /* Prevent zoom on iOS inputs */
 @media screen and (max-width: 767px) {
   .post-textarea {
-    font-size: 16px; // Critical for preventing iOS zoom
+    font-size: 16px;
   }
 }

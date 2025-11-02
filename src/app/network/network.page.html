@@ -73,12 +73,11 @@
       </div>
     </div>
   </div>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="openNewPostModal()">
+    <ion-icon name="create-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
-  <!-- FLOATING ACTION BUTTON -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-bottom-right">
-    <ion-fab-button (click)="openNewPostModal()">
-      <ion-icon name="create-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 
 </ion-content>

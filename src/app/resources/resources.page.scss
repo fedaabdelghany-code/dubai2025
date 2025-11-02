@@ -1,5 +1,9 @@
 // Mobile-First AMEA Resources Styles
 
+$holcim-green: #7AB023; // Primary green
+$holcim-dark-green: #5c8b1c; // Darker tone for active/hover
+$holcim-light-green: #eaf5df; // Subtle background highlight
+
 .resources-content {
   --background: #f9fafb;
 }
@@ -212,22 +216,25 @@
   min-width: 85px;
   padding: 0.6rem 1rem;
   border-radius: 0.5rem;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.8rem;
   background: #f9fafb;
-  color: #6b7280;
+  color: #18376e;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   white-space: nowrap;
+  border: none;
 
   &:hover:not(.active) {
-    background: #f3f4f6;
+    background: $holcim-light-green;
+    color: $holcim-dark-green;
   }
 
   &.active {
-    background: #eff6ff;
-    color: #1D4370;
-    font-weight: 600;
+    background: $holcim-green;
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(122, 176, 35, 0.25);
   }
 
   @media (min-width: 768px) {
@@ -236,6 +243,7 @@
     font-size: 0.85rem;
   }
 }
+
 
 @keyframes slideDown {
   from {

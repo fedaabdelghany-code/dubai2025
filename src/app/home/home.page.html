@@ -335,63 +335,65 @@
   </div>
 
 
-  <!-- ================= QR MODAL ================= -->
-  <ion-modal
-    [isOpen]="showQR"
-    [backdropDismiss]="true"
-    (didDismiss)="closeQRCode()"
-    class="qr-modal"
-  >
-    <ng-template>
-      <div class="qr-modal-content">
-        <div class="qr-header">
-          <div class="qr-title-group">
-            <h1 class="qr-title">Digital Business Card</h1>
+<!-- ================= QR MODAL ================= -->
+<ion-modal
+  [isOpen]="showQR"
+  [backdropDismiss]="true"
+  (didDismiss)="closeQRCode()"
+  class="qr-modal"
+>
+  <ng-template>
+    <div class="qr-modal-content">
+      <div class="qr-header">
+        <h1 class="qr-title">Digital Business Card</h1>
+        <button class="close-btn" (click)="closeQRCode()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="qr-card-modal">
+        <div class="qr-card-content">
+          <div class="qr-display">
+            <div class="qr-frame">
+              <img src="assets/qr.png" alt="QR Code" class="qr-image" />
+            </div>
+            <p class="qr-instruction">Scan to exchange contact information</p>
           </div>
-          <button class="close-btn" (click)="closeQRCode()">
-            <ion-icon name="close-outline"></ion-icon>
-          </button>
-        </div>
 
-        <div class="qr-container">
-          <div class="qr-card-modal">
-            <div class="qr-card-content">
-              <div class="qr-display">
-                <div class="qr-frame">
-                  <div class="qr-code"><ion-icon name="qr-code"></ion-icon></div>
-                </div>
-                <p class="qr-instruction">Scan to exchange contact information</p>
+          <div class="user-info">
+            <div class="info-row info-row-primary">
+              <div class="info-icon">
+                <ion-icon name="person-outline"></ion-icon>
               </div>
+              <div class="info-text">
+                <div class="info-label">Name</div>
+                <div class="info-value">Feda Khalid</div>
+              </div>
+            </div>
 
-              <div class="user-info">
-                <div class="info-row info-row-primary">
-                  <div class="info-icon"><ion-icon name="person-outline"></ion-icon></div>
-                  <div class="info-text">
-                    <div class="info-label">Name</div>
-                    <div class="info-value">John Anderson</div>
-                  </div>
-                </div>
+            <div class="info-row">
+              <div class="info-icon">
+                <ion-icon name="briefcase-outline"></ion-icon>
+              </div>
+              <div class="info-text">
+                <div class="info-label">Position</div>
+                <div class="info-value">Digital Strategy Specialist</div>
+              </div>
+            </div>
 
-                <div class="info-row">
-                  <div class="info-icon"><ion-icon name="briefcase-outline"></ion-icon></div>
-                  <div class="info-text">
-                    <div class="info-label">Position</div>
-                    <div class="info-value">Director of Marketing</div>
-                  </div>
-                </div>
-
-                <div class="info-row">
-                  <div class="info-icon"><ion-icon name="globe-outline"></ion-icon></div>
-                  <div class="info-text">
-                    <div class="info-label">Country</div>
-                    <div class="info-value">Egypt</div>
-                  </div>
-                </div>
+            <div class="info-row">
+              <div class="info-icon">
+                <ion-icon name="globe-outline"></ion-icon>
+              </div>
+              <div class="info-text">
+                <div class="info-label">Country</div>
+                <div class="info-value">Egypt</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </ng-template>
-  </ion-modal>
+    </div>
+  </ng-template>
+</ion-modal>
 </ion-content>
