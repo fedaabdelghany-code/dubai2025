@@ -5,7 +5,7 @@ $holcim-dark-green: #5c8b1c; // Darker tone for active/hover
 $holcim-light-green: #eaf5df; // Subtle background highlight
 
 .resources-content {
-  --background: #f9fafb;
+  --background: #ffffff;
 }
 
 .pb-20 {
@@ -34,14 +34,14 @@ $holcim-light-green: #eaf5df; // Subtle background highlight
   position: absolute;
   top: 0;
   right: 0;
-  width: 13rem;
+  width: 25rem;
   height: auto;
   opacity: 0.55;
   z-index: 0;
   pointer-events: none;
   user-select: none;
   mix-blend-mode: soft-light;
-  transform: translate(25%, -10%);
+  transform: translate(20%, -15%);
 
   @media (min-width: 480px) {
     width: 15rem;
@@ -843,37 +843,50 @@ $holcim-light-green: #eaf5df; // Subtle background highlight
   border-radius: 16px;
   cursor: default;
   transition: transform 0.3s ease, box-shadow 0.2s ease;
+
   img {
     width: 100%;
-    height: 180px;
+    /* INCREASED HEIGHT: Makes the card more vertical to show more of the image */
+    height: 260px; /* Increased from 180px */
     object-fit: cover;
   }
+
   .project-info {
-    padding: 1rem;
-    background-color: rgba(0,0,0,0.5);
+    /* ADJUSTED PADDING: Slight reduction for compactness, maintaining readability */
+    padding: 1rem 1.25rem;
+    
+    /* BACKGROUND ADJUSTMENT: Reduced opacity for a sleeker look that lets more image through */
+    background-color: rgba(0, 0, 0, 0.65); /* Increased opacity from 0.5 to 0.65 for better text contrast */
+    
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     color: white;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(6px); /* Slightly stronger blur for a sleeker effect */
+
     h5 {
       margin: 0 0 0.25rem;
       font-size: 1.1rem;
       font-weight: 700;
+      /* Subtle text shadow for crispness over image */
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); 
     }
+
     p {
+      /* Reduced bottom margin to compact the paragraph */
+      margin-bottom: 0;
       font-size: 0.9rem;
       line-height: 1.4;
+      /* Reduced line count by capping max height, which implicitly makes it compact */
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* Limit to 2 lines of description */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  }
-}
 
-/* People */
+}/* People */
 .people-section {
   display: flex;
   flex-direction: column;

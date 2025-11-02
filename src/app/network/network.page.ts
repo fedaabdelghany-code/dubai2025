@@ -1,19 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { PostService, Post } from '../services/post.service';
 import { NewPostModalComponent } from './new-post-modal/new-post-modal.component';
+import { Auth } from '@angular/fire/auth';
 
-interface Post {
-  id: string;
-  userName: string;
-  userPhoto?: string;
-  caption: string;
-  photoURL?: string;
-  likes: number;
+interface PostDisplay extends Post {
   liked: boolean;
-  comments: { userName: string; text: string }[];
-  timestamp: Date;
   showComments?: boolean;
   newComment?: string;
 }
@@ -25,144 +20,185 @@ interface Post {
   templateUrl: './network.page.html',
   styleUrls: ['./network.page.scss'],
 })
-export class NetworkPage implements OnInit {
+export class NetworkPage implements OnInit, OnDestroy {
   searchQuery = '';
-  currentUserName = 'Feda Abdelghany';
-  currentUserPhoto = 'assets/profilepics/khalid_samaka.jpg';
+  
+  // Current user info from Google SSO
+  currentUserId = '';
+  currentUserName = '';
+  currentUserPhoto = '';
 
-  newPost: Partial<Post> = { caption: '', photoURL: '' };
-  allPosts: Post[] = [];
-  filteredPosts: Post[] = [];
+  allPosts: PostDisplay[] = [];
+  filteredPosts: PostDisplay[] = [];
+  
+  private postsSubscription?: Subscription;
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(
+    private modalCtrl: ModalController,
+    private postService: PostService,
+    private auth: Auth
+  ) {}
 
   ngOnInit() {
-    // ✅ Dummy Feed Data
-    this.allPosts = [
-      {
-        id: '1',
-        userName: 'Ahmed Youssef',
-        userPhoto: 'assets/profilepics/adham_elmahdy.jpeg',
-        caption: 'Excited to be part of the Holcim sustainability workshop this week! 🌿',
-        photoURL: 'assets/zuhra.jpg',
-        likes: 12,
-        liked: false,
-        comments: [
-          { userName: 'Sara Ali', text: 'Looks great!' },
-          { userName: 'Mohamed Nabil', text: 'See you there!' },
-        ],
-        timestamp: new Date('2025-10-20T09:00:00'),
-      },
-      {
-        id: '2',
-        userName: 'Leila Mansour',
-        userPhoto: 'assets/profilepics/ali_said.jpeg',
-        caption:
-          'Another successful day at the Sokhna Plant – proud of our team’s performance and teamwork! 💪',
-        photoURL: 'assets/mall.webp',
-        likes: 23,
-        liked: false,
-        comments: [{ userName: 'Omar Farouk', text: 'Amazing results, Leila!' }],
-        timestamp: new Date('2025-10-21T14:30:00'),
-      },
-      {
-        id: '3',
-        userName: 'John Anderson',
-        userPhoto: 'assets/profilepics/grant_earnshaw.jpg',
-        caption: 'Innovation is at the core of what we do. Testing new green materials today!',
-        photoURL: 'assets/palm.jpg',
-        likes: 18,
-        liked: false,
-        comments: [],
-        timestamp: new Date('2025-10-22T11:45:00'),
-      },
-    ];
-
-    this.refreshFeed();
+    // Get current user info from Google SSO
+    this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.currentUserId = user.uid;
+        this.currentUserName = user.displayName || 'Anonymous';
+        this.currentUserPhoto = user.photoURL || '';
+        
+        // Subscribe to real-time posts
+        this.subscribeToPost();
+      }
+    });
   }
 
-  /** 🔍 Filter Posts */
+  ngOnDestroy() {
+    this.postsSubscription?.unsubscribe();
+  }
+
+  /**
+   * Subscribe to real-time posts from Firestore
+   */
+  private subscribeToPost() {
+    this.postsSubscription = this.postService.getPosts().subscribe({
+      next: (posts) => {
+        // Transform posts to include UI state
+        this.allPosts = posts.map((post) => ({
+          ...post,
+          liked: post.likes.includes(this.currentUserId),
+          showComments: false,
+          newComment: '',
+        }));
+        this.refreshFeed();
+      },
+      error: (error) => {
+        console.error('Error fetching posts:', error);
+      },
+    });
+  }
+
+  /**
+   * Filter posts based on search query
+   */
   onSearchChange(query: string) {
+    if (!query.trim()) {
+      this.filteredPosts = [...this.allPosts];
+      return;
+    }
+
+    const lowerQuery = query.toLowerCase();
     this.filteredPosts = this.allPosts.filter(
       (p) =>
-        p.caption.toLowerCase().includes(query.toLowerCase()) ||
-        p.userName.toLowerCase().includes(query.toLowerCase())
+        p.caption.toLowerCase().includes(lowerQuery) ||
+        p.userName.toLowerCase().includes(lowerQuery)
     );
   }
 
-  /** 🆕 Create Post directly */
-  createPost() {
-    if (!this.newPost.caption?.trim()) return;
+  /**
+   * Open modal to create new post
+   */
+  async openNewPostModal() {
+    const modal = await this.modalCtrl.create({
+      component: NewPostModalComponent,
+      cssClass: 'full-screen-modal',
+      showBackdrop: true,
+    });
 
-    const newPost: Post = {
-      id: (this.allPosts.length + 1).toString(),
-      userName: this.currentUserName,
-      userPhoto: this.currentUserPhoto,
-      caption: this.newPost.caption,
-      photoURL: this.newPost.photoURL,
-      likes: 0,
-      liked: false,
-      comments: [],
-      timestamp: new Date(),
-    };
+    await modal.present();
 
-    this.allPosts.unshift(newPost);
-    this.refreshFeed();
-    this.newPost = { caption: '', photoURL: '' };
+    const { data } = await modal.onDidDismiss();
+    if (data?.caption) {
+      await this.createPost(data.caption, data.photoURL);
+    }
   }
 
-  /** ❤️ Like / Unlike */
-  toggleLike(post: Post) {
-    post.liked = !post.liked;
-    post.likes += post.liked ? 1 : -1;
+  /**
+   * Create a new post in Firestore
+   */
+  async createPost(caption: string, photoURL?: string) {
+    try {
+      await this.postService.createPost({
+        userId: this.currentUserId,
+        userName: this.currentUserName,
+        userPhoto: this.currentUserPhoto,
+        caption: caption,
+        photoURL: photoURL,
+      });
+      // Post will automatically appear in feed via real-time subscription
+    } catch (error) {
+      console.error('Error creating post:', error);
+    }
   }
 
-  /** 💬 Show / Hide Comments */
-  toggleComments(post: Post) {
+  /**
+   * Toggle like on a post
+   */
+  async toggleLike(post: PostDisplay) {
+    if (!post.id) return;
+
+    try {
+      // Optimistic UI update
+      post.liked = !post.liked;
+      
+      // Update in Firestore
+      await this.postService.toggleLike(post.id, this.currentUserId, !post.liked);
+      
+      // The real-time listener will update the actual like count
+    } catch (error) {
+      console.error('Error toggling like:', error);
+      // Revert optimistic update on error
+      post.liked = !post.liked;
+    }
+  }
+
+  /**
+   * Toggle comments visibility
+   */
+  toggleComments(post: PostDisplay) {
     post.showComments = !post.showComments;
   }
 
-  /** ➕ Add Comment */
-  addComment(post: Post) {
-    if (!post.newComment?.trim()) return;
-    post.comments.push({
-      userName: this.currentUserName,
-      text: post.newComment,
-    });
-    post.newComment = '';
+  /**
+   * Add a comment to a post
+   */
+  async addComment(post: PostDisplay) {
+    if (!post.newComment?.trim() || !post.id) return;
+
+    try {
+      await this.postService.addComment(post.id, {
+        userName: this.currentUserName,
+        userPhoto: this.currentUserPhoto,
+        text: post.newComment,
+      });
+
+      // Clear input
+      post.newComment = '';
+      
+      // Comment will automatically appear via real-time subscription
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
   }
 
-  /** 🧭 Open Fullscreen Modal for New Post */
-async openNewPostModal() {
-  const modal = await this.modalCtrl.create({
-    component: NewPostModalComponent,
-    cssClass: 'full-screen-modal',
-    showBackdrop: true,
-  });
-
-  await modal.present();
-
-  const { data } = await modal.onDidDismiss();
-  if (data) {
-    const newPost = {
-      id: (this.allPosts.length + 1).toString(),
-      userName: this.currentUserName,
-      userPhoto: this.currentUserPhoto,
-      caption: data.caption,
-      photoURL: data.photoURL,
-      likes: 0,
-      liked: false,
-      comments: [],
-      timestamp: new Date(),
-    };
-    this.allPosts.unshift(newPost);
-    this.filteredPosts = [...this.allPosts];
+  /**
+   * Get like count for display
+   */
+  getLikeCount(post: PostDisplay): number {
+    return post.likes?.length || 0;
   }
-}
 
-  /** 🔄 Helper: Refresh and Sort Feed */
+  /**
+   * Get comment count for display
+   */
+  getCommentCount(post: PostDisplay): number {
+    return post.comments?.length || 0;
+  }
+
+  /**
+   * Refresh and sort feed
+   */
   private refreshFeed() {
-    this.allPosts.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
     this.filteredPosts = [...this.allPosts];
   }
 }

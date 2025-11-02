@@ -30,14 +30,14 @@ ion-content {
   position: absolute;
   top: 0;
   right: 0;
-  width: 13rem;
+  width: 25rem;
   height: auto;
   opacity: 0.55;
   z-index: 0;
   pointer-events: none;
   user-select: none;
   mix-blend-mode: soft-light;
-  transform: translate(25%, -10%);
+  transform: translate(20%, -15%);
 
   @media (min-width: 480px) {
     width: 15rem;
@@ -119,75 +119,86 @@ ion-content {
 
 
 .hotel-card {
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  background: #ffffff;
   border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  margin-bottom: 1.5rem;
-  transition: all 0.3s ease-in-out;
 
-  &:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
-  }
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09),
+              0 2px 5px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(229, 231, 235, 0.7);
+  margin-bottom: 1.5rem; /* Reduced external margin */
 
   .card-content {
-    padding: 1.75rem 2.25rem; // more breathing room horizontally
+    /* Reduced padding: Tightened both horizontal and vertical space */
+    padding: 1.5rem 2rem;
   }
 
   .card-header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    /* Reduced margin-bottom and removed padding-bottom/border for compactness */
     margin-bottom: 1rem;
+    border-bottom: none;
+    padding-bottom: 0;
   }
 
   .card-title-with-icon {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.6rem; /* Slightly tighter gap */
 
     .wifi-icon {
-      font-size: 1.4rem;
-      padding: 0.4rem;
-      background: rgba(28, 67, 112, 0.1); // Holcim blue tint
-      color: #0a2a5a;
+      /* Reduced icon size and padding */
+      font-size: 1.3rem;
+      padding: 0.5rem;
+      background: #e6f0ff;
+      color: #0d47a1;
       border-radius: 50%;
+      box-shadow: inset 0 1px 3px rgba(13, 71, 161, 0.1);
     }
   }
 
   .card-title {
     color: #0a2a5a;
-    font-size: 1.05rem;
+    /* Slightly reduced font size */
+    font-size: 1.1rem;
     font-weight: 700;
     margin: 0;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.3px; /* Slightly tighter letter-spacing */
   }
 
   .wifi-details {
+    /* Reduced body font size and line height */
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #1f2937;
+    color: #4b5563;
 
     p {
+      /* Significantly reduced vertical margin between detail lines */
       margin: 0.4rem 0;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem; /* Tighter gap */
 
       ion-icon {
+        /* Reduced detail icon size */
         font-size: 1rem;
-        color: #2c5aa0; // cohesive blue tone
+        color: #2c5aa0;
+        min-width: 1rem;
       }
 
       strong {
-        color: #0a2a5a;
+        color: #1f2937;
         font-weight: 600;
+      }
+
+      span {
+        color: #6b7280;
+        font-weight: 400;
       }
     }
   }
-}
-
-/* ========================================
+}/* ========================================
    UNIFIED SESSION CARD SYSTEM
    All session cards (next, no-session, current) share the same styling
    ======================================== */

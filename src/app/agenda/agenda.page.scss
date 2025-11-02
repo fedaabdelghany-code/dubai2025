@@ -28,14 +28,14 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 13rem;
+  width: 25rem;
   height: auto;
   opacity: 0.55;
   z-index: 0;
   pointer-events: none;
   user-select: none;
   mix-blend-mode: soft-light;
-  transform: translate(25%, -10%);
+  transform: translate(20%, -15%);
 
   @media (min-width: 480px) {
     width: 15rem;
