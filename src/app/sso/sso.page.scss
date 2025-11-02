@@ -124,55 +124,66 @@ $holcim-green: #7ab023;
     animation: fadeInText 0.8s ease-out 0.3s both;
   }
 
-  .google-btn {
-    --background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    --background-hover: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    --color: #3c4043;
-    --border-radius: 0.875rem;
-    --box-shadow: 0 4px 16px rgba(4, 23, 57, 0.15);
-    height: 3.5rem;
-    font-weight: 600;
-    font-size: 1rem;
-    margin-top: 1rem;
-    border: 1px solid rgba(4, 23, 57, 0.1);
-    animation: fadeInText 0.8s ease-out 0.4s both;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-
-    // Shine effect
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-      transition: left 0.5s;
-    }
-
-    &:active:not([disabled])::before {
-      left: 100%;
-    }
-
-    ion-icon {
-      font-size: 1.375rem;
-      margin-right: 0.625rem;
-    }
-
-    &:active:not([disabled]) {
-      transform: scale(0.98);
-      --box-shadow: 0 2px 8px rgba(4, 23, 57, 0.2);
-    }
-
-    &[disabled] {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+// Google Sign-in Button Styles
+.google-btn {
+  --background: white;
+  --color: #333;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.25px;
+  
+  // Flexbox for proper icon alignment
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  
+  // Hover effect
+  &:hover {
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
+  
+  // Disabled state
+  &.button-disabled {
+    opacity: 0.6;
+  }
+}
 
-  .footer-text {
+// Google logo image
+img.google {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  flex-shrink: 0; // Prevent image from shrinking
+}
+
+// Alternative sizes if needed
+img.google-sm {
+  width: 18px;
+  height: 18px;
+}
+
+img.google-lg {
+  width: 24px;
+  height: 24px;
+}
+
+// Ensure proper alignment with text
+.google-btn::part(native) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}  .footer-text {
     margin-top: 2rem;
     animation: fadeInText 0.8s ease-out 0.5s both;
 

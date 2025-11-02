@@ -360,3 +360,28 @@ ion-tab-button {
   width: 100% !important;
   border-radius: 0 !important;
 }
+
+ion-fab-button {
+  display: flex !important;
+  visibility: visible !important;
+}
+
+
+// FAB Button - Global Styles (REQUIRED for PWA)
+ion-fab-button {
+  --background: #0a2a5a !important;
+  --background-activated: #082243 !important;
+  --color: white !important;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  --border-radius: 50% !important;
+  
+  width: 56px !important;
+  height: 56px !important;
+}
+
+ion-fab-button::part(native) {
+  background-color: #0a2a5a !important;
+  color: white !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
