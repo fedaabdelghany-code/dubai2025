@@ -1,0 +1,132 @@
+// HOLCIM BRAND COLORS
+$holcim-dark-blue: #041739;
+$holcim-light-blue: #1d4370;
+$holcim-link-blue: #00A9E0;
+
+// GENERIC COLORS
+$text-color-primary: #1e293b;
+$text-color-secondary: #475569;
+$light-gray-line: #e5e7eb;
+$light-bg: #f8fafc;
+
+// HEADER HEIGHT
+$fixed-header-height: 65px;
+
+// =====================
+// PAGE CONTAINER & HEADER
+// =====================
+.tips-page-container {
+  background: $light-bg;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s ease;
+
+  &.fade-out {
+    opacity: 0;
+  }
+}
+
+.fixed-header-bar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: $fixed-header-height;
+  background-color: $holcim-dark-blue;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 1000;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .header-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .close-btn {
+    font-size: 2rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.5rem;
+  }
+}
+
+// =====================
+// SCROLLABLE CONTENT
+// =====================
+.tips-content-wrapper {
+  padding-top: calc($fixed-header-height + 2.5rem); // instead of 1rem
+  padding-bottom: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  scroll-behavior: smooth;
+}
+
+// =====================
+// TIPS LIST
+// =====================
+.tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tip-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  padding: 16px 1rem;
+  gap: 20px;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+  dt {
+    font-weight: 600;
+    color: $holcim-light-blue;
+  }
+
+  dd {
+    margin: 0;
+    color: $text-color-secondary;
+
+    strong {
+      color: $holcim-dark-blue;
+      font-weight: 700;
+    }
+
+    a.holcim-link {
+      color: $holcim-link-blue;
+      text-decoration: none;
+      font-weight: 600;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+// RESPONSIVE
+@media (max-width: 600px) {
+  .tip-item {
+    grid-template-columns: 1fr;
+    dt {
+      border-bottom: 1px solid $light-gray-line;
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+      color: $holcim-dark-blue;
+    }
+  }
+}

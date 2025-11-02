@@ -52,4 +52,3 @@ self.addEventListener('push', function(event) {
     console.log('[Custom SW] Push event has no data');
   }
 });
-

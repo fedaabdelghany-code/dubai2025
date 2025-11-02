@@ -213,7 +213,7 @@
             </div>
           </div>
 
-          <div class="action-card" (click)="openNetworking()">
+          <div class="action-card" (click)="openTips()">
             <div class="action-content">
               <div class="action-icon networking"><ion-icon name="bulb-outline"></ion-icon></div>
               <div class="action-title">Tips</div>
@@ -229,56 +229,7 @@
             </div>
           </div>
         </div>
-<!-- Add this right after the Quick Actions div in your home.page.html -->
 
-<!-- Notification Settings Card -->
-<div class="notification-card">
-  <div class="card-content">
-    <div class="card-header">
-      <div class="card-title-with-icon">
-        <ion-icon name="notifications-outline" class="title-icon"></ion-icon>
-        <h3 class="card-title">Session Reminders</h3>
-      </div>
-      <div class="notification-toggle">
-        <label class="toggle-switch">
-          <input 
-            type="checkbox" 
-            [checked]="notificationsEnabled"
-            (change)="toggleNotifications()"
-          />
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-    </div>
-
-    <div class="notification-info">
-      <ng-container *ngIf="notificationsEnabled">
-        <div class="info-message success">
-          <ion-icon name="checkmark-circle"></ion-icon>
-          <span>You'll receive reminders 5 minutes before each session</span>
-        </div>
-        <button class="test-notification-btn" (click)="testNotification()">
-          <ion-icon name="notifications-outline"></ion-icon>
-          Test Notification
-        </button>
-      </ng-container>
-
-      <ng-container *ngIf="!notificationsEnabled && notificationPermission !== 'denied'">
-        <div class="info-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          <span>Enable notifications to never miss a session</span>
-        </div>
-      </ng-container>
-
-      <ng-container *ngIf="notificationPermission === 'denied'">
-        <div class="info-message warning">
-          <ion-icon name="warning-outline"></ion-icon>
-          <span>Notifications blocked. Please enable them in your device settings.</span>
-        </div>
-      </ng-container>
-    </div>
-  </div>
-</div>
         <!-- My Agenda -->
         <div class="agenda-card">
           <div class="card-content">

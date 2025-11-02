@@ -5,7 +5,6 @@ import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NotificationService } from '../services/pwa-notification.service';
 
 interface Session {
   id: string;
@@ -60,8 +59,7 @@ throw new Error('Method not implemented.');
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private router: Router,
-     private notificationService: NotificationService // Add this
-
+    
   ) {}
 
   ionViewWillEnter() {
@@ -103,12 +101,6 @@ throw new Error('Method not implemented.');
     const sessionsRef = collection(this.firestore, 'sessions');
     collectionData(sessionsRef, { idField: 'id' }).subscribe((data: any[]) => {
       this.sessions = data || [];
-
-      // Re-schedule notifications whenever sessions are loaded
-      // (only if notifications are enabled)
-      if (this.notificationService.isNotificationEnabled()) {
-        this.notificationService.scheduleSessionNotifications(this.sessions);
-      }
 
       if (this.targetSessionId) {
         const target = this.sessions.find((s) => s.id === this.targetSessionId);

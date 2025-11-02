@@ -31,4 +31,8 @@ export const routes: Routes = [
     canActivate: [AuthGuard, DataPrefetchGuard],
     loadComponent: () => import('./hse-induction/hse-induction.page').then(m => m.HseInductionPage),
   },
+  {
+    path: 'tips',
+    loadComponent: () => import('./tips/tips.page').then( m => m.TipsPage)
+  },
 ];
