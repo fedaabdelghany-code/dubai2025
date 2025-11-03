@@ -25,19 +25,17 @@ export class NewPostModalComponent implements OnInit, OnDestroy {
   userName = '';
   userPhoto = '';
   caption = '';
-  selectedImageDataUrl?: string; // Base64 data URL for preview
-  uploadedImageUrl?: string; // Firebase Storage URL after upload
+  selectedImageDataUrl?: string;
+  uploadedImageUrl?: string;
   isLoading = false;
   imageLoadError = false;
 
   ngOnInit() {
-    // Set user immediately if cached
     const currentUser = this.auth.currentUser;
     if (currentUser) {
       this.setUserData(currentUser);
     }
 
-    // ✅ Subscribe to auth state within Angular Zone for proper change detection
     this.unsubscribeAuth = onAuthStateChanged(this.auth, (user: User | null) => {
       this.zone.run(() => {
         if (user) {
@@ -56,17 +54,10 @@ export class NewPostModalComponent implements OnInit, OnDestroy {
 
   private setUserData(user: User) {
     this.userName = this.toTitleCase(user.displayName || 'Anonymous');
-
-    let photoURL =
-      user.photoURL ||
-      user.providerData[0]?.photoURL ||
-      'assets/user.png';
-
-    // If Google photo, upscale resolution
+    let photoURL = user.photoURL || user.providerData[0]?.photoURL || 'assets/user.png';
     if (photoURL.includes('googleusercontent.com')) {
       photoURL = photoURL.replace(/=s\d+-c/, '=s400-c');
     }
-
     this.userPhoto = photoURL;
   }
 
@@ -79,63 +70,215 @@ export class NewPostModalComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Show action sheet to choose image source (Camera or Gallery)
-   * For PWA: Both options use file input, but camera option requests camera on mobile
+   * Show action sheet to choose image source
+   * CRITICAL: Must run in NgZone for mobile
    */
   async selectImageSource() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Add Photo',
-      buttons: [
-        {
-          text: 'Take Photo',
-          icon: 'camera',
-          handler: () => {
-            this.takePhoto();
+    console.log('[selectImageSource] Opening action sheet...');
+    
+    try {
+      const actionSheet = await this.actionSheetCtrl.create({
+        header: 'Add Photo',
+        mode: 'ios', // iOS mode works better on all platforms
+        buttons: [
+          {
+            text: 'Take Photo',
+            icon: 'camera',
+            handler: () => {
+              console.log('[selectImageSource] Take Photo selected');
+              // Use setTimeout to ensure action sheet dismisses first
+              setTimeout(() => this.takePhoto(), 300);
+              return true;
+            },
           },
-        },
-        {
-          text: 'Choose from Gallery',
-          icon: 'images',
-          handler: () => {
-            this.pickFromGallery();
+          {
+            text: 'Choose from Gallery',
+            icon: 'images',
+            handler: () => {
+              console.log('[selectImageSource] Gallery selected');
+              setTimeout(() => this.pickFromGallery(), 300);
+              return true;
+            },
           },
-        },
-        {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel',
-        },
-      ],
-    });
+          {
+            text: 'Cancel',
+            icon: 'close',
+            role: 'cancel',
+            handler: () => {
+              console.log('[selectImageSource] Cancelled');
+            }
+          },
+        ],
+      });
 
-    await actionSheet.present();
+      await actionSheet.present();
+      console.log('[selectImageSource] Action sheet presented');
+    } catch (error) {
+      console.error('[selectImageSource] Error:', error);
+      this.showAlert('Error', 'Failed to open photo picker');
+    }
   }
 
   /**
-   * Take photo with camera (opens camera on mobile browsers)
+   * Take photo with camera
    */
   async takePhoto() {
-    const dataUrl = await this.imageUploadService.takePhoto();
-    if (dataUrl) {
-      this.selectedImageDataUrl = dataUrl;
+    console.log('[takePhoto] Starting...');
+    
+    try {
+      const dataUrl = await this.imageUploadService.takePhoto();
+      
+      this.zone.run(() => {
+        if (dataUrl) {
+          console.log('[takePhoto] Photo captured, updating UI');
+          this.selectedImageDataUrl = dataUrl;
+        } else {
+          console.warn('[takePhoto] No photo captured');
+        }
+      });
+    } catch (error) {
+      console.error('[takePhoto] Error:', error);
+      this.zone.run(() => {
+        this.showAlert('Error', 'Failed to take photo. Please try again.');
+      });
     }
   }
 
   /**
-   * Pick image from gallery (opens file picker)
+   * Pick image from gallery
    */
   async pickFromGallery() {
-    const dataUrl = await this.imageUploadService.pickImageFromGallery();
-    if (dataUrl) {
-      this.selectedImageDataUrl = dataUrl;
+    console.log('[pickFromGallery] Starting...');
+    
+    try {
+      const dataUrl = await this.imageUploadService.pickImageFromGallery();
+      
+      this.zone.run(() => {
+        if (dataUrl) {
+          console.log('[pickFromGallery] Image selected, updating UI');
+          this.selectedImageDataUrl = dataUrl;
+        } else {
+          console.warn('[pickFromGallery] No image selected');
+        }
+      });
+    } catch (error) {
+      console.error('[pickFromGallery] Error:', error);
+      this.zone.run(() => {
+        this.showAlert('Error', 'Failed to select image. Please try again.');
+      });
     }
   }
 
   /**
-   * Legacy method for web file input (fallback)
+   * Remove selected photo
    */
-  triggerUpload() {
-    document.getElementById('photoUpload')?.click();
+  removePhoto() {
+    console.log('[removePhoto] Removing photo');
+    this.selectedImageDataUrl = undefined;
+    this.uploadedImageUrl = undefined;
+  }
+
+  /**
+   * Create post and upload image
+   */
+  async createPost() {
+    // Prevent double-submission
+    if (this.isLoading) {
+      console.log('[createPost] Already posting, ignoring');
+      return;
+    }
+
+    console.log('[createPost] Starting...');
+    
+    if (!this.caption.trim() && !this.selectedImageDataUrl) {
+      this.showAlert('Error', 'Please add a caption or photo');
+      return;
+    }
+
+    this.isLoading = true;
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Posting...',
+      spinner: 'crescent',
+      backdropDismiss: false,
+    });
+    await loading.present();
+
+    try {
+      let photoURL: string | undefined = undefined;
+      const user = this.auth.currentUser;
+
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      if (this.selectedImageDataUrl) {
+        console.log('[createPost] Compressing image...');
+        const compressedImage = await this.imageUploadService.compressImage(
+          this.selectedImageDataUrl,
+          1200,
+          0.8
+        );
+
+        console.log('[createPost] Uploading image...');
+        photoURL = await this.imageUploadService.uploadPostImage(
+          compressedImage,
+          user.uid
+        );
+      }
+
+      console.log('[createPost] Dismissing modal with data');
+      await loading.dismiss();
+
+      await this.modalCtrl.dismiss(
+        {
+          caption: this.caption.trim(),
+          photoURL: photoURL,
+        },
+        'post'
+      );
+
+    } catch (error) {
+      await loading.dismiss();
+      console.error('[createPost] Error:', error);
+      this.isLoading = false;
+      this.showAlert('Error', 'Failed to create post. Please try again.');
+    }
+  }
+
+  /**
+   * Close modal without posting
+   */
+  closeModal() {
+    this.modalCtrl.dismiss(null, 'cancel');
+  }
+
+  /**
+   * Handle avatar image load error
+   */
+  onImageError(event: any) {
+    console.error('[onImageError] Avatar failed to load');
+    this.imageLoadError = true;
+    event.target.src = 'assets/user.png';
+  }
+
+  /**
+   * Check if post button should be enabled
+   */
+  canPost(): boolean {
+    return (this.caption.trim().length > 0 || !!this.selectedImageDataUrl) && !this.isLoading;
+  }
+
+  /**
+   * Show alert dialog
+   */
+  private async showAlert(header: string, message: string) {
+    const alert = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 
   /**
@@ -162,120 +305,4 @@ export class NewPostModalComponent implements OnInit, OnDestroy {
     reader.readAsDataURL(file);
   }
 
-  /**
-   * Remove selected photo
-   */
-  removePhoto() {
-    this.selectedImageDataUrl = undefined;
-    this.uploadedImageUrl = undefined;
-  }
-
-  /**
-   * Create post and upload image to Firebase Storage
-   */
-async createPost() {
-  console.log('[createPost] Starting post creation...');
-  
-  if (!this.caption.trim() && !this.selectedImageDataUrl) {
-    console.warn('[createPost] Missing caption and image');
-    this.showAlert('Error', 'Please add a caption or photo');
-    return;
-  }
-
-  const loading = await this.loadingCtrl.create({
-    message: 'Posting...',
-    spinner: 'crescent',
-  });
-  await loading.present();
-
-  try {
-    let photoURL: string | undefined = undefined;
-    const user = this.auth.currentUser;
-
-    if (!user) {
-      console.error('[createPost] No authenticated user found');
-      throw new Error('User not authenticated');
-    }
-
-    console.log('[createPost] Authenticated user:', user.uid);
-
-    // ✅ If image selected
-    if (this.selectedImageDataUrl) {
-      console.log('[createPost] Compressing image...');
-      const compressedImage = await this.imageUploadService.compressImage(
-        this.selectedImageDataUrl,
-        1200,
-        0.8
-      );
-
-      console.log('[createPost] Uploading image...');
-      photoURL = await this.imageUploadService.uploadPostImage(
-        compressedImage,
-        user.uid
-      );
-
-      console.log('[createPost] Image uploaded successfully:', photoURL);
-      this.uploadedImageUrl = photoURL;
-    } else {
-      console.log('[createPost] No image selected, caption only post.');
-    }
-
-    // ✅ Log what will be sent to parent modal
-    console.log('[createPost] Dismissing modal with data:', {
-      caption: this.caption,
-      photoURL: photoURL,
-    });
-
-    await loading.dismiss();
-
-    // ✅ Return post data to parent component
-await this.modalCtrl.dismiss(
-  {
-    caption: this.caption,
-    photoURL: photoURL,
-  },
-  'post' // ✅ explicitly mark role as 'post'
-);
-
-    console.log('[createPost] Modal dismissed successfully.');
-  } catch (error) {
-    await loading.dismiss();
-    console.error('[createPost] Error:', error);
-    this.showAlert('Error', 'Failed to upload image. Please try again.');
-  }
-}
-  /**
-   * Close modal without posting
-   */
-  closeModal() {
-    this.modalCtrl.dismiss();
-  }
-
-  /**
-   * Handle user avatar image load error
-   */
-  onImageError(event: any) {
-    console.error('Image failed to load:', this.userPhoto);
-    this.imageLoadError = true;
-    event.target.src = 'assets/user.png';
-  }
-
-  /**
-   * Check if post button should be enabled
-   */
-  canPost(): boolean {
-    return this.caption.trim().length > 0 || !!this.selectedImageDataUrl;
-  }
-
-  /**
-   * Show alert dialog
-   */
-  private async showAlert(header: string, message: string) {
-    const alert = await this.alertCtrl.create({
-      header,
-      message,
-      buttons: ['OK'],
-    });
-    await alert.present();
-  }
 }

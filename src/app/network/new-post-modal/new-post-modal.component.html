@@ -1,75 +1,82 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header class="header-clean">
+  <ion-toolbar class="toolbar-clean">
     <ion-buttons slot="start">
-      <ion-button (click)="closeModal()">
-        <ion-icon name="close"></ion-icon>
+      <ion-button (click)="closeModal()" class="cancel-btn">
+        Cancel
       </ion-button>
     </ion-buttons>
-    <ion-title>New Post</ion-title>
+    <ion-title class="page-title">New Post</ion-title>
     <ion-buttons slot="end">
       <ion-button 
         [disabled]="!canPost() || isLoading" 
         (click)="createPost()"
-        [strong]="true">
+        class="post-btn">
         Post
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <!-- User Info -->
-  <div class="user-info">
-    <ion-avatar>
+<ion-content>
+  <div class="content-wrapper">
+    <!-- User Info -->
+    <div class="user-section">
       <img 
         [src]="userPhoto" 
         [alt]="userName"
-        (error)="onImageError($event)" />
-    </ion-avatar>
-    <div class="user-details">
-      <h3>{{ userName }}</h3>
+        (error)="onImageError($event)"
+        class="avatar" />
+      <div class="user-meta">
+        <h3>{{ userName }}</h3>
+        <p>Posting now</p>
+      </div>
     </div>
-  </div>
 
-  <!-- Caption Input -->
-  <ion-textarea
-    [(ngModel)]="caption"
-    placeholder="What's on your mind?"
-    rows="4"
-    autoGrow="true"
-    class="caption-input">
-  </ion-textarea>
+    <!-- Caption Input - Using native textarea for mobile compatibility -->
+    <textarea
+      [(ngModel)]="caption"
+      placeholder="What's on your mind?"
+      class="post-textarea"
+      [disabled]="isLoading"></textarea>
 
-  <!-- Image Preview -->
-  <div *ngIf="selectedImageDataUrl" class="image-preview">
-    <img [src]="selectedImageDataUrl" alt="Selected image" />
-    <ion-button 
-      fill="clear" 
-      class="remove-image-btn"
-      (click)="removePhoto()">
-      <ion-icon name="close-circle" slot="icon-only"></ion-icon>
-    </ion-button>
-  </div>
+    <div class="caption-counter" 
+         [class.warning]="caption.length > 2000"
+         [class.error]="caption.length > 2500">
+      {{ caption.length }} / 2500
+    </div>
 
-  <!-- Add Photo Buttons -->
-  <div class="photo-actions">
-    <!-- Mobile: Camera/Gallery Action Sheet -->
-    <ion-button 
-      *ngIf="!selectedImageDataUrl"
-      expand="block" 
-      fill="outline"
-      (click)="selectImageSource()"
-      class="add-photo-btn">
-      <ion-icon name="camera" slot="start"></ion-icon>
-      Add Photo
-    </ion-button>
+    <!-- Image Preview -->
+    <div *ngIf="selectedImageDataUrl" class="photo-preview">
+      <img [src]="selectedImageDataUrl" alt="Selected image" />
+      <div class="remove-photo" (click)="removePhoto()">
+        <ion-icon name="close"></ion-icon>
+      </div>
+    </div>
 
-    <!-- Web Fallback: Hidden File Input -->
+    <!-- Add Photo Button -->
+<div class="upload-area">
+  <ion-icon name="camera"></ion-icon>
+  <span>Add Photo</span>
+  <input 
+    type="file"
+    accept="image/*"
+    (change)="onPhotoSelected($event)"
+    capture="environment"
+    class="upload-input"
+  />
+</div>
+
+    <!-- Hidden File Input for Web Fallback -->
     <input 
       type="file" 
       id="photoUpload" 
       accept="image/*" 
       (change)="onPhotoSelected($event)"
       style="display: none;" />
+  </div>
+
+  <!-- Loading Overlay -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <ion-spinner name="crescent"></ion-spinner>
   </div>
 </ion-content>

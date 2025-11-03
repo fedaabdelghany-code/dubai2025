@@ -74,7 +74,6 @@
             <div
               class="speaker-info"
               *ngIf="session.speaker?.name && session.speaker?.name?.toLowerCase() !== 'all'"
-              (click)="goToSpeaker(session.speaker)"
             >
               <div
                 class="speaker-avatar"
@@ -111,7 +110,6 @@
               </div>
               <div
                 class="meta-item clickable"
-                (click)="goToLocation(session.location)"
               >
                 <ion-icon name="location-outline" class="meta-icon"></ion-icon>
                 <span class="meta-value">{{ session.location }}</span>

@@ -1,0 +1,1577 @@
+[
+  {
+    "firstName": "Adham",
+    "lastName": "ELSHARKAWY",
+    "position": "CEO Algeria",
+    "country": "Algeria",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "2",
+      "galaDinnerSeating": "1",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Ahmed",
+    "lastName": "KHALIFA",
+    "position": "CFO Algeria",
+    "country": "Algeria",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "",
+      "galaDinnerSeating": "5",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Hafid",
+    "lastName": "AOUCHICHE",
+    "position": "Import/Export and PR Director",
+    "country": "Algeria",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Hichem",
+    "lastName": "KAOULI",
+    "position": "Head Supply Chain Algeria",
+    "country": "Algeria",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "",
+      "galaDinnerSeating": "3",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Lyes",
+    "lastName": "BAHLOUL",
+    "position": "CCUS Project Lead",
+    "country": "Algeria",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": true
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Mohammed",
+    "lastName": "BENARMAS",
+    "position": "Director - Industrial - Algeria",
+    "country": "Algeria",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": true
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "4",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Mounir",
+    "lastName": "TAIBI",
+    "position": "Chief People Officer Algeria",
+    "country": "Algeria",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Rezika",
+    "lastName": "DOUAR",
+    "position": "Country Marketing Director & Dry Mortar",
+    "country": "Algeria",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "",
+      "galaDinnerSeating": "2",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "2",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Zine Eddine",
+    "lastName": "ABIB",
+    "position": "Director Sales & Marketing Algeria",
+    "country": "Algeria",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "George",
+    "lastName": "AGRIOGIANNIS",
+    "position": "CEO Australia & New Zealand",
+    "country": "Australia",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "4",
+      "galaDinnerSeating": "1",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Greg",
+    "lastName": "PRICE",
+    "position": "Executive General Manager Concrete & Major Projects",
+    "country": "Australia",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "",
+      "galaDinnerSeating": "2",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Ina",
+    "lastName": "CHALMERS",
+    "position": "General Manager HR",
+    "country": "Australia",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Jeremy",
+    "lastName": "PARSONS",
+    "position": "General Manager Marketing & Strategy",
+    "country": "Australia",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Marius",
+    "lastName": "SWANEPOEL",
+    "position": "Executive General Manager Aggregates & Asphalt",
+    "country": "Australia",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Sarah",
+    "lastName": "HAYES",
+    "position": "Chief Financial Officer",
+    "country": "Australia",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Sergiu",
+    "lastName": "STOICOV",
+    "position": "CEO Azerbaijan",
+    "country": "Azerbaijan",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "2",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "4",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Iqbal",
+    "lastName": "CHOWDHURY",
+    "position": "CEO Bangladesh",
+    "country": "Bangladesh",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "1",
+      "galaDinnerSeating": "4",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Md. Nazmul",
+    "lastName": "ISLAM",
+    "position": "CFO Bangladesh",
+    "country": "Bangladesh",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "2",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Adham",
+    "lastName": "ELMAHDY",
+    "position": "CCUS Project Lead",
+    "country": "Egypt",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "",
+      "plenarySeating": "",
+      "galaDinnerSeating": "3",
+      "freeSeating": false,
+      "isPresenter": true
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Ayat MOHAMED",
+    "lastName": "NAGUIB",
+    "position": "CFO Egypt",
+    "country": "Egypt",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "1",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "2",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Khaled",
+    "lastName": "EL DOKANI",
+    "position": "CEO Egypt",
+    "country": "Egypt",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "1",
+      "galaDinnerSeating": "1",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Ramy",
+    "lastName": "HAMZA",
+    "position": "Commercial Director Egypt",
+    "country": "Egypt",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "",
+      "galaDinnerSeating": "2",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Riham",
+    "lastName": "MOHSEN",
+    "position": "HR Director",
+    "country": "Egypt",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "4",
+      "groupPM": "4",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Said",
+    "lastName": "HASHEM",
+    "position": "Industrial Director",
+    "country": "Egypt",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "4",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Mohamed",
+    "lastName": "ABU SINNA",
+    "position": "CEO East Africa",
+    "country": "East Africa",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Ahmed",
+    "lastName": "OSMAN",
+    "position": "CFO East Africa",
+    "country": "East Africa",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Rachid",
+    "lastName": "YOUSRY",
+    "position": "CEO Ivory Coast",
+    "country": "Ivory Coast",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "",
+      "galaDinnerSeating": "4",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "4",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Medhat Ismail",
+    "lastName": "DARWISH",
+    "position": "CEO Iraq",
+    "country": "Iraq",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "1",
+      "galaDinnerSeating": "5",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "2",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Hezha",
+    "lastName": "HAWRE HASAN",
+    "position": "Country Dry Mortar Manage",
+    "country": "Iraq",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "",
+      "galaDinnerSeating": "3",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Rozhgar",
+    "lastName": "BARZAN",
+    "position": "Cement Sales Director & RMX GM",
+    "country": "Iraq",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "",
+      "galaDinnerSeating": "4",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "4",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Vasileios",
+    "lastName": "KARALIS",
+    "position": "CFO Iraq",
+    "country": "Iraq",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "",
+      "galaDinnerSeating": "5",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "2",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Mounia",
+    "lastName": "KHOURACHE",
+    "position": "Procurement HEAD Morocco",
+    "country": "Morocco",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "2",
+      "galaDinnerSeating": "",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "4",
+      "groupPM": "4",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Asmaa",
+    "lastName": "KHAMLACH",
+    "position": "CCUS Project Lead",
+    "country": "Morocco",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "",
+      "plenarySeating": "",
+      "galaDinnerSeating": "3",
+      "freeSeating": false,
+      "isPresenter": true
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "2",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Khalid",
+    "lastName": "SAMAKA",
+    "position": "CEO Morocco",
+    "country": "Morocco",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "4",
+      "galaDinnerSeating": "2",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Mohamed",
+    "lastName": "AGOUMI",
+    "position": "Industrial Director Morocco",
+    "country": "Morocco",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "",
+      "galaDinnerSeating": "4",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "4",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Fouad",
+    "lastName": "BENAYACHE",
+    "position": "CFO Morocco",
+    "country": "Morocco",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Daniel",
+    "lastName": "MENDIBLE",
+    "position": "Oman RMX GM",
+    "country": "Oman",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "2",
+      "galaDinnerSeating": "",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Nicolas",
+    "lastName": "GEORGE",
+    "position": "CEO Philippines",
+    "country": "Philippines",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "3",
+      "galaDinnerSeating": "3",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Zoe",
+    "lastName": "SIBALA",
+    "position": "CFO Philippines",
+    "country": "Philippines",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "",
+      "galaDinnerSeating": "4",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Sajith",
+    "lastName": "EDIRISOORIYA",
+    "position": "Commercial Head",
+    "country": "Philippines",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "",
+      "galaDinnerSeating": "2",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Saeed",
+    "lastName": "ANDE",
+    "position": "Procurement HEAD Philippines",
+    "country": "Philippines",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "",
+      "galaDinnerSeating": "5",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Mario",
+    "lastName": "GEREIS",
+    "position": "Industrial Philippines",
+    "country": "Philippines",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "",
+      "galaDinnerSeating": "6",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Dilhan",
+    "lastName": "ALEXANDRE",
+    "position": "Head of Trading APAC",
+    "country": "Singapore",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "4",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Abdelrahman",
+    "lastName": "AWAD",
+    "position": "RMX Sustainable Brands Product Manager",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "",
+      "groupPM": "",
+      "isPresenter": true
+    }
+  },
+  {
+    "firstName": "Antonio",
+    "lastName": "CARRILLO",
+    "position": "Vice President Sustainability",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "",
+      "groupPM": "",
+      "isPresenter": true
+    }
+  },
+  {
+    "firstName": "Bernd",
+    "lastName": "POMREHN",
+    "position": "Group Head Investors Relations",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Cedric",
+    "lastName": "DE MEEÛS",
+    "position": "Vice President, Public Affairs and Socia",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "",
+      "groupPM": "",
+      "isPresenter": true
+    }
+  },
+  {
+    "firstName": "Elena",
+    "lastName": "CHOUNTA",
+    "position": "Chief Security & Resilience Officer",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "4",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Elodie",
+    "lastName": "ROBIN",
+    "position": "Head of Group Logistics",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Fatma",
+    "lastName": "HEDEYA",
+    "position": "Group Head of Talent",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Isabel",
+    "lastName": "TEVES",
+    "position": "Head of Global Brand Marketing",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "",
+      "groupPM": "",
+      "isPresenter": true
+    }
+  },
+  {
+    "firstName": "Jeffrey",
+    "lastName": "GIESSE",
+    "position": "Group Head of HS&E",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "4",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Julia",
+    "lastName": "EHRLER",
+    "position": "Strategy Manager",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Lily",
+    "lastName": "WONG",
+    "position": "Global Head of Digital Transformation&AI",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "2",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Markus",
+    "lastName": "UNTERNÄHRER",
+    "position": "Head of Group Treasury & Tax",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "",
+      "galaDinnerSeating": "",
+      "freeSeating": true,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "4",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Mathan",
+    "lastName": "DURAIRAJ",
+    "position": "Chief Procurement Officer",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "",
+      "galaDinnerSeating": "6",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Milos",
+    "lastName": "MIRIC",
+    "position": "Group Head of People",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "",
+      "galaDinnerSeating": "5",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Kim",
+    "lastName": "FAUSING",
+    "position": "Holcim Chaiman",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "5",
+      "galaDinnerSeating": "1",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Martin",
+    "lastName": "KRIEGNER",
+    "position": "Region Head AMEA",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "1",
+      "galaDinnerSeating": "1",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Miljan",
+    "lastName": "GUTOVIC",
+    "position": "Group CEO",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "1",
+      "galaDinnerSeating": "2",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Steffen",
+    "lastName": "KINDLER",
+    "position": "Group Chief Financial Officer",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "2",
+      "galaDinnerSeating": "3",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Virginie",
+    "lastName": "DARBO",
+    "position": "Group Head of Strategy and M&A",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "3",
+      "galaDinnerSeating": "4",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Alexia",
+    "lastName": "SOMMER",
+    "position": "Group Chief Communications Officer",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "4",
+      "galaDinnerSeating": "3",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Alfonso",
+    "lastName": "PARADINAS",
+    "position": "Group Chief Marketing & innovation Office",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "5",
+      "plenarySeating": "4",
+      "galaDinnerSeating": "4",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Dragan",
+    "lastName": "MAKSIMOVIC",
+    "position": "Region Head West Europe",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "2",
+      "galaDinnerSeating": "6",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Oliver",
+    "lastName": "OSSWALD",
+    "position": "Region Head LATAM",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "3",
+      "galaDinnerSeating": "4",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Ram",
+    "lastName": "MUTHU",
+    "position": "Group Head of Operational Excellence",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "3",
+      "galaDinnerSeating": "5",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Carmen",
+    "lastName": "DIAZ",
+    "position": "Group Chief People & Sustainibility Officer",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "1",
+      "galaDinnerSeating": "1",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Lukas",
+    "lastName": "STUDER",
+    "position": "Group General Counsel",
+    "country": "Switzerland",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "4",
+      "plenarySeating": "",
+      "galaDinnerSeating": "5",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Basem",
+    "lastName": "AL-KHALAILEH",
+    "position": "People Director",
+    "country": "UAE",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "1",
+      "plenarySeating": "",
+      "galaDinnerSeating": "1",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "1",
+      "groupPM": "2",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Ali",
+    "lastName": "SAID",
+    "position": "CEO UAE",
+    "country": "UAE",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "3",
+      "galaDinnerSeating": "2",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "2",
+      "groupPM": "1",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Medhat",
+    "lastName": "HAMDAN",
+    "position": "Commercial Director UAE",
+    "country": "UAE",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "4",
+      "galaDinnerSeating": "",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "WS",
+      "groupAM": "3",
+      "groupPM": "3",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Rajesh",
+    "lastName": "SURANA",
+    "position": "Head of Finance AMEA",
+    "country": "Region",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "2",
+      "plenarySeating": "2",
+      "galaDinnerSeating": "",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Grant",
+    "lastName": "EARNSHAW",
+    "position": "Area Manager Middle East and Africa",
+    "country": "Region",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "3",
+      "plenarySeating": "3",
+      "galaDinnerSeating": "3",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "MILLER",
+    "position": "EGM New Zealand",
+    "country": "New Zealand",
+    "day11": {
+      "ameaMeeting": true,
+      "galaDinner": true,
+      "group": "6",
+      "plenarySeating": "",
+      "galaDinnerSeating": "5",
+      "freeSeating": false,
+      "isPresenter": false
+    },
+    "day12": {
+      "type": "SV",
+      "groupAM": "SV",
+      "groupPM": "SV",
+      "isPresenter": false
+    }
+  }
+]

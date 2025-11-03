@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, QueryList, ViewChildren, ViewChild } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { IonContent, IonIcon, IonModal } from '@ionic/angular/standalone';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, query, where, getDocs } from '@angular/fire/firestore';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +17,7 @@ interface Session {
   category: string;
   color: string;
   isGeneral: boolean;
+  rotationalSchedule?: any;
   material?: string;
   qnaLink?: string;
   speaker?: {
@@ -35,22 +36,16 @@ interface Session {
   imports: [IonModal, IonContent, IonIcon, CommonModule, DatePipe, FormsModule],
 })
 export class AgendaPage implements OnInit {
-goToLocation(arg0: string) {
-throw new Error('Method not implemented.');
-}
-goToSpeaker(arg0: { name: string; title: string; photoURL: string|null; userID: string; }|undefined) {
-throw new Error('Method not implemented.');
-}
   selectedDay = '1';
   @ViewChildren('sessionCard') sessionCards!: QueryList<ElementRef>;
   @ViewChild(IonContent, { static: false }) content!: IonContent;
 
-  private targetSessionId: string | null = null;
-  private fromHome = false;
-
   sessions: Session[] = [];
   filteredSessions: Session[] = [];
   searchQuery = '';
+
+  currentUser: any = null;
+  userEmail = 'feda.abdelghany@lafarge.com'; // TODO: replace with logged-in user's email
 
   showMaterialViewer = false;
   selectedMaterial: { url: string; name: string; type: string } | null = null;
@@ -59,106 +54,133 @@ throw new Error('Method not implemented.');
     private firestore: Firestore,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
-    private router: Router,
-    
+    private router: Router
   ) {}
 
-  ionViewWillEnter() {
-    // detect if user came from home
-    const nav = this.router.getCurrentNavigation();
-    this.fromHome = nav?.extras?.state?.['fromHome'] === true;
-  }
-
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      this.targetSessionId = params['sessionId'] || null;
-
-      // only change day from params if no targetSession
-      if (params['day'] && !this.targetSessionId) {
-        this.selectedDay = params['day'].replace('Day ', '');
-      }
-
-      this.loadSessions();
-
-      // Cleanup URL **after** scroll if not from home
-      if (!this.fromHome && this.router.url.includes('?')) {
-        const baseUrl = this.router.url.split('?')[0];
-        setTimeout(() => {
-          this.router.navigate([baseUrl], { replaceUrl: true });
-        }, 600); // delay allows scroll to finish first
-      }
-    });
+    console.log('[DEBUG] Initializing AgendaPage...');
+    this.loadUserAndSessions();
   }
 
-  ngAfterViewInit() {
-    this.sessionCards.changes.subscribe(() => {
-      if (this.targetSessionId) {
-        this.waitAndScrollToSessionIfNeeded(this.targetSessionId);
-      }
-    });
-  }
+  async loadUserAndSessions() {
+    try {
+      // 1️⃣ Load the user
+      const usersRef = collection(this.firestore, 'users');
+      const q = query(usersRef, where('email', '==', this.userEmail));
+      const snapshot = await getDocs(q);
 
-  private loadSessions() {
-    const sessionsRef = collection(this.firestore, 'sessions');
-    collectionData(sessionsRef, { idField: 'id' }).subscribe((data: any[]) => {
-      this.sessions = data || [];
-
-      if (this.targetSessionId) {
-        const target = this.sessions.find((s) => s.id === this.targetSessionId);
-        if (target) {
-          this.selectedDay = String(target.day).replace(/^Day\s*/i, '');
-        }
+      if (snapshot.empty) {
+        console.warn(`[DEBUG] No user found with email ${this.userEmail}`);
+        return;
       }
 
-      this.applyFilters();
+      this.currentUser = snapshot.docs[0].data();
+      console.log('[DEBUG] Loaded user:', this.currentUser);
 
-      setTimeout(() => {
-        if (this.targetSessionId) {
-          this.waitAndScrollToSessionIfNeeded(this.targetSessionId);
-        }
-      }, 150);
-    });
-  }
+      // 2️⃣ Load all sessions
+      const sessionsRef = collection(this.firestore, 'sessions');
+      collectionData(sessionsRef, { idField: 'id' }).subscribe((data: any[]) => {
+        this.sessions = data || [];
+        console.log('[DEBUG] Total sessions loaded:', this.sessions.length);
 
-private waitAndScrollToSessionIfNeeded(sessionId: string | null, retries = 12) {
-  if (!sessionId) return;
+        // 3️⃣ Apply user-specific filters
+        this.applyFilters();
 
-  const target = this.sessionCards?.find(
-    (card) => card.nativeElement.id === sessionId
-  );
-
-  if (target && target.nativeElement) {
-    const el = target.nativeElement;
-    
-    // Wait for layout to stabilize
-    setTimeout(() => {
-      // Get viewport height
-      const viewportHeight = window.innerHeight;
-      
-      // Get element's position and height
-      const elementTop = el.offsetTop;
-      const elementHeight = el.offsetHeight;
-      
-      // Calculate center position: element's top + half element height - half viewport height
-      const centerY = elementTop + (elementHeight / 2) - (viewportHeight / 2);
-      
-      // Use Ionic's scrollToPoint method (works reliably in PWA)
-      this.content.scrollToPoint(0, centerY, 500).then(() => {
-        // Add highlight after scroll completes
-        el.classList.add('highlight');
-        setTimeout(() => el.classList.remove('highlight'), 2200);
+        // Scroll to a target session if present in URL
+        this.route.queryParams.subscribe(params => {
+          const targetSessionId = params['sessionId'] || null;
+          if (targetSessionId) {
+            setTimeout(() => this.scrollToSession(targetSessionId), 150);
+          }
+        });
       });
-    }, 200); // Increased delay for PWA stability
-
-    this.targetSessionId = null;
-  } else if (retries > 0) {
-    setTimeout(() => this.waitAndScrollToSessionIfNeeded(sessionId, retries - 1), 250);
+    } catch (err) {
+      console.error('[DEBUG] Error loading user or sessions:', err);
+    }
   }
+
+private applyFilters() {
+  if (!this.currentUser) return;
+
+  let filtered = this.sessions.filter(s => s.day === this.selectedDay);
+
+  filtered = filtered.filter(session => {
+    if (session.isGeneral) return true;
+
+    // Determine group key
+    let groupKey = '';
+    if (this.selectedDay === '2') { // day11 → agenda day 2
+      const group = this.currentUser.day11?.group;
+      groupKey = group ? `group${group}` : '';
+    } else if (this.selectedDay === '3') { // day12 → agenda day 3
+      const group = this.currentUser.day12?.groupAM; // or groupPM depending on session
+      if (group && group !== 'SV') {
+        groupKey = `group${group}`; // only if it's a numbered group
+      }
+    }
+
+    if (!groupKey) return false; // user not assigned to a numbered group → skip
+    return session.rotationalSchedule?.hasOwnProperty(groupKey);
+  });
+
+  // Map start/end times for user's group
+  this.filteredSessions = filtered.map(session => {
+    let groupKey = '';
+    if (this.selectedDay === '2') {
+      groupKey = `group${this.currentUser.day11?.group}`;
+    } else if (this.selectedDay === '3') {
+      const group = this.currentUser.day12?.groupAM;
+      if (group && group !== 'SV') groupKey = `group${group}`;
+    }
+
+    if (groupKey && session.rotationalSchedule?.[groupKey]) {
+      return {
+        ...session,
+        startTime: session.rotationalSchedule[groupKey].startTime,
+        endTime: session.rotationalSchedule[groupKey].endTime
+      };
+    }
+    return session;
+  });
+
+  // Sort sessions by startTime
+  this.filteredSessions.sort((a, b) => {
+    const aTime = a.startTime.toDate ? a.startTime.toDate().getTime() : new Date(a.startTime).getTime();
+    const bTime = b.startTime.toDate ? b.startTime.toDate().getTime() : new Date(b.startTime).getTime();
+    return aTime - bTime;
+  });
+
+  console.log('[DEBUG] Filtered sessions for user:', this.filteredSessions);
 }
+
+  private scrollToSession(sessionId: string | null, retries = 12) {
+    if (!sessionId) return;
+
+    const target = this.sessionCards?.find(card => card.nativeElement.id === sessionId);
+
+    if (target && target.nativeElement) {
+      const el = target.nativeElement;
+      setTimeout(() => {
+        const viewportHeight = window.innerHeight;
+        const elementTop = el.offsetTop;
+        const elementHeight = el.offsetHeight;
+        const centerY = elementTop + elementHeight / 2 - viewportHeight / 2;
+
+        this.content.scrollToPoint(0, centerY, 500).then(() => {
+          el.classList.add('highlight');
+          setTimeout(() => el.classList.remove('highlight'), 2200);
+        });
+      }, 200);
+
+      return;
+    } else if (retries > 0) {
+      setTimeout(() => this.scrollToSession(sessionId, retries - 1), 250);
+    }
+  }
+
   setSelectedDay(day: string) {
     this.selectedDay = day;
     this.applyFilters();
-    this.targetSessionId = null;
   }
 
   onSearchChange(query: string) {
@@ -171,27 +193,24 @@ private waitAndScrollToSessionIfNeeded(sessionId: string | null, retries = 12) {
     this.applyFilters();
   }
 
-  private applyFilters() {
-    let filtered = this.sessions.filter((s) => s.day === this.selectedDay);
-
-    if (this.searchQuery.trim()) {
-      const query = this.searchQuery.toLowerCase();
-      filtered = filtered.filter((session) =>
-        [session.title, session.location, session.category, session.description, session.speaker?.name, session.speaker?.title]
-          .some((field) => field?.toLowerCase().includes(query))
-      );
-    }
-
-    this.filteredSessions = filtered.sort(
-      (a, b) => a.startTime.toDate().getTime() - b.startTime.toDate().getTime()
-    );
-  }
-
   formatSessionTime(session: Session): string {
-    const start = session.startTime.toDate();
-    const end = session.endTime.toDate();
+    const start = session.startTime.toDate ? session.startTime.toDate() : new Date(session.startTime);
+    const end = session.endTime.toDate ? session.endTime.toDate() : new Date(session.endTime);
     const opts: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
     return `${start.toLocaleTimeString('en-US', opts)} - ${end.toLocaleTimeString('en-US', opts)}`;
+  }
+
+  // Material viewing methods...
+  viewMaterial(session: Session) {
+    if (!session.material) return;
+    const type = this.getMaterialType(session.material);
+    this.selectedMaterial = { url: session.material, name: session.title, type };
+    this.showMaterialViewer = true;
+  }
+
+  closeMaterialViewer() {
+    this.showMaterialViewer = false;
+    this.selectedMaterial = null;
   }
 
   getMaterialType(url: string): string {
@@ -214,43 +233,6 @@ private waitAndScrollToSessionIfNeeded(sessionId: string | null, retries = 12) {
       Presentation: 'easel-outline',
     };
     return map[type] || 'document-outline';
-  }
-
-  viewMaterial(session: Session) {
-    if (!session.material) return;
-    const type = this.getMaterialType(session.material);
-    this.selectedMaterial = { url: session.material, name: session.title, type };
-    this.showMaterialViewer = true;
-  }
-
-  closeMaterialViewer() {
-    this.showMaterialViewer = false;
-    this.selectedMaterial = null;
-  }
-
-  sanitizeUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-
-
-
-  downloadMaterial(event: Event, session: Session) {
-    event.stopPropagation();
-    if (!session.material) return;
-    const link = document.createElement('a');
-    link.href = session.material;
-    link.download = session.title;
-    link.target = '_blank';
-    link.click();
-  }
-
-  downloadCurrentMaterial() {
-    if (!this.selectedMaterial) return;
-    const link = document.createElement('a');
-    link.href = this.selectedMaterial.url;
-    link.download = this.selectedMaterial.name;
-    link.target = '_blank';
-    link.click();
   }
 
 
