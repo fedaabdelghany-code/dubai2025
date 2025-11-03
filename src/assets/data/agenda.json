@@ -5,9 +5,9 @@
       "description": "Welcome cocktail dinner for all attendees at the Helipad Arena",
       "category": "social",
       "day": "1",
-      "startTime": "2025-11-01T19:00:00",
-      "endTime": "2025-11-01T22:00:00",
-      "location": "Helipad Arena",
+      "startTime": "2025-11-10T19:00:00",
+      "endTime": "2025-11-10T22:00:00",
+      "location": "Helipad Arena (at the Hotel)",
       "isGeneral": true,
       "color": "#94c12e",
       "speaker": {
@@ -22,9 +22,9 @@
       "description": "Safety briefing for all attendees",
       "category": "general",
       "day": "2",
-      "startTime": "2025-11-02T08:30:00",
-      "endTime": "2025-11-02T08:45:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T08:30:00",
+      "endTime": "2025-11-11T08:35:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
       "color": "#041739",
       "speaker": {
@@ -39,14 +39,14 @@
       "description": "Welcome address from host country",
       "category": "keynote",
       "day": "2",
-      "startTime": "2025-11-02T08:45:00",
-      "endTime": "2025-11-02T08:50:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T08:35:00",
+      "endTime": "2025-11-11T08:45:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
       "color": "#4bb05b",
       "speaker": {
         "name": "Ali S.",
-        "title": "Country CEO - UAE",
+        "title": "Country CEO",
         "photoURL": null,
         "userID": null
       }
@@ -56,9 +56,9 @@
       "description": "Overview of the event schedule and structure",
       "category": "general",
       "day": "2",
-      "startTime": "2025-11-02T08:45:00",
-      "endTime": "2025-11-02T08:50:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T08:45:00",
+      "endTime": "2025-11-11T08:50:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
       "color": "#041739",
       "speaker": {
@@ -70,284 +70,63 @@
     },
     {
       "title": "NextGen Growth & Key Expectations AMEA",
-      "description": "Presentation on NextGen Holcim growth strategy and key expectations for AMEA region",
+      "description": "Overview of NextGen growth strategy and key expectations for AMEA region",
       "category": "keynote",
       "day": "2",
-      "startTime": "2025-11-02T08:50:00",
-      "endTime": "2025-11-02T09:10:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T08:50:00",
+      "endTime": "2025-11-11T09:00:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
       "color": "#4bb05b",
       "speaker": {
         "name": "Martin K. & Miljan G.",
-        "title": "Regional Leadership",
+        "title": "Leadership Team",
         "photoURL": null,
         "userID": null
       }
     },
     {
-      "title": "Growth Starts With Us: AMEA People Story",
-      "description": "Video presentation showcasing AMEA people and culture",
-      "category": "video",
+      "title": "Growth Starts With Us: AMEA People Story (Video)",
+      "description": "Video presentation on AMEA people and growth story",
+      "category": "presentation",
       "day": "2",
-      "startTime": "2025-11-02T09:10:00",
-      "endTime": "2025-11-02T09:15:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T09:00:00",
+      "endTime": "2025-11-11T09:10:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
-      "color": "#04bbf1",
+      "color": "#041739",
       "speaker": {
         "name": "B.K. & Karen T.",
-        "title": "People & Culture Team",
+        "title": "People & Culture",
         "photoURL": null,
         "userID": null
       }
     },
     {
-      "title": "Key Markets & Positions - AMEA",
-      "description": "Overview of key markets and strategic positions across AMEA region",
-      "category": "strategy",
+      "title": "Unlocking Growth Potential AMEA",
+      "description": "Plenary session covering country strategies and growth ambitions across Egypt, Australia, Algeria, Morocco, and UAE",
+      "category": "keynote",
       "day": "2",
-      "startTime": "2025-11-02T09:15:00",
-      "endTime": "2025-11-02T11:00:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T09:10:00",
+      "endTime": "2025-11-11T11:00:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
-      "color": "#007fad",
+      "color": "#4bb05b",
       "speaker": {
-        "name": "Grant E.",
-        "title": "Regional Director",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Country Strategy Delivering Growth Ambition: Egypt",
-      "description": "Egypt country strategy presentation for growth ambition",
-      "category": "country-strategy",
-      "day": "2",
-      "startTime": "2025-11-02T09:15:00",
-      "endTime": "2025-11-02T11:00:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#1d4370",
-      "speaker": {
-        "name": "Khaled D.",
-        "title": "Country CEO - Egypt",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Country Strategy Delivering Growth Ambition: Australia",
-      "description": "Australia country strategy presentation for growth ambition",
-      "category": "country-strategy",
-      "day": "2",
-      "startTime": "2025-11-02T09:15:00",
-      "endTime": "2025-11-02T11:00:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#1d4370",
-      "speaker": {
-        "name": "George A.",
-        "title": "Country CEO - Australia",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Country Strategy Delivering Growth Ambition: Algeria",
-      "description": "Algeria country strategy presentation for growth ambition",
-      "category": "country-strategy",
-      "day": "2",
-      "startTime": "2025-11-02T09:15:00",
-      "endTime": "2025-11-02T11:00:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#1d4370",
-      "speaker": {
-        "name": "Adham E.",
-        "title": "Country CEO - Algeria",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Country Strategy Delivering Growth Ambition: Morocco",
-      "description": "Morocco country strategy presentation for growth ambition",
-      "category": "country-strategy",
-      "day": "2",
-      "startTime": "2025-11-02T09:15:00",
-      "endTime": "2025-11-02T11:00:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#1d4370",
-      "speaker": {
-        "name": "Khalid S.",
-        "title": "Country CEO - Morocco",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Country Strategy Delivering Growth Ambition: UAE",
-      "description": "UAE country strategy presentation for growth ambition",
-      "category": "country-strategy",
-      "day": "2",
-      "startTime": "2025-11-02T09:15:00",
-      "endTime": "2025-11-02T11:00:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#1d4370",
-      "speaker": {
-        "name": "Ali S.",
-        "title": "Country CEO - UAE",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Discussions and Feedback & Group Perspective",
-      "description": "Group discussions and feedback session on country strategies",
-      "category": "discussion",
-      "day": "2",
-      "startTime": "2025-11-02T09:15:00",
-      "endTime": "2025-11-02T11:00:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": true,
-      "color": "#d0d0d0",
-      "speaker": {
-        "name": "Grant E. & Virginie D.",
+        "name": "Adham E., Ali S., George A., Grant E., Khaled D., Khalid S. & Virginie D.",
         "title": "Regional Leadership",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Decarbonizing Formulation: Low-Cost Hub (Calcined Clay)",
-      "description": "Sustainable innovation session on calcined clay as a low-cost hub for NextGen Holcim decarbonization",
-      "category": "sustainability",
-      "day": "2",
-      "startTime": "2025-11-02T11:15:00",
-      "endTime": "2025-11-02T12:15:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#94c12e",
-      "speaker": {
-        "name": "Najib R. / Daniel R.",
-        "title": "Sustainability Experts",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Decarbonizing Operations: Low Carbon Biogenic Fuels",
-      "description": "Sustainable energy alternatives using low carbon biogenic fuels for operations",
-      "category": "sustainability",
-      "day": "2",
-      "startTime": "2025-11-02T11:15:00",
-      "endTime": "2025-11-02T12:15:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#94c12e",
-      "speaker": {
-        "name": "Moumita C. / Daniel R.",
-        "title": "Operations & Sustainability Experts",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Decarbonizing Operations: Clinker Factor Reduction & Separate Grinding",
-      "description": "Operational decarbonization through clinker factor reduction and separate grinding techniques",
-      "category": "sustainability",
-      "day": "2",
-      "startTime": "2025-11-02T11:15:00",
-      "endTime": "2025-11-02T12:15:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#94c12e",
-      "speaker": {
-        "name": "Medhat I. / Daniel R.",
-        "title": "Operations & Sustainability Experts",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Circular Construction: C&D Materials - Country Success Stories",
-      "description": "Construction and demolition materials success stories from AMEA countries showcasing circular construction",
-      "category": "sustainability",
-      "day": "2",
-      "startTime": "2025-11-02T13:15:00",
-      "endTime": "2025-11-02T14:15:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#94c12e",
-      "speaker": {
-        "name": "George A. & Tony P. / Alfonso P.",
-        "title": "Circular Construction Experts",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Deep Decarbonization - CCUS (Morocco, Algeria, UAE, Egypt)",
-      "description": "Carbon capture, utilization and storage initiatives in Morocco, Algeria, UAE and Egypt",
-      "category": "sustainability",
-      "day": "2",
-      "startTime": "2025-11-02T13:15:00",
-      "endTime": "2025-11-02T14:15:00",
-      "location": "Booth 1",
-      "isGeneral": false,
-      "color": "#94c12e",
-      "speaker": {
-        "name": "Khalid S., Khaled D. / Roze W.",
-        "title": "CCUS Experts",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Commercializing Sustainable Solutions: ECOPACT, ECOPLANET & EPDs",
-      "description": "Commercialization strategies for sustainable product solutions including ECOPACT, ECOPLANET and Environmental Product Declarations",
-      "category": "sustainability",
-      "day": "2",
-      "startTime": "2025-11-02T13:15:00",
-      "endTime": "2025-11-02T14:15:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": false,
-      "color": "#94c12e",
-      "speaker": {
-        "name": "Sergiu S., Greg P., Ramy H. / Wilfried C.",
-        "title": "Sustainable Solutions Team",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Sustainability Sessions - Feedback & Discussions",
-      "description": "Open discussion and feedback on sustainability initiatives",
-      "category": "discussion",
-      "day": "2",
-      "startTime": "2025-11-02T14:15:00",
-      "endTime": "2025-11-02T14:35:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": true,
-      "color": "#d0d0d0",
-      "speaker": {
-        "name": "All",
-        "title": "All Participants",
         "photoURL": null,
         "userID": null
       }
     },
     {
       "title": "Coffee Break",
-      "description": "Tea & Coffee Break for all attendees",
+      "description": "Morning coffee break",
       "category": "social",
       "day": "2",
-      "startTime": "2025-11-02T14:35:00",
-      "endTime": "2025-11-02T14:50:00",
-      "location": "Helipad Arena",
+      "startTime": "2025-11-11T11:00:00",
+      "endTime": "2025-11-11T11:15:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
       "color": "#94c12e",
       "speaker": {
@@ -358,166 +137,302 @@
       }
     },
     {
-      "title": "Health & Safety: Safeguarding Our People and Operations",
-      "description": "Best practices in health and safety for people and operations across AMEA",
-      "category": "best-practices",
+      "title": "Decarbonizing Formulation: New Mineral Components",
+      "description": "Booth presentation on decarbonization through new mineral components",
+      "category": "workshop",
       "day": "2",
-      "startTime": "2025-11-02T14:50:00",
-      "endTime": "2025-11-02T15:40:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T11:15:00",
+      "endTime": "2025-11-11T11:35:00",
+      "location": "Booth Area",
+      "isGeneral": false,
+      "color": "#041739",
+      "speaker": {
+        "name": "Daniel R., Mario G., Miran A., Mohamed B., Mohamed S. & Najib R.",
+        "title": "Sustainability Team",
+        "photoURL": null,
+        "userID": null
+      }
+    },
+    {
+      "title": "Decarbonizing Operations: Alternative Fuels and Raw Materials",
+      "description": "Booth presentation on alternative fuels and raw materials for decarbonization",
+      "category": "workshop",
+      "day": "2",
+      "startTime": "2025-11-11T11:35:00",
+      "endTime": "2025-11-11T11:55:00",
+      "location": "Booth Area",
+      "isGeneral": false,
+      "color": "#041739",
+      "speaker": {
+        "name": "Alaa B., Daniel R., Moumita C. & Reda B.",
+        "title": "Operations Team",
+        "photoURL": null,
+        "userID": null
+      }
+    },
+    {
+      "title": "Decarbonizing Operations: Clinker Factor Reduction & Separate Grinding",
+      "description": "Booth presentation on clinker factor reduction and separate grinding techniques",
+      "category": "workshop",
+      "day": "2",
+      "startTime": "2025-11-11T11:55:00",
+      "endTime": "2025-11-11T12:15:00",
+      "location": "Booth Area",
+      "isGeneral": false,
+      "color": "#041739",
+      "speaker": {
+        "name": "Daniel R., Mahmoud A., Medhat I. & Mohamed B.",
+        "title": "Operations Team",
+        "photoURL": null,
+        "userID": null
+      }
+    },
+    {
+      "title": "Lunch Break",
+      "description": "Lunch break for all attendees",
+      "category": "social",
+      "day": "2",
+      "startTime": "2025-11-11T12:15:00",
+      "endTime": "2025-11-11T13:15:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
-      "color": "#4bb05b",
+      "color": "#94c12e",
+      "speaker": {
+        "name": null,
+        "title": null,
+        "photoURL": null,
+        "userID": null
+      }
+    },
+    {
+      "title": "Circular Construction: Construction and Demolition Materials",
+      "description": "Booth presentation on circular construction using construction and demolition materials",
+      "category": "workshop",
+      "day": "2",
+      "startTime": "2025-11-11T13:15:00",
+      "endTime": "2025-11-11T13:40:00",
+      "location": "Booth Area",
+      "isGeneral": false,
+      "color": "#041739",
+      "speaker": {
+        "name": "Alfonso P., Bian W. & Scott T.",
+        "title": "Circular Economy Team",
+        "photoURL": null,
+        "userID": null
+      }
+    },
+    {
+      "title": "Deep Decarbonization - CCUS Projects (Morocco, Algeria, UAE and Egypt)",
+      "description": "Booth presentation on carbon capture, utilization and storage projects across AMEA",
+      "category": "workshop",
+      "day": "2",
+      "startTime": "2025-11-11T13:40:00",
+      "endTime": "2025-11-11T14:05:00",
+      "location": "Booth Area",
+      "isGeneral": false,
+      "color": "#041739",
+      "speaker": {
+        "name": "Adham E., Asmaa K., Lyes B., Mohamed S. & Roze W.",
+        "title": "CCUS Team",
+        "photoURL": null,
+        "userID": null
+      }
+    },
+    {
+      "title": "Commercializing Sustainable Solutions: ECOPact, ECOPlanet & EPDs",
+      "description": "Booth presentation on commercializing sustainable solutions including ECOPact, ECOPlanet and Environmental Product Declarations",
+      "category": "workshop",
+      "day": "2",
+      "startTime": "2025-11-11T14:05:00",
+      "endTime": "2025-11-11T14:30:00",
+      "location": "Booth Area",
+      "isGeneral": false,
+      "color": "#041739",
+      "speaker": {
+        "name": "Greg P., Ramy H., Sergiu S. & Wilfried C.",
+        "title": "Commercial Team",
+        "photoURL": null,
+        "userID": null
+      }
+    },
+    {
+      "title": "Coffee Break",
+      "description": "Afternoon coffee break",
+      "category": "social",
+      "day": "2",
+      "startTime": "2025-11-11T14:30:00",
+      "endTime": "2025-11-11T14:50:00",
+      "location": "Baraha Ballroom 3",
+      "isGeneral": true,
+      "color": "#94c12e",
+      "speaker": {
+        "name": null,
+        "title": null,
+        "photoURL": null,
+        "userID": null
+      }
+    },
+    {
+      "title": "Health, Safety and Environment",
+      "description": "Video highlighting AMEA best practices and success stories in health, safety and environment",
+      "category": "presentation",
+      "day": "2",
+      "startTime": "2025-11-11T14:50:00",
+      "endTime": "2025-11-11T15:02:00",
+      "location": "Baraha Ballroom 3",
+      "isGeneral": true,
+      "color": "#041739",
       "speaker": {
         "name": "Javier A.",
-        "title": "Health & Safety Director",
+        "title": "HSE Leader",
         "photoURL": null,
         "userID": null
       }
     },
     {
       "title": "Digital / AI: Driving Adoption",
-      "description": "Digital transformation and AI adoption best practices in AMEA",
-      "category": "best-practices",
+      "description": "Video highlighting AMEA best practices and success stories in digital transformation and AI adoption",
+      "category": "presentation",
       "day": "2",
-      "startTime": "2025-11-02T14:50:00",
-      "endTime": "2025-11-02T15:40:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T15:02:00",
+      "endTime": "2025-11-11T15:15:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
-      "color": "#4bb05b",
+      "color": "#041739",
       "speaker": {
         "name": "Nicolas G.",
-        "title": "Digital & AI Lead",
+        "title": "Digital Leader",
         "photoURL": null,
         "userID": null
       }
     },
     {
       "title": "Commercial Successes AMEA",
-      "description": "Showcase of commercial success stories from across AMEA region",
-      "category": "best-practices",
+      "description": "Video highlighting AMEA commercial best practices and success stories",
+      "category": "presentation",
       "day": "2",
-      "startTime": "2025-11-02T14:50:00",
-      "endTime": "2025-11-02T15:40:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T15:15:00",
+      "endTime": "2025-11-11T15:27:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
-      "color": "#4bb05b",
+      "color": "#041739",
       "speaker": {
         "name": "Iqbal C.",
-        "title": "Commercial Director",
+        "title": "Commercial Leader",
         "photoURL": null,
         "userID": null
       }
     },
     {
       "title": "Global Sourcing: Best Cost Countries & Electric Vehicles",
-      "description": "Best practices in global sourcing focusing on best cost countries and electric vehicle initiatives",
-      "category": "best-practices",
+      "description": "Video highlighting AMEA best practices in global sourcing, best cost countries and electric vehicles",
+      "category": "presentation",
       "day": "2",
-      "startTime": "2025-11-02T14:50:00",
-      "endTime": "2025-11-02T15:40:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T15:27:00",
+      "endTime": "2025-11-11T15:40:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
-      "color": "#4bb05b",
+      "color": "#041739",
       "speaker": {
         "name": "Manoj C.",
-        "title": "Global Sourcing Director",
-        "photoURL": null,
-        "userID": null
-      }
-    },
-    {
-      "title": "Best Practices - Discussions",
-      "description": "Open discussions on best practices shared during the session",
-      "category": "discussion",
-      "day": "2",
-      "startTime": "2025-11-02T14:50:00",
-      "endTime": "2025-11-02T15:40:00",
-      "location": "Baraha Ballroom 1 & 2",
-      "isGeneral": true,
-      "color": "#d0d0d0",
-      "speaker": {
-        "name": "All",
-        "title": "All Participants",
+        "title": "Sourcing Leader",
         "photoURL": null,
         "userID": null
       }
     },
     {
       "title": "Performance Benchmark & Financial Targets",
-      "description": "Review of performance benchmarks and financial targets for AMEA region",
-      "category": "strategy",
+      "description": "Presentation on performance benchmarking and financial targets",
+      "category": "keynote",
       "day": "2",
-      "startTime": "2025-11-02T15:40:00",
-      "endTime": "2025-11-02T16:10:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T15:40:00",
+      "endTime": "2025-11-11T16:10:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
-      "color": "#007fad",
+      "color": "#4bb05b",
       "speaker": {
         "name": "Rajesh S.",
-        "title": "Financial Director",
+        "title": "Finance Leader",
         "photoURL": null,
         "userID": null
       }
     },
     {
       "title": "Plenary with Group Leadership Team with Q&A",
-      "description": "Interactive plenary session with Group Leadership Team including Q&A",
+      "description": "Interactive plenary session with Group Leadership Team and Q&A",
       "category": "keynote",
       "day": "2",
-      "startTime": "2025-11-02T16:10:00",
-      "endTime": "2025-11-02T16:40:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T16:10:00",
+      "endTime": "2025-11-11T16:40:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
       "color": "#4bb05b",
       "speaker": {
         "name": "Group Leadership Team",
-        "title": "Group Leadership",
+        "title": "Leadership",
         "photoURL": null,
         "userID": null
       }
     },
     {
       "title": "Country Commitments",
-      "description": "Country CEOs present 2-3 examples of country commitments",
-      "category": "country-strategy",
+      "description": "Presentation of country commitments with examples from country CEOs",
+      "category": "presentation",
       "day": "2",
-      "startTime": "2025-11-02T16:40:00",
-      "endTime": "2025-11-02T16:50:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T16:40:00",
+      "endTime": "2025-11-11T16:50:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
-      "color": "#1d4370",
+      "color": "#041739",
       "speaker": {
         "name": "Country CEOs",
-        "title": "Country CEOs",
+        "title": "Country Leadership",
         "photoURL": null,
         "userID": null
       }
     },
     {
       "title": "Closing Remarks & Wrap up",
-      "description": "Day 2 closing remarks and summary",
-      "category": "general",
+      "description": "Closing remarks and event wrap up",
+      "category": "keynote",
       "day": "2",
-      "startTime": "2025-11-02T16:50:00",
-      "endTime": "2025-11-02T17:00:00",
-      "location": "Baraha Ballroom 1 & 2",
+      "startTime": "2025-11-11T16:50:00",
+      "endTime": "2025-11-11T17:00:00",
+      "location": "Baraha Ballroom 3",
       "isGeneral": true,
-      "color": "#041739",
+      "color": "#4bb05b",
       "speaker": {
         "name": "Martin K.",
-        "title": "Regional Director",
+        "title": "Regional Leader",
         "photoURL": null,
         "userID": null
       }
     },
     {
-      "title": "Gala Dinner with Holcim Chairman.",
-      "description": "Gala dinner with Holcim Chairman including speech",
+      "title": "Free Time",
+      "description": "Free time for attendees",
       "category": "social",
       "day": "2",
-      "startTime": "2025-11-02T19:00:00",
-      "endTime": "2025-11-02T22:00:00",
-      "location": "The Promenade",
+      "startTime": "2025-11-11T17:00:00",
+      "endTime": "2025-11-11T19:00:00",
+      "location": "Hotel",
+      "isGeneral": true,
+      "color": "#94c12e",
+      "speaker": {
+        "name": null,
+        "title": null,
+        "photoURL": null,
+        "userID": null
+      }
+    },
+    {
+      "title": "Gala Dinner with Chairman - Holcim Ltd.",
+      "description": "Gala dinner with speech from Holcim Chairman",
+      "category": "social",
+      "day": "2",
+      "startTime": "2025-11-11T19:00:00",
+      "endTime": "2025-11-11T22:00:00",
+      "location": "Al Baraha 3 (at the Hotel)",
       "isGeneral": true,
       "color": "#94c12e",
       "speaker": {

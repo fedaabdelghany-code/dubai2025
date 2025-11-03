@@ -53,7 +53,7 @@ interface Session {
   };
 }
 
-type MessageType = 'today' | 'over' | null;
+type MessageType = 'today' | 'over' | 'before' |null;
 
 @Component({
   selector: 'app-home',
@@ -138,89 +138,79 @@ onAuthStateChanged(this.auth, (user: User | null) => {
     .join(' ');
 }
 
-  private calculateCurrentDayFromSessions(sessions: Session[]): number {
-    if (!sessions || sessions.length === 0) return 1;
+private calculateCurrentDayFromSessions(sessions: Session[]): number {
+  if (!sessions || sessions.length === 0) return 1;
 
-    const now = new Date();
+  const now = new Date();
 
-    // Group sessions by day
-    const sessionsByDay = new Map<string, Session[]>();
-    sessions.forEach(session => {
-      const day = this.normalizeDay(session.day);
-      if (!sessionsByDay.has(day)) {
-        sessionsByDay.set(day, []);
-      }
-      sessionsByDay.get(day)!.push(session);
-    });
+  // Group sessions by event day number
+  const sessionsByDay = new Map<number, Session[]>();
+  for (const session of sessions) {
+    const dayNum = parseInt(this.normalizeDay(session.day), 10);
+    if (!sessionsByDay.has(dayNum)) sessionsByDay.set(dayNum, []);
+    sessionsByDay.get(dayNum)!.push(session);
+  }
 
-    // Sort days numerically
-    const sortedDays = Array.from(sessionsByDay.keys())
-      .map(d => parseInt(d))
-      .filter(d => !isNaN(d))
-      .sort((a, b) => a - b);
+  const sortedDays = Array.from(sessionsByDay.keys()).sort((a, b) => a - b);
+  if (sortedDays.length === 0) return 1;
 
-    if (sortedDays.length === 0) return 1;
+  // Build start–end range for each day
+  const dayRanges = sortedDays.map(dayNum => {
+    const sessionsOfDay = sessionsByDay.get(dayNum)!;
+    sessionsOfDay.sort((a, b) =>
+      this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime()
+    );
 
-    // Find which day we're currently in
-    for (const dayNum of sortedDays) {
-      const daySessions = sessionsByDay.get(dayNum.toString()) || [];
-      if (daySessions.length === 0) continue;
+    const firstSession = sessionsOfDay[0];
+    const lastSession = sessionsOfDay[sessionsOfDay.length - 1];
+    const start = this.toDate(firstSession.startTime);
+    const end = this.toDate(lastSession.endTime);
 
-      // Sort sessions by start time
-      daySessions.sort((a, b) => 
-        this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime()
-      );
-
-      const firstSession = daySessions[0];
-      const lastSession = daySessions[daySessions.length - 1];
-
-      const dayStart = this.toDate(firstSession.startTime);
-      const dayEnd = this.toDate(lastSession.endTime);
-
-      // If we're before this day's first session, we're in a previous day or this day
-      if (now < dayStart) {
-        // Return previous day if it exists, otherwise this day
-        const prevDay = sortedDays[sortedDays.indexOf(dayNum) - 1];
-        return prevDay || dayNum;
-      }
-
-      // If we're within this day's range (before last session ends)
-      if (now >= dayStart && now < dayEnd) {
-        return dayNum;
-      }
-
-      // If we're after this day's last session, check if there's a next day
-      if (now >= dayEnd) {
-        const nextDayIndex = sortedDays.indexOf(dayNum) + 1;
-        // If there's no next day, we're still on this day (it's over but it's still "today")
-        if (nextDayIndex >= sortedDays.length) {
-          return dayNum;
-        }
-        // If there is a next day, check if we should roll over to it
-        const nextDay = sortedDays[nextDayIndex];
-        const nextDaySessions = sessionsByDay.get(nextDay.toString()) || [];
-        if (nextDaySessions.length > 0) {
-          const nextDayFirstSession = nextDaySessions.sort((a, b) => 
-            this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime()
-          )[0];
-          const nextDayStart = this.toDate(nextDayFirstSession.startTime);
-          
-          // If we're past midnight and before next day's first session, roll to next day
-          const currentDate = this.toLocalDateStr(now);
-          const nextDayDate = this.toLocalDateStr(nextDayStart);
-          
-          if (currentDate === nextDayDate && now < nextDayStart) {
-            return nextDay;
-          }
-        }
-        // Otherwise continue checking (might be between days)
-        continue;
-      }
+    // Extend end past midnight (for sessions ending after 00:00)
+    const adjustedEnd = new Date(end);
+    if (adjustedEnd.getHours() < 6 && adjustedEnd > start) {
+      adjustedEnd.setDate(adjustedEnd.getDate()); // same logical day
     }
 
-    // Default: return the last day
+    return { dayNum, start, end: adjustedEnd };
+  });
+
+  const firstDayStart = dayRanges[0].start;
+  const lastDayEnd = dayRanges[dayRanges.length - 1].end;
+
+  // 🕐 CASE 1 — Before event starts
+  if (now < firstDayStart) {
+    return 0; // explicitly indicate "before event"
+  }
+
+  // 🕓 CASE 2 — During or between event days
+  for (let i = 0; i < dayRanges.length; i++) {
+    const { dayNum, start, end } = dayRanges[i];
+
+    // Within current day's range
+    if (now >= start && now <= end) {
+      return dayNum;
+    }
+
+    // Between this day and the next
+    const next = dayRanges[i + 1];
+    if (next && now > end && now < next.start) {
+      // If after midnight but before next day starts, stay on current day
+      if (now.getDate() === end.getDate() + 1 && now.getHours() < 6) {
+        return dayNum;
+      }
+      return next.dayNum;
+    }
+  }
+
+  // 🌙 CASE 3 — After event ends
+  if (now > lastDayEnd) {
     return sortedDays[sortedDays.length - 1];
   }
+
+  // Fallback
+  return 1;
+}
 
   /**
    * Normalize day field to just the number (handles "1", "Day 1", "day 1", etc.)
@@ -253,24 +243,39 @@ onAuthStateChanged(this.auth, (user: User | null) => {
       return { primary: null, secondary: null, messageType: 'over' };
     }
 
+      // ✅ Handle before Day 1
+  const allSessionsSorted = [...sessions].sort(
+    (a, b) => this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime()
+  );
+  const firstSession = allSessionsSorted[0];
+  if (now < this.toDate(firstSession.startTime)) {
+    return { primary: null, secondary: null, messageType: 'before' };
+  }
     // Filter to current day's sessions
     const todaySessions = sessions.filter((s) => 
       this.normalizeDay(s.day) === this.currentDay.toString()
     );
 
-    // If no sessions today, determine if event is over or just done for the day
-    if (todaySessions.length === 0) {
-      const allDays = sessions.map(s => parseInt(this.normalizeDay(s.day))).filter(d => !isNaN(d));
-      const maxDay = Math.max(...allDays);
-      
-      // If current day is beyond max day, event is over
-      if (this.currentDay > maxDay) {
-        return { primary: null, secondary: null, messageType: 'over' };
-      }
-      
-      // Otherwise, just no sessions today (shouldn't happen with proper data)
-      return { primary: null, secondary: null, messageType: 'today' };
-    }
+// If no sessions today, determine if we're before, after, or between event days
+if (todaySessions.length === 0) {
+  const allDays = sessions.map(s => parseInt(this.normalizeDay(s.day))).filter(d => !isNaN(d));
+  const maxDay = Math.max(...allDays);
+  const minDay = Math.min(...allDays);
+
+  // Before event start (Day 0)
+  if (this.currentDay === 0) {
+    return { primary: null, secondary: null, messageType: 'before' };
+  }
+
+  // After event ends
+  if (this.currentDay > maxDay) {
+    return { primary: null, secondary: null, messageType: 'over' };
+  }
+
+  // Between days (no sessions right now)
+  return { primary: null, secondary: null, messageType: 'today' };
+}
+
 
     // Sort sessions by start time
     todaySessions.sort(

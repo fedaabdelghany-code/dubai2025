@@ -5,7 +5,8 @@
       <div class="header-container">
         <div class="header-content">
           <p class="event-label">AMEA REGIONAL MEETING 2025</p>
-          <h1 class="day-title">DAY {{ currentDay }}</h1>
+<h1 class="day-title" *ngIf="currentDay > 0">DAY {{ currentDay }}</h1>
+<h1 class="day-title" *ngIf="currentDay === 0">COMING SOON</h1>
           <p class="date-text">Ahlan, {{ displayName }}!</p>
         </div>
 
@@ -156,37 +157,45 @@
         </ng-container>
 
         <!-- No Session -->
-        <ng-template #noSession>
-          <div class="session-card no-session" [ngClass]="messageType">
-            <div class="card-content">
-              <div class="no-session-icon">
-                <ion-icon
-                  [name]="messageType === 'today' ? 'checkmark-circle' : 'trophy'"
-                  *ngIf="messageType === 'today' || messageType === 'over'"
-                ></ion-icon>
-              </div>
+<ng-template #noSession>
+  <div class="session-card no-session" [ngClass]="messageType">
+    <div class="card-content">
+      <div class="no-session-icon">
+        <ion-icon
+          *ngIf="messageType === 'before'"
+          name="hourglass-outline"
+        ></ion-icon>
+        <ion-icon
+          [name]="messageType === 'today' ? 'checkmark-circle' : 'trophy'"
+          *ngIf="messageType === 'today' || messageType === 'over'"
+        ></ion-icon>
+      </div>
 
-              <h3 class="session-title" *ngIf="messageType === 'today'">
-                All Caught Up for Today
-              </h3>
-              <h3 class="session-title" *ngIf="messageType === 'over'">
-                AMEA 2025 Complete
-              </h3>
+      <h3 class="session-title" *ngIf="messageType === 'before'">
+        AMEA 2025 Starts Soon
+      </h3>
+      <p class="session-text" *ngIf="messageType === 'before'">
+        The event hasn’t started yet. Check back on the 10th! 
+      </p>
 
-              <p class="session-text" *ngIf="messageType === 'today'">
-                Enjoy some downtime and
-                we'll see you tomorrow!
-              </p>
-              <p class="session-text" *ngIf="messageType === 'over'">
-                Thank you for being part of our AMEA 2025 strategy. Your
-                participation has been invaluable. Safe travels home!
-              </p>
+      <h3 class="session-title" *ngIf="messageType === 'today'">
+        All Caught Up for Today
+      </h3>
+      <h3 class="session-title" *ngIf="messageType === 'over'">
+        AMEA 2025 Complete
+      </h3>
 
-              <div class="no-session-decoration"></div>
-            </div>
-          </div>
-        </ng-template>
+      <p class="session-text" *ngIf="messageType === 'today'">
+        Enjoy some downtime and we’ll see you tomorrow!
+      </p>
+      <p class="session-text" *ngIf="messageType === 'over'">
+        Thank you for being part of our AMEA 2025 strategy. Safe travels home!
+      </p>
 
+      <div class="no-session-decoration"></div>
+    </div>
+  </div>
+</ng-template>
         <!-- Quick Actions -->
         <div class="quick-actions">
           <div class="action-card" (click)="openQRCode()">

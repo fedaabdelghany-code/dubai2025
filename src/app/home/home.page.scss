@@ -644,6 +644,10 @@ background: linear-gradient(135deg, #4bb05b 0%, #4bb05b 100%);
 }
 
 .no-session.over .no-session-icon {
+  background: linear-gradient(135deg, #94C12E 0%, #7da625 100%);
+  box-shadow: 0 8px 16px rgba(148, 193, 46, 0.25);
+}
+.no-session.before .no-session-icon {
   background: linear-gradient(135deg, #00A9E0 0%, #0092c4 100%);
   box-shadow: 0 8px 16px rgba(0, 169, 224, 0.25);
 }
