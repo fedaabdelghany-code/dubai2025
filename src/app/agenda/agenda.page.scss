@@ -143,18 +143,12 @@
 }
 
 // Day Selector - Floating Tabs Style
-// ============================================
-// TABS SECTION - Floating & Sticky (Holcim Style)
-// ============================================
-// ============================================
-// TABS SECTION – Floating & Sticky (Holcim Style)
-// ============================================
 .tabs-container {
   padding: 0 1rem;
   margin-top: -2rem; // deeper overlap under header for mobile
   margin-bottom: 1rem;
   position: sticky;
-  top: 2rem; // closer to top of viewport
+  top: 2.5rem; // closer to top of viewport
   z-index: 100;
   transition: all 0.3s ease;
 
@@ -434,7 +428,8 @@
   }
 }
 
-// Materials Section (unchanged, kept clean)
+$holcim-green: #7ab023;
+
 .materials-section {
   margin-top: 1rem;
   padding-top: 1rem;
@@ -452,13 +447,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #1a1a1a;
 
-  .folder-icon {
-    font-size: 1rem;
-    color: #666;
+  ion-icon {
+    font-size: 1.1rem;
+    color: $holcim-green;
   }
 }
 
@@ -471,12 +466,14 @@
 .material-card {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
   padding: 0.875rem;
   background: #f9fafb;
   border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.25s ease;
   cursor: pointer;
-  transition: all 0.2s ease;
 
   &:hover {
     background: #f0f1f3;
@@ -495,10 +492,27 @@
 
 .material-icon {
   font-size: 1.4rem;
+  color: $holcim-green;
+}
+
+.material-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+
+  .material-name {
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .material-meta {
+    font-size: 0.8rem;
+    color: #64748b;
+  }
 }
 
 .material-download-btn {
-  border: none;
   background: white;
   border-radius: 8px;
   width: 34px;
@@ -508,6 +522,7 @@
   justify-content: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
   transition: all 0.2s;
+  color: $holcim-green;
 
   ion-icon {
     font-size: 1.2rem;
@@ -518,181 +533,6 @@
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   }
 }
-// Material Viewer Modal Styling
-.material-modal {
-  --width: 95%;
-  --height: 90%;
-  --border-radius: 16px;
-  --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-
-  @media (min-width: 768px) {
-    --width: 85%;
-    --height: 85%;
-  }
-
-  @media (min-width: 1024px) {
-    --width: 75%;
-    --height: 85%;
-  }
-}
-
-.modal-content {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: white;
-  overflow: hidden;
-}
-
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.modal-title {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  flex: 1;
-  min-width: 0;
-
-  ion-icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  }
-
-  span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-.modal-actions {
-  display: flex;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
-.modal-action-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  ion-icon {
-    font-size: 1.5rem;
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.05);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-}
-
-.modal-body {
-  flex: 1;
-  overflow: hidden;
-  position: relative;
-  background: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.material-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: white;
-}
-
-.material-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  padding: 1rem;
-}
-
-.material-video {
-  max-width: 100%;
-  max-height: 100%;
-  outline: none;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.unsupported-type {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-  text-align: center;
-
-  ion-icon {
-    font-size: 4rem;
-    color: #999;
-  }
-
-  p {
-    font-size: 1rem;
-    color: #666;
-    margin: 0;
-  }
-
-  .download-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-
-    ion-icon {
-      font-size: 1.25rem;
-    }
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-  }
-}
-
 // Highlight animation for scrolled sessions
 .session-card.highlight {
   animation: highlight-pulse 2s ease-out;
@@ -1562,3 +1402,4 @@
     color: #1D4370;
   }
 }
+

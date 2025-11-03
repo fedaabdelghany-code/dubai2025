@@ -1,16 +1,52 @@
+// Page Container
 .page-container {
-  padding: 48px 24px 80px;
+  padding: calc(env(safe-area-inset-top) + 26px) 24px 80px; // top padding for notches
 }
 
+// Header Section
 .header-section {
   margin-bottom: 24px;
+  padding-top: env(safe-area-inset-top);
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // place title on left, close button on right
 }
 
+// Page Title
 .page-title {
   font-size: 24px;
   font-weight: 700;
   color: #1D4370;
-  margin: 0 0 8px 0;
+  margin: 0;
+  flex: 1; // ensures proper spacing before button
+}
+
+// Close Button (now inline, not absolute)
+.close-button {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  ion-icon {
+    font-size: 22px;
+    color: #1a1a1a; // darker X
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .page-subtitle {
@@ -210,12 +246,4 @@ ion-col {
 
 ion-grid {
   padding: 0;
-}
-
-.close-button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 10;
-  --color: var(--ion-color-dark);
 }

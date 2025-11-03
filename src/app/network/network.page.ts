@@ -6,11 +6,13 @@ import { Subscription } from 'rxjs';
 import { PostService, Post } from '../services/post.service';
 import { NewPostModalComponent } from './new-post-modal/new-post-modal.component';
 import { Auth } from '@angular/fire/auth';
+import { Timestamp } from 'firebase/firestore';
 
 interface PostDisplay extends Post {
   liked: boolean;
   showComments?: boolean;
   newComment?: string;
+  createdAt?: any;
 }
 
 @Component({
@@ -150,38 +152,75 @@ export class NetworkPage implements OnInit, OnDestroy {
   /**
    * Open modal to create new post
    */
-  async openNewPostModal() {
-    const modal = await this.modalCtrl.create({
-      component: NewPostModalComponent,
-      cssClass: 'full-screen-modal',
-      showBackdrop: true,
-    });
+/**
+ * Open modal to create new post
+ */
+async openNewPostModal() {
+  const modal = await this.modalCtrl.create({
+    component: NewPostModalComponent,
+    cssClass: 'full-screen-modal',
+    showBackdrop: true,
+  });
 
-    await modal.present();
+  await modal.present();
 
-    const { data } = await modal.onDidDismiss();
-    if (data?.caption) {
-      await this.createPost(data.caption, data.photoURL);
-    }
+  const { data, role } = await modal.onDidDismiss();
+  console.log('[NetworkPage] Modal dismissed with role:', role, 'and data:', data);
+
+  if (role === 'post' && data?.caption) {
+    console.log('[NetworkPage] Creating Firestore post...');
+    await this.createPost(data.caption, data.photoURL);
+  } else {
+    console.log('[NetworkPage] Modal closed without posting.');
   }
+}
 
-  /**
+
+/**
    * Create a new post in Firestore
    */
-  async createPost(caption: string, photoURL?: string) {
-    try {
-      await this.postService.createPost({
-        userId: this.currentUserId,
-        userName: this.currentUserName,
-        userPhoto: this.currentUserPhoto,
-        caption: caption,
-        photoURL: photoURL,
-      });
-      // Post will automatically appear in feed via real-time subscription
-    } catch (error) {
-      console.error('Error creating post:', error);
-    }
+async createPost(caption: string, photoURL?: string) {
+  try {
+    const tempId = 'temp-' + Date.now();
+
+    // Temporary post shown immediately
+    const tempPost: PostDisplay = {
+      id: tempId,
+      userId: this.currentUserId,
+      userName: this.currentUserName,
+      userPhoto: this.currentUserPhoto,
+      caption,
+      photoURL: photoURL || '',
+      likes: [],
+      comments: [],
+      liked: false,
+      showComments: false,
+      newComment: '',
+      createdAt: new Date(),
+      timestamp: new Timestamp(Date.now() / 1000, 0),
+    };
+
+    // Show it instantly in the feed
+    this.allPosts.unshift(tempPost);
+    this.refreshFeed();
+
+    // Upload to Firestore
+    await this.postService.createPost({
+      userId: this.currentUserId,
+      userName: this.currentUserName,
+      userPhoto: this.currentUserPhoto,
+      caption,
+      photoURL,
+    });
+
+    // Remove temporary post (Firestore real-time will re-add it properly)
+    this.allPosts = this.allPosts.filter(p => p.id !== tempId);
+    this.refreshFeed();
+
+  } catch (error) {
+    console.error('Error creating post:', error);
   }
+}
 
   /**
    * Toggle like on a post
@@ -239,6 +278,10 @@ export class NetworkPage implements OnInit, OnDestroy {
   getLikeCount(post: PostDisplay): number {
     return post.likes?.length || 0;
   }
+
+  trackByPostId(index: number, post: PostDisplay): string {
+  return post.id || index.toString();
+}
 
   /**
    * Get comment count for display

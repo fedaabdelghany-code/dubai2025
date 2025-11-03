@@ -18,6 +18,7 @@ interface Session {
   color: string;
   isGeneral: boolean;
   material?: string;
+  qnaLink?: string;
   speaker?: {
     name: string;
     title: string;

@@ -4,6 +4,7 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage'; // ✅ Add this
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { environment } from './environments/environment';
@@ -52,8 +53,9 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-        provideFirestore(() => getFirestore()),
-provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()), 
 
     // ✅ Still valid in Angular 20.x
     {

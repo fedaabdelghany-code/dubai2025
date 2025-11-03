@@ -56,7 +56,7 @@
 
     <!-- POSTS FEED - Show when loaded -->
     <div *ngIf="!isLoading && filteredPosts.length > 0">
-      <div *ngFor="let post of filteredPosts" class="post-card">
+<div *ngFor="let post of filteredPosts; trackBy: trackByPostId" class="post-card">
         <div class="post-header">
           <img
             [src]="post.userPhoto || 'assets/default-avatar.png'"

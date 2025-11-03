@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './tips.page.html',
   styleUrls: ['./tips.page.scss'],
   standalone: true,
-  imports: [IonContent]
+  imports: [IonIcon, IonButton, IonContent]
 })
 export class TipsPage implements OnInit {
   @ViewChild(IonContent, { static: true }) content!: IonContent;
