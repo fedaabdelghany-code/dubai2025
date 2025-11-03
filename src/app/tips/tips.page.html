@@ -1,82 +1,158 @@
+<!-- HTML -->
 <div class="tips-page-container">
 
-  <!-- FIXED HEADER -->
-  <div class="fixed-header-bar">
-    <div class="header-content">
-      <h1 class="header-title">GENERAL TIPS AND RECOMMENDATIONS</h1>
-<button class="close-btn" (click)="goHome()">&times;</button>
-    </div>
+  <!-- HEADER with gradient and overlay -->
+  <div class="header-gradient">
+    <h2 class="header-title">TIPS & RECOMMENDATIONS</h2>
+    <img src="assets/skyline.webp" alt="" class="header-overlay" />
+    <button class="close-btn" (click)="goHome()" aria-label="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
   </div>
 
   <!-- SCROLLABLE CONTENT -->
   <ion-content class="tips-content-wrapper">
-    <dl class="tips-list">
+    <div class="tips-container">
+      <dl class="tips-list">
 
-      <div class="tip-item">
-        <dt>Dress Code</dt>
-        <dd>
-          <strong>Smart Casual</strong><br>
-          Gala Dinner: <strong>Formal</strong>
-        </dd>
-      </div>
+        <!-- Essential Info Section -->
+        <div class="section-header">
+          <h2>Essential Information</h2>
+        </div>
 
-      <div class="tip-item">
-        <dt>Currency</dt>
-        <dd><strong>AED (Arab Emirates Dirham)</strong></dd>
-      </div>
+        <div class="tip-item">
+          <dt>
+            <span class="icon">👔</span>
+            Dress Code
+          </dt>
+          <dd>
+            <div class="info-row">
+              <span class="label">General:</span>
+              <span class="value">Smart Casual</span>
+            </div>
+            <div class="info-row highlight">
+              <span class="label">Gala Dinner:</span>
+              <span class="value">Formal</span>
+            </div>
+          </dd>
+        </div>
 
-      <div class="tip-item">
-        <dt>Monetary exchange /<br>Cash machines</dt>
-        <dd>
-          Credit cards are well accepted in the Dubai region.<br><br>
-          Cash exchange is available at the airport, hotels, and malls at almost similar rates.
-        </dd>
-      </div>
+        <div class="tip-item">
+          <dt>
+            <span class="icon">💰</span>
+            Currency
+          </dt>
+          <dd>
+            <div class="info-row">
+              <span class="value-large">AED</span>
+              <span class="subtext">Arab Emirates Dirham</span>
+            </div>
+          </dd>
+        </div>
 
-      <div class="tip-item">
-        <dt>Voltage</dt>
-        <dd>
-          Dubai operates on <strong>220V</strong>.<br>
-          Plug type: <strong>G</strong> (three rectangular pins in a triangular pattern)
-        </dd>
-      </div>
+        <div class="tip-item">
+          <dt>
+            <span class="icon">💳</span>
+            Payment & Exchange
+          </dt>
+          <dd>
+            <p>Credit cards are widely accepted throughout Dubai.</p>
+            <p class="note">Currency exchange available at airports, hotels, and malls with similar rates.</p>
+          </dd>
+        </div>
 
-      <div class="tip-item">
-        <dt>Security</dt>
-        <dd>
-          The country is <strong>very safe</strong>.<br>
-          More info: <a href="#" class="holcim-link">UAE Travel Guide</a>
-        </dd>
-      </div>
+        <div class="tip-item">
+          <dt>
+            <span class="icon">🔌</span>
+            Voltage & Plugs
+          </dt>
+          <dd>
+            <div class="info-row">
+              <span class="label">Voltage:</span>
+              <span class="value">220V</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Plug Type:</span>
+              <span class="value">G (UK-style, 3 pins)</span>
+            </div>
+          </dd>
+        </div>
 
-      <div class="tip-item">
-        <dt>Int'l SOS</dt>
-        <dd>
-          Medical/Security assistance: <strong>+971 4 601 8777</strong><br>
-          Membership number: <strong>15AMMS000002</strong>
-        </dd>
-      </div>
+        <!-- Safety & Health Section -->
+        <div class="section-header">
+          <h2>Safety & Health</h2>
+        </div>
 
-      <div class="tip-item">
-        <dt>Health Insurance</dt>
-        <dd>
-          Always carry your <strong>health insurance certificate</strong>.<br>
-          Inform us of special requirements in advance.
-        </dd>
-      </div>
+        <div class="tip-item">
+          <dt>
+            <span class="icon">🛡️</span>
+            Security
+          </dt>
+          <dd>
+            <p>Dubai is considered <strong>very safe</strong> for travelers.</p>
+            <a href="#" class="holcim-link">
+              View UAE Travel Guide →
+            </a>
+          </dd>
+        </div>
 
-      <div class="tip-item contact-item">
-        <dt>Contact</dt>
-        <dd>
-          Main contact in UAE:<br>
-          <strong>Warda Arqui</strong><br>
-          <strong>+971 55 7438706</strong><br>
-          <a href="mailto:warda.arqui@lafargeholcim.com" class="holcim-link">
-            warda.arqui@lafargeholcim.com
-          </a>
-        </dd>
-      </div>
+        <div class="tip-item important">
+          <dt>
+            <span class="icon">🏥</span>
+            Int'l SOS
+          </dt>
+          <dd>
+            <div class="contact-info">
+              <div class="info-row">
+                <span class="label">Emergency:</span>
+                <a href="tel:+97146018777" class="phone-link">+971 4 601 8777</a>
+              </div>
+              <div class="info-row">
+                <span class="label">Membership:</span>
+                <span class="value mono">15AMMS000002</span>
+              </div>
+            </div>
+          </dd>
+        </div>
 
-    </dl>
+        <div class="tip-item">
+          <dt>
+            <span class="icon">🩺</span>
+            Health Insurance
+          </dt>
+          <dd>
+            <p><strong>Always carry</strong> your health insurance certificate.</p>
+            <p class="note">Please inform us of any special medical requirements in advance.</p>
+          </dd>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="section-header">
+          <h2>Local Contact</h2>
+        </div>
+
+        <div class="tip-item contact-card">
+          <dt>
+            <span class="icon">📞</span>
+            Main Contact in UAE
+          </dt>
+          <dd>
+            <div class="contact-details">
+              <p class="contact-name">Warda Arqui</p>
+              <a href="tel:+971557438706" class="contact-phone">
+                +971 55 7438706
+              </a>
+              <a href="mailto:warda.arqui@lafargeholcim.com" class="contact-email">
+                warda.arqui@lafargeholcim.com
+              </a>
+            </div>
+          </dd>
+        </div>
+
+      </dl>
+    </div>
   </ion-content>
 </div>

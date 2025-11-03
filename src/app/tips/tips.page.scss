@@ -7,9 +7,12 @@ $holcim-link-blue: #00A9E0;
 $text-color-primary: #1e293b;
 $text-color-secondary: #475569;
 $light-gray-line: #e5e7eb;
-$light-bg: #f8fafc;
+$light-bg: #f9fafb;
+$white: #ffffff;
+$highlight-bg: #dcfce7;
+$highlight-border: #22c55e;
 
-// HEADER HEIGHT
+// HEADER HEIGHT (with safe area)
 $fixed-header-height: 65px;
 
 // =====================
@@ -27,41 +30,101 @@ $fixed-header-height: 65px;
   }
 }
 
-.fixed-header-bar {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: $fixed-header-height;
-  background-color: $holcim-dark-blue;
+.header-gradient {
+  background: linear-gradient(to bottom right, #041739 0%, #041739 40%, #1d4370 100%);
+  padding: 4.5rem 1.25rem 3rem;
+  position: relative;
+  overflow: hidden;
+
+  @media (min-width: 480px) {
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  @media (min-width: 768px) {
+    padding: 3rem 2rem 3rem;
+  }
+}
+
+.header-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25rem;
+  height: auto;
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: soft-light;
+  transform: translate(20%, -15%);
+
+  @media (min-width: 480px) {
+    width: 15rem;
+    transform: translate(30%, -10%);
+  }
+
+  @media (min-width: 768px) {
+    width: 20rem;
+    transform: translate(40%, -20%);
+  }
+}
+
+.header-title {
+  position: relative;
   color: white;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 700;
+  margin: 0;
+  z-index: 2;
+
+  @media (min-width: 480px) {
+    font-size: 1.6rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   display: flex;
   align-items: center;
-  padding: 0 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  z-index: 1000;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
 
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
   }
 
-  .header-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin: 0;
+  &:active {
+    transform: scale(0.95);
   }
 
-  .close-btn {
-    font-size: 2rem;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0.5rem;
+  svg {
+    display: block;
+  }
+
+  @media (min-width: 480px) {
+    top: 1.25rem;
+    right: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    top: 1.5rem;
+    right: 1.5rem;
   }
 }
 
@@ -69,11 +132,40 @@ $fixed-header-height: 65px;
 // SCROLLABLE CONTENT
 // =====================
 .tips-content-wrapper {
-  padding-top: calc($fixed-header-height + 2.5rem); // instead of 1rem
-  padding-bottom: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
+  padding-top: 0;
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom));
   scroll-behavior: smooth;
+}
+
+.tips-container {
+  max-width: 800px;
+  margin: -1rem auto 0;
+  padding: 0 1rem 3rem;
+  // Safe area padding for sides
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+}
+
+// =====================
+// SECTION HEADERS
+// =====================
+.section-header {
+  margin: 2rem 0 1rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  h2 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: $holcim-light-blue;
+    margin: 0;
+    padding: 0 0.5rem;
+  }
 }
 
 // =====================
@@ -86,47 +178,272 @@ $fixed-header-height: 65px;
 }
 
 .tip-item {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  padding: 16px 1rem;
-  gap: 20px;
-  background: #fff;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  background: $white;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09),
+              0 2px 5px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(229, 231, 235, 0.7);
+  overflow: hidden;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12),
+                0 4px 8px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+  }
+
+  // Important items styling
+  &.important {
+    border-left: 4px solid $highlight-border;
+  }
+
+  &.contact-card {
+    border-left: 4px solid $holcim-link-blue;
+  }
 
   dt {
-    font-weight: 600;
-    color: $holcim-light-blue;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0a2a5a;
+    padding: 1.25rem 1.5rem 0.75rem;
+    border-bottom: 1px solid $light-gray-line;
+
+    .icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e6f0ff;
+      border-radius: 50%;
+    }
   }
 
   dd {
     margin: 0;
-    color: $text-color-secondary;
+    padding: 1.25rem 1.5rem;
+    color: #4b5563;
+    line-height: 1.6;
+    font-size: 0.95rem;
 
-    strong {
-      color: $holcim-dark-blue;
-      font-weight: 700;
+    p {
+      margin: 0 0 0.75rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
-    a.holcim-link {
-      color: $holcim-link-blue;
-      text-decoration: none;
+    strong {
+      color: #1f2937;
       font-weight: 600;
-      &:hover { text-decoration: underline; }
+    }
+
+    .note {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-style: normal;
+      margin-top: 0.5rem;
+      display: block;
     }
   }
 }
 
+// =====================
+// INFO ROWS
+// =====================
+.info-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.highlight {
+    padding: 0.75rem;
+    background: $highlight-bg;
+    border-radius: 0.5rem;
+    margin-top: 0.75rem;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  .label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+    min-width: 100px;
+  }
+
+  .value {
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .value-large {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0a2a5a;
+    display: block;
+  }
+
+  .subtext {
+    font-size: 0.875rem;
+    color: #6b7280;
+    display: block;
+    margin-top: 0.25rem;
+  }
+
+  .mono {
+    font-family: 'Courier New', monospace;
+    background: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+}
+
+// =====================
+// LINKS
+// =====================
+.holcim-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: $holcim-link-blue;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+
+  &:hover {
+    color: darken($holcim-link-blue, 10%);
+    gap: 0.5rem;
+  }
+}
+
+.phone-link {
+  color: #0a2a5a;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $holcim-link-blue;
+  }
+}
+
+// =====================
+// CONTACT INFO
+// =====================
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .contact-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0a2a5a;
+    margin: 0;
+  }
+
+  .contact-phone {
+    color: #0a2a5a;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $holcim-link-blue;
+    }
+  }
+
+  .contact-email {
+    color: $holcim-link-blue;
+    text-decoration: none;
+    font-size: 0.9375rem;
+    word-break: break-all;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// =====================
 // RESPONSIVE
+// =====================
 @media (max-width: 600px) {
+  .tips-container {
+    padding: 0 0.75rem 1.5rem;
+  }
+
   .tip-item {
-    grid-template-columns: 1fr;
     dt {
-      border-bottom: 1px solid $light-gray-line;
-      padding-bottom: 5px;
-      margin-bottom: 5px;
-      color: $holcim-dark-blue;
+      font-size: 0.9375rem;
+      padding: 1rem 1.25rem 0.625rem;
+
+      .icon {
+        font-size: 1.25rem;
+        width: 1.75rem;
+        height: 1.75rem;
+      }
+    }
+
+    dd {
+      padding: 1rem 1.25rem;
+      font-size: 0.9375rem;
+    }
+  }
+
+  .info-row {
+    flex-direction: column;
+    gap: 0.25rem;
+
+    .label {
+      min-width: auto;
+      font-size: 0.8125rem;
+    }
+  }
+
+  .contact-details {
+    .contact-name {
+      font-size: 1.125rem;
+    }
+
+    .contact-phone {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Extra small devices
+@media (max-width: 360px) {
+  .close-btn {
+    width: 36px;
+    height: 36px;
+
+    svg {
+      width: 20px;
+      height: 20px;
     }
   }
 }
