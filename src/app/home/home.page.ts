@@ -1,10 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
-import { IonContent, IonIcon, IonModal, IonButton, IonCardTitle, IonCard, IonCardHeader, IonCardContent } from '@ionic/angular/standalone';
-import { Auth, signOut } from '@angular/fire/auth';
+import {
+  IonContent,
+  IonIcon,
+  IonModal,
+  IonButton,
+  IonCardTitle,
+  IonCard,
+  IonCardHeader,
+  IonCardContent,
+} from '@ionic/angular/standalone';
+import { Auth, signOut, onAuthStateChanged } from '@angular/fire/auth';
 import { DataService } from '../services/data.service';
-import { onAuthStateChanged, User } from '@angular/fire/auth';
 
 import {
   Firestore,
@@ -14,6 +22,7 @@ import {
   orderBy,
   Timestamp,
 } from '@angular/fire/firestore';
+
 import {
   Observable,
   Subject,
@@ -22,6 +31,7 @@ import {
   map,
   takeUntil,
   shareReplay,
+  startWith,
 } from 'rxjs';
 import { RouterModule } from '@angular/router';
 
@@ -38,7 +48,7 @@ interface Session {
   id: string;
   title: string;
   startTime: any; // Firestore Timestamp
-  endTime: any;   // Firestore Timestamp
+  endTime: any; // Firestore Timestamp
   location: string;
   day: string;
   description: string;
@@ -53,17 +63,31 @@ interface Session {
   };
 }
 
-type MessageType = 'today' | 'over' | 'before' |null;
+type MessageType = 'today' | 'over' | 'before' | null;
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonCardContent, IonCardHeader, IonCard, IonCardTitle, IonButton, IonModal, IonContent, IonIcon, CommonModule, DatePipe, RouterModule],
+  imports: [
+    IonCardContent,
+    IonCardHeader,
+    IonCard,
+    IonCardTitle,
+    IonButton,
+    IonModal,
+    IonContent,
+    IonIcon,
+    CommonModule,
+    DatePipe,
+    RouterModule,
+  ],
 })
 export class HomePage implements OnInit, OnDestroy {
-  /* Public observables / properties used by the template */
+openPhotos() {
+throw new Error('Method not implemented.');
+}
   public primarySession: Session | null = null;
   public secondarySession: Session | null = null;
   public todaySessions$!: Observable<Session[]>;
@@ -71,283 +95,233 @@ export class HomePage implements OnInit, OnDestroy {
   public messageType: MessageType = null;
   public currentDay = 1;
   public showQR = false;
-  displayName: string | null = null;
+  public displayName: string | null = null;
 
-
-  /* Internal */
   private destroy$ = new Subject<void>();
   private readonly TICK_MS = 1000;
 
-  
+  constructor(
+    private router: Router,
+    private firestore: Firestore,
+    private auth: Auth,
+    private data: DataService
+  ) {}
 
-  constructor(private router: Router, private firestore: Firestore, private auth: Auth, private data: DataService,   
-) {}
+  ngOnInit() {
+    // sessions$ from data service but ensure it's sorted and convert timestamps lazily when needed.
+    const sessionsSorted$ = this.data.sessions$.pipe(
+      map((sessions) =>
+        (sessions || []).slice().sort((a, b) => this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime())
+      ),
+      shareReplay(1)
+    );
 
-ngOnInit() {
-  const sessions$ = this.data.sessions$;
-  this.announcements$ = this.data.announcements$;
+    // announcements are expected to come from data service — reuse and share
+    this.announcements$ = (this.data.announcements$ || [] as any) as Observable<Announcement[]>;
 
-  const tick$ = interval(this.TICK_MS);
+    // "now" stream for ticking UI (used in evaluation and time-remaining helpers)
+    const now$ = interval(this.TICK_MS).pipe(
+      startWith(0),
+      map(() => new Date()),
+      shareReplay(1)
+    );
 
+    // auth state - formatted displayName
+    const authState$ = new Observable((sub) => {
+      const unsub = onAuthStateChanged(this.auth, (user) => sub.next(user ?? null));
+      return { unsubscribe: unsub };
+    }).pipe(takeUntil(this.destroy$), shareReplay(1));
 
-onAuthStateChanged(this.auth, (user: User | null) => {
-  if (user && user.displayName) {
-    this.displayName = this.formatDisplayName(user.displayName);
-
-  } else {
-    this.displayName = null;
-  }
-});
-  
-  combineLatest([sessions$, tick$])
-    .pipe(
-      map(([sessions]) => {
-        this.currentDay = this.calculateCurrentDayFromSessions(sessions);
-        return this.evaluateSessions(sessions);
-      }),
-      takeUntil(this.destroy$)
-    )
-    .subscribe(({ primary, secondary, messageType }) => {
-      this.primarySession = primary;
-      this.secondarySession = secondary;
-      this.messageType = messageType;
+    authState$.pipe(takeUntil(this.destroy$)).subscribe((user: any) => {
+      this.displayName = user?.displayName ? this.formatDisplayName(user.displayName) : null;
     });
 
-  this.todaySessions$ = sessions$.pipe(
-    map((sessions) => {
-      const currentDay = this.calculateCurrentDayFromSessions(sessions);
-      return sessions.filter(s => this.normalizeDay(s.day) === currentDay.toString()).slice(0, 3);
-    }),
-    shareReplay(1)
-  );
-}
+    // Combine sessions + now to compute currentDay and evaluate live/up-next sessions
+    combineLatest([sessionsSorted$, now$])
+      .pipe(
+        map(([sessions, now]) => {
+          const currentDay = this.calculateCurrentDayFromSessions(sessions, now);
+          const evaluation = this.evaluateSessionsForDay(sessions, now, currentDay);
+          return { currentDay, evaluation };
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(({ currentDay, evaluation }) => {
+        this.currentDay = currentDay;
+        this.primarySession = evaluation.primary;
+        this.secondarySession = evaluation.secondary;
+        this.messageType = evaluation.messageType;
+      });
+
+    // expose top-3 sessions for "today" (derived from sorted sessions)
+    this.todaySessions$ = sessionsSorted$.pipe(
+      map((sessions) => {
+        const dayStr = String(this.currentDay); // fallback to 1 if currentDay unset
+        return sessions.filter((s) => this.normalizeDay(s.day) === dayStr).slice(0, 3);
+      }),
+      shareReplay(1)
+    );
+  }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  /**
-   * Calculate current day based on sessions themselves (not hardcoded dates)
-   * Returns the day number (1, 2, 3, etc.) based on which day's sessions are active
-   */
+  // ---------- Utilities / Helpers ----------
 
   private formatDisplayName(name: string): string {
-  return name
-    .toLowerCase()
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
-private calculateCurrentDayFromSessions(sessions: Session[]): number {
-  if (!sessions || sessions.length === 0) return 1;
-
-  const now = new Date();
-
-  // Group sessions by event day number
-  const sessionsByDay = new Map<number, Session[]>();
-  for (const session of sessions) {
-    const dayNum = parseInt(this.normalizeDay(session.day), 10);
-    if (!sessionsByDay.has(dayNum)) sessionsByDay.set(dayNum, []);
-    sessionsByDay.get(dayNum)!.push(session);
+    if (!name) return name;
+    return name
+      .toLowerCase()
+      .split(' ')
+      .filter(Boolean)
+      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .join(' ');
   }
 
-  const sortedDays = Array.from(sessionsByDay.keys()).sort((a, b) => a - b);
-  if (sortedDays.length === 0) return 1;
-
-  // Build start–end range for each day
-  const dayRanges = sortedDays.map(dayNum => {
-    const sessionsOfDay = sessionsByDay.get(dayNum)!;
-    sessionsOfDay.sort((a, b) =>
-      this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime()
-    );
-
-    const firstSession = sessionsOfDay[0];
-    const lastSession = sessionsOfDay[sessionsOfDay.length - 1];
-    const start = this.toDate(firstSession.startTime);
-    const end = this.toDate(lastSession.endTime);
-
-    // Extend end past midnight (for sessions ending after 00:00)
-    const adjustedEnd = new Date(end);
-    if (adjustedEnd.getHours() < 6 && adjustedEnd > start) {
-      adjustedEnd.setDate(adjustedEnd.getDate()); // same logical day
-    }
-
-    return { dayNum, start, end: adjustedEnd };
-  });
-
-  const firstDayStart = dayRanges[0].start;
-  const lastDayEnd = dayRanges[dayRanges.length - 1].end;
-
-  // 🕐 CASE 1 — Before event starts
-  if (now < firstDayStart) {
-    return 0; // explicitly indicate "before event"
+  /** Parse day like "Day 1", "1", "day 2" -> integer. Return 1 on invalid. */
+  private parseDayToInt(day?: string | number): number {
+    if (day == null) return 1;
+    const match = String(day).toLowerCase().match(/(\d+)/);
+    const n = match ? parseInt(match[1], 10) : NaN;
+    return isNaN(n) ? 1 : n;
   }
 
-  // 🕓 CASE 2 — During or between event days
-  for (let i = 0; i < dayRanges.length; i++) {
-    const { dayNum, start, end } = dayRanges[i];
-
-    // Within current day's range
-    if (now >= start && now <= end) {
-      return dayNum;
-    }
-
-    // Between this day and the next
-    const next = dayRanges[i + 1];
-    if (next && now > end && now < next.start) {
-      // If after midnight but before next day starts, stay on current day
-      if (now.getDate() === end.getDate() + 1 && now.getHours() < 6) {
-        return dayNum;
-      }
-      return next.dayNum;
-    }
-  }
-
-  // 🌙 CASE 3 — After event ends
-  if (now > lastDayEnd) {
-    return sortedDays[sortedDays.length - 1];
-  }
-
-  // Fallback
-  return 1;
-}
-
-  /**
-   * Normalize day field to just the number (handles "1", "Day 1", "day 1", etc.)
-   */
+  /** Normalize day to digits-only string */
   private normalizeDay(day: string | undefined): string {
     if (!day) return '1';
-    return day.toString().toLowerCase().replace(/[^0-9]/g, '');
+    const digits = String(day).replace(/[^0-9]/g, '');
+    return digits === '' ? '1' : digits;
   }
 
   /**
-   * Load sessions from Firestore ordered by startTime asc.
+   * Convert a variety of Firestore-like timestamp shapes to a JS Date.
+   * Non-convertible values produce an Invalid Date (NaN date).
    */
-  private loadSessionsObservable(): Observable<Session[]> {
-    const sessionsRef = collection(this.firestore, 'sessions');
-    const q = query(sessionsRef, orderBy('startTime', 'asc'));
-    return collectionData(q, { idField: 'id' }) as Observable<Session[]>;
-  }
-
-  /**
-   * Core logic: determines which sessions are LIVE/UP NEXT for current day only
-   */
-  private evaluateSessions(sessions: Session[]): {
-    primary: Session | null;
-    secondary: Session | null;
-    messageType: MessageType;
-  } {
-    const now = new Date();
-
-    if (!sessions || sessions.length === 0) {
-      return { primary: null, secondary: null, messageType: 'over' };
-    }
-
-      // ✅ Handle before Day 1
-  const allSessionsSorted = [...sessions].sort(
-    (a, b) => this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime()
-  );
-  const firstSession = allSessionsSorted[0];
-  if (now < this.toDate(firstSession.startTime)) {
-    return { primary: null, secondary: null, messageType: 'before' };
-  }
-    // Filter to current day's sessions
-    const todaySessions = sessions.filter((s) => 
-      this.normalizeDay(s.day) === this.currentDay.toString()
-    );
-
-// If no sessions today, determine if we're before, after, or between event days
-if (todaySessions.length === 0) {
-  const allDays = sessions.map(s => parseInt(this.normalizeDay(s.day))).filter(d => !isNaN(d));
-  const maxDay = Math.max(...allDays);
-  const minDay = Math.min(...allDays);
-
-  // Before event start (Day 0)
-  if (this.currentDay === 0) {
-    return { primary: null, secondary: null, messageType: 'before' };
-  }
-
-  // After event ends
-  if (this.currentDay > maxDay) {
-    return { primary: null, secondary: null, messageType: 'over' };
-  }
-
-  // Between days (no sessions right now)
-  return { primary: null, secondary: null, messageType: 'today' };
-}
-
-
-    // Sort sessions by start time
-    todaySessions.sort(
-      (a, b) => this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime()
-    );
-
-    // Check for LIVE session
-    const liveSession = todaySessions.find(
-      (s) => this.toDate(s.startTime) <= now && this.toDate(s.endTime) > now
-    );
-
-    if (liveSession) {
-      // Find next session AFTER the live one (today only)
-      const liveIndex = todaySessions.findIndex((s) => s.id === liveSession.id);
-      const nextSession = todaySessions
-        .slice(liveIndex + 1)
-        .find((s) => this.toDate(s.startTime) > now) || null;
-      
-      return { 
-        primary: liveSession, 
-        secondary: nextSession, 
-        messageType: null 
-      };
-    }
-
-    // No live session - find next upcoming session (today only)
-    const upcomingSession = todaySessions.find(
-      (s) => this.toDate(s.startTime) > now
-    );
-
-    if (upcomingSession) {
-      return { 
-        primary: upcomingSession, 
-        secondary: null, 
-        messageType: null 
-      };
-    }
-
-    // No live or upcoming sessions today
-    // Check if this is the last day of the event
-    const allDays = sessions.map(s => parseInt(this.normalizeDay(s.day))).filter(d => !isNaN(d));
-    const maxDay = Math.max(...allDays);
-    
-    if (this.currentDay >= maxDay) {
-      // This is the last day and all sessions are done
-      return { primary: null, secondary: null, messageType: 'over' };
-    }
-
-    // There are more days ahead, today is just done
-    return { primary: null, secondary: null, messageType: 'today' };
-  }
-
-  // ---------- Helper utilities ----------
-
-  /** Safely convert Firestore Timestamp or Date-like to JS Date */
   private toDate(tsOrDate: any): Date {
     if (!tsOrDate) return new Date(NaN);
     if (tsOrDate instanceof Timestamp) return tsOrDate.toDate();
     if (tsOrDate?.toDate && typeof tsOrDate.toDate === 'function') return tsOrDate.toDate();
     if (tsOrDate instanceof Date) return tsOrDate;
+    // fallback - allow ISO / numeric strings
     return new Date(tsOrDate);
   }
 
-  /** Local date string 'YYYY-MM-DD' */
-  private toLocalDateStr(d: Date): string {
-    const year = d.getFullYear();
-    const mm = `${d.getMonth() + 1}`.padStart(2, '0');
-    const dd = `${d.getDate()}`.padStart(2, '0');
-    return `${year}-${mm}-${dd}`;
+  /** Calculate event "current day" using sessions and a reference now time. Returns 0 for before event. */
+  private calculateCurrentDayFromSessions(sessions: Session[], now = new Date()): number {
+    if (!sessions || sessions.length === 0) return 1;
+
+    // Group sessions by day number
+    const byDay = new Map<number, { start: Date; end: Date }[]>();
+    for (const s of sessions) {
+      const dayNum = this.parseDayToInt(s.day);
+      const start = this.toDate(s.startTime);
+      const end = this.toDate(s.endTime);
+      if (!byDay.has(dayNum)) byDay.set(dayNum, []);
+      byDay.get(dayNum)!.push({ start, end });
+    }
+
+    const dayNums = Array.from(byDay.keys()).sort((a, b) => a - b);
+    if (dayNums.length === 0) return 1;
+
+    // Determine day's earliest start and latest end (per day)
+    const ranges = dayNums.map((n) => {
+      const entries = byDay.get(n)!;
+      const starts = entries.map((e) => e.start.getTime());
+      const ends = entries.map((e) => e.end.getTime());
+      const start = new Date(Math.min(...starts));
+      const end = new Date(Math.max(...ends));
+      return { dayNum: n, start, end };
+    });
+
+    // Before event
+    if (now < ranges[0].start) return 0;
+
+    // Find if now is within any day's range. If exactly between days but before 06:00, keep previous day.
+    for (let i = 0; i < ranges.length; i++) {
+      const { dayNum, start, end } = ranges[i];
+      if (now >= start && now <= end) return dayNum;
+      const next = ranges[i + 1];
+      if (next && now > end && now < next.start) {
+        if (now.getDate() === end.getDate() + 1 && now.getHours() < 6) {
+          return dayNum;
+        }
+        return next.dayNum;
+      }
+    }
+
+    // After last day
+    return ranges[ranges.length - 1].dayNum;
   }
+
+  /**
+   * Evaluate sessions for a particular day and "now".
+   * Returns { primary, secondary, messageType } - pure function.
+   */
+  private evaluateSessionsForDay(sessions: Session[], now: Date, currentDay: number) {
+    if (!sessions || sessions.length === 0) {
+      return { primary: null, secondary: null, messageType: 'over' as MessageType };
+    }
+
+    // Sorted sessions expected but ensure stable ordering
+    const sorted = sessions.slice().sort((a, b) => this.toDate(a.startTime).getTime() - this.toDate(b.startTime).getTime());
+
+    // If before the very first session overall => before event
+    const firstOverall = sorted[0];
+    if (now < this.toDate(firstOverall.startTime)) {
+      return { primary: null, secondary: null, messageType: 'before' as MessageType };
+    }
+
+    // Filter today's sessions (by currentDay)
+    const todayStr = String(currentDay);
+    const todaySessions = sorted.filter((s) => this.normalizeDay(s.day) === todayStr);
+
+    // If there are no sessions for the computed currentDay, determine if we're after event or between days
+    if (todaySessions.length === 0) {
+      const dayNums = Array.from(new Set(sorted.map((s) => this.parseDayToInt(s.day)))).sort((a, b) => a - b);
+      const min = dayNums[0];
+      const max = dayNums[dayNums.length - 1];
+      if (currentDay === 0) return { primary: null, secondary: null, messageType: 'before' as MessageType };
+      if (currentDay > max) return { primary: null, secondary: null, messageType: 'over' as MessageType };
+      // Otherwise we're between days and there are sessions on other days
+      return { primary: null, secondary: null, messageType: 'today' as MessageType };
+    }
+
+    // Now, determine live or upcoming in today's sessions
+    // Convert times once for today's sessions to avoid repeated conversion
+    const withDates = todaySessions.map((s) => ({
+      session: s,
+      start: this.toDate(s.startTime),
+      end: this.toDate(s.endTime),
+    }));
+
+    // Find live session
+    const live = withDates.find((d) => d.start <= now && now < d.end);
+    if (live) {
+      // find next session on today after the live one
+      const index = withDates.findIndex((d) => d.session.id === live.session.id);
+      const next = withDates.slice(index + 1).find((d) => d.start > now);
+      return { primary: live.session, secondary: next ? next.session : null, messageType: null as MessageType };
+    }
+
+    // No live -> find upcoming today
+    const upcoming = withDates.find((d) => d.start > now);
+    if (upcoming) {
+      return { primary: upcoming.session, secondary: null, messageType: null as MessageType };
+    }
+
+    // No live or upcoming today. Determine if it's the last day.
+    const allDayNums = Array.from(new Set(sorted.map((s) => this.parseDayToInt(s.day))));
+    const maxDay = Math.max(...allDayNums);
+    if (currentDay >= maxDay) {
+      return { primary: null, secondary: null, messageType: 'over' as MessageType };
+    }
+
+    return { primary: null, secondary: null, messageType: 'today' as MessageType };
+  }
+
+  // ---------- UI helpers ----------
 
   public getTimeUntil(session: Session | null): string {
     if (!session) return '';
@@ -355,9 +329,11 @@ if (todaySessions.length === 0) {
     const start = this.toDate(session.startTime);
     const end = this.toDate(session.endTime);
 
-    // Live now?
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) return '';
+
+    // Live
     if (now >= start && now < end) {
-      const remainingMs = end.getTime() - now.getTime();
+      const remainingMs = Math.max(0, end.getTime() - now.getTime());
       const mins = Math.floor(remainingMs / 60000);
       const secs = Math.floor((remainingMs % 60000) / 1000);
       if (mins > 0) return `Live • ${mins}m ${secs}s left`;
@@ -379,30 +355,18 @@ if (todaySessions.length === 0) {
     const now = new Date();
     const start = this.toDate(session.startTime);
     const end = this.toDate(session.endTime);
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) return false;
     return start <= now && now < end;
   }
 
   shouldDisplaySpeaker(session: Session | undefined | null): boolean {
-    if (!session?.speaker) return false;
-    if (!session.speaker.name) return false;
-    const speakerName = session.speaker.name.trim().toLowerCase();
-    return speakerName !== 'all' && speakerName !== '';
+    const name = session?.speaker?.name?.trim?.() ?? '';
+    if (!name) return false;
+    const lc = name.toLowerCase();
+    return lc !== 'all' && lc.length > 0;
   }
 
-  // ---------- Announcements ----------
-
-  private loadAnnouncements() {
-    const announcementsRef = collection(this.firestore, 'announcements');
-    const q = query(announcementsRef, orderBy('timestamp', 'desc'));
-    this.announcements$ = collectionData(q, { idField: 'id' }).pipe(
-      map((ann: any[]) =>
-        ann.sort((a, b) => this.toDate(b.timestamp).getTime() - this.toDate(a.timestamp).getTime())
-      ),
-      shareReplay(1)
-    );
-  }
-
-  // ---------- Navigation / UI helpers ----------
+  // ---------- Navigation ----------
 
   navigateToAgenda() {
     this.router.navigate(['tabs/agenda']);
@@ -420,11 +384,7 @@ if (todaySessions.length === 0) {
   }
 
   openTips() {
-        this.router.navigate(['/tips']);
-
-  }
-  openPhotos() {
-    console.log('Opening photos gallery');
+    this.router.navigate(['/tips']);
   }
 
   openQRCode() {
@@ -463,9 +423,6 @@ if (todaySessions.length === 0) {
   }
 
   openHSEInduction() {
-  this.router.navigate(['/hse-induction']);
+    this.router.navigate(['/hse-induction']);
+  }
 }
-
-
-}
-
