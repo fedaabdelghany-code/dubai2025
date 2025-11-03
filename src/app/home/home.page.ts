@@ -78,6 +78,8 @@ export class HomePage implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private readonly TICK_MS = 1000;
 
+  
+
   constructor(private router: Router, private firestore: Firestore, private auth: Auth, private data: DataService,   
 ) {}
 
@@ -466,3 +468,4 @@ if (todaySessions.length === 0) {
 
 
 }
+
