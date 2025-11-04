@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
+
   "assetGroups": [
     {
       "name": "app",
@@ -15,17 +16,16 @@
       }
     },
     {
-  "name": "ionicons",
-  "installMode": "lazy",
-  "updateMode": "prefetch",
-  "resources": {
-    "urls": [
-      "https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js",
-      "https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ]
-  }
-}
-,
+      "name": "ionicons",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "urls": [
+          "https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js",
+          "https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+        ]
+      }
+    },
     {
       "name": "assets",
       "installMode": "lazy",
@@ -33,12 +33,13 @@
       "resources": {
         "files": [
           "/assets/**",
-          "/svg/**",                 
+          "/svg/**",
           "/*.(png|jpg|jpeg|svg|webp|avif|gif|ico)"
         ]
       }
     }
   ],
+
   "dataGroups": [
     {
       "name": "api-cache",
@@ -50,6 +51,18 @@
         "strategy": "freshness",
         "maxSize": 100,
         "maxAge": "1h",
+        "timeout": "10s"
+      }
+    },
+    {
+      "name": "remote-images",
+      "urls": [
+        "https://firebasestorage.googleapis.com/**"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 60,
+        "maxAge": "7d",
         "timeout": "10s"
       }
     }

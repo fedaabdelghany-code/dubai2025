@@ -935,172 +935,6 @@ $color-bg-light: #f9fafb;
 $color-border: #e5e7eb;
 
 // ========================================
-// Modal Wrapper
-// ========================================
-.qr-modal {
-  --width: 92%;
-  --max-width: 400px;
-  --border-radius: 1.25rem;
-  --height: auto;
-  --max-height: 85vh;
-
-  @media (min-width: 480px) {
-    --max-width: 420px;
-  }
-}
-
-.qr-modal-content {
-  background: #fff;
-  padding: 1.25rem 1.5rem 1.5rem;
-  border-radius: 1.25rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; // prevent scrolling for compact layout
-}
-
-// ========================================
-// Header
-// ========================================
-.qr-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid $color-border;
-
-  .qr-title {
-    color: $color-primary;
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin: 0;
-  }
-
-  .close-btn {
-    background: rgba($color-bg-light, 0.8);
-    border: none;
-    border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    ion-icon {
-      font-size: 1.2rem;
-      color: $color-primary;
-    }
-
-    &:hover {
-      background: rgba($color-secondary, 0.15);
-      ion-icon {
-        color: $color-secondary;
-      }
-    }
-  }
-}
-
-// ========================================
-// QR Section
-// ========================================
-.qr-display {
-  text-align: center;
-  margin: 0.5rem 0 1.25rem;
-
-  .qr-frame {
-    background: white;
-    padding: 0.75rem;
-    border-radius: 0.75rem;
-    border: 1px solid $color-border;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-
-    .qr-image {
-      width: 8.5rem;
-      height: 8.5rem;
-      object-fit: contain;
-    }
-  }
-
-  .qr-instruction {
-    margin-top: 0.75rem;
-    color: #6b7280;
-    font-size: 0.85rem;
-  }
-}
-
-// ========================================
-// Info Section
-// ========================================
-.user-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  border-top: 1px solid $color-border;
-  padding-top: 1rem;
-  margin-top: 0.75rem;
-}
-
-.info-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-
-  &.info-row-primary {
-    .info-icon {
-      background: rgba($color-accent, 0.15);
-      ion-icon {
-        color: $color-accent;
-      }
-    }
-    .info-value {
-      font-weight: 700;
-      color: $color-primary;
-    }
-  }
-}
-
-.info-icon {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  background: $color-bg-light;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-
-  ion-icon {
-    color: $color-secondary;
-    font-size: 1.15rem;
-  }
-}
-
-.info-text {
-  flex: 1;
-  min-width: 0;
-
-  .info-label {
-    font-size: 0.7rem;
-    color: #9ca3af;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-weight: 600;
-    margin-bottom: 0.125rem;
-  }
-
-  .info-value {
-    font-size: 1rem;
-    color: $color-primary;
-    font-weight: 600;
-  }
-}
-
-// ========================================
 // Footer
 // ========================================
 .qr-footer {
@@ -1330,19 +1164,400 @@ ion-header {
   }
 }
 
-// Dark mode support
-@media (prefers-color-scheme: dark) {
-  .notification-card {
-    background: var(--ion-card-background, #1e1e1e);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
-    .test-notification-btn {
-      background: var(--ion-color-dark);
+/* Card Header with Button on Same Row */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  .card-title {
+    margin: 0;
+    // Keep existing title styles
+  }
+}
+
+/* Compact Add Button - Just '+' Icon */
+.add-btn {
+  --padding-start: 0;
+  --padding-end: 0;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  color: white;
+  font-weight: 600;
+    --background: #003366; /* Dark blue fill */
+
+  transition: all 0.3s ease;
+  
+
+  ion-icon {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ========================================
+// MODAL BASE CONFIGURATION
+// ========================================
+ion-modal {
+  --backdrop-opacity: 0.6;
+
+  &::part(backdrop) {
+    backdrop-filter: blur(4px);
+  }
+
+  &::part(content) {
+    position: relative;
+    margin: auto;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+}
+
+// ========================================
+// ADD ANNOUNCEMENT MODAL
+// ========================================
+.add-modal {
+  --width: 90%;
+  --max-width: 520px;
+  --max-height: 90vh;
+  --border-radius: 24px;
+
+  .add-modal-content {
+    background: #ffffff;
+    color: #1e293b;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 90vh;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    justify-content: space-between;
+    padding: 1.5rem 1.75rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e2e8f0;
+    flex-shrink: 0;
+
+    .modal-title {
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0;
+      letter-spacing: -0.3px;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      font-size: 1.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      padding: 0;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+        color: #1e293b;
+      }
 
       &:active {
-        background: var(--ion-color-dark-shade);
+        transform: scale(0.95);
       }
+    }
+  }
+
+  .modal-body {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow-y: auto;
+    flex: 1;
+    background: #ffffff;
+
+    ion-input,
+    ion-textarea {
+      --padding-start: 14px;
+      --padding-end: 14px;
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+      --border-radius: 12px;
+      --border-color: #e2e8f0;
+      --border-width: 1.5px;
+      --background: #ffffff;
+      --color: #1e293b;
+      font-size: 0.9375rem;
+
+      &::part(native) {
+        color: #1e293b;
+        background: #ffffff;
+      }
+
+      &::part(label) {
+        font-weight: 600;
+        color: #475569;
+        font-size: 0.875rem;
+      }
+
+      &.has-focus {
+        --border-color: #00a9e0;
+        --highlight-color: #00a9e0;
+      }
+    }
+
+    ion-textarea {
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+      min-height: 120px;
+
+      &::part(native) {
+        resize: vertical;
+      }
+    }
+
+    .save-btn {
+      margin-top: 0.5rem;
+      --padding-top: 14px;
+      --padding-bottom: 14px;
+      height: 48px;
+      color: white;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      font-size: 0.9375rem;
+      transition: all 0.3s ease;
+
+      ion-icon {
+        margin-right: 8px;
+        font-size: 1.3rem;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &::part(native) {
+        border-radius: 14px;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    --width: 95%;
+    --border-radius: 20px;
+    --max-height: 95vh;
+
+    .modal-header {
+      padding: 1.25rem;
+
+      .modal-title {
+        font-size: 1.25rem;
+      }
+    }
+
+    .modal-body {
+      padding: 1.25rem;
+      gap: 1rem;
     }
   }
 }
 
+// ========================================
+// QR CODE MODAL
+// ========================================
+.qr-modal {
+  --width: 92%;
+  --max-width: 400px;
+  --border-radius: 1.25rem;
+  --height: auto;
+  --max-height: 85vh;
+  --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 480px) {
+    --max-width: 420px;
+  }
+
+  .qr-modal-content {
+    background: #fff;
+    padding: 1.25rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .qr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+
+    .qr-title {
+      color: #1d4370;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .close-btn {
+      background: rgba(241, 245, 249, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      ion-icon {
+        font-size: 1.2rem;
+        color: #1d4370;
+      }
+
+      &:hover {
+        background: rgba(0, 169, 224, 0.15);
+        
+        ion-icon {
+          color: #00a9e0;
+        }
+      }
+    }
+  }
+
+  .qr-display {
+    text-align: center;
+    margin: 0.5rem 0 1.25rem;
+
+    .qr-frame {
+      background: white;
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      .qr-image {
+        width: 8.5rem;
+        height: 8.5rem;
+        object-fit: contain;
+      }
+    }
+
+    .qr-instruction {
+      margin-top: 0.75rem;
+      color: #6b7280;
+      font-size: 0.85rem;
+    }
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    &.info-row-primary {
+      .info-icon {
+        background: rgba(0, 169, 224, 0.15);
+        
+        ion-icon {
+          color: #00a9e0;
+        }
+      }
+      
+      .info-value {
+        font-weight: 700;
+        color: #1d4370;
+      }
+    }
+  }
+
+  .info-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    ion-icon {
+      color: #00a9e0;
+      font-size: 1.15rem;
+    }
+  }
+
+  .info-text {
+    flex: 1;
+    min-width: 0;
+
+    .info-label {
+      font-size: 0.7rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+      margin-bottom: 0.125rem;
+    }
+
+    .info-value {
+      font-size: 1rem;
+      color: #1d4370;
+      font-weight: 600;
+    }
+  }
+}
+
+// ========================================
+// MODAL ANIMATIONS
+// ========================================
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+ion-modal::part(content) {
+  animation: modalSlideIn 0.3s ease-out;
+}

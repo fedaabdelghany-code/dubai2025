@@ -1,6 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
+import { addDoc } from '@angular/fire/firestore';
+import { FormsModule } from '@angular/forms';
+
+
 import {
   IonContent,
   IonIcon,
@@ -9,8 +13,7 @@ import {
   IonCardTitle,
   IonCard,
   IonCardHeader,
-  IonCardContent,
-} from '@ionic/angular/standalone';
+  IonCardContent, IonTextarea, IonInput } from '@ionic/angular/standalone';
 import { Auth, signOut, onAuthStateChanged } from '@angular/fire/auth';
 import { DataService } from '../services/data.service';
 
@@ -70,7 +73,7 @@ type MessageType = 'today' | 'over' | 'before' | null;
   standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [
+  imports: [IonInput, IonTextarea, 
     IonCardContent,
     IonCardHeader,
     IonCard,
@@ -82,9 +85,12 @@ type MessageType = 'today' | 'over' | 'before' | null;
     CommonModule,
     DatePipe,
     RouterModule,
+    FormsModule
   ],
 })
 export class HomePage implements OnInit, OnDestroy {
+newAnnouncementTitle: any;
+newAnnouncementDesc: any;
 openPhotos() {
 throw new Error('Method not implemented.');
 }
@@ -96,6 +102,37 @@ throw new Error('Method not implemented.');
   public currentDay = 1;
   public showQR = false;
   public displayName: string | null = null;
+  public isAdmin = false;
+private adminEmails = [
+   'feda.abdelghany@lafarge.com',
+  'emily.elias@lafarge.com',
+  'gulan.sherko@lafarge.com'
+];
+
+
+
+showAddModal = false;
+newAnnouncementPriority = 'normal';
+
+
+
+async submitAnnouncement() {
+  if (!this.newAnnouncementTitle.trim() || !this.newAnnouncementDesc.trim()) return;
+
+  const ref = collection(this.firestore, 'announcements');
+  await addDoc(ref, {
+    title: this.newAnnouncementTitle.trim(),
+    description: this.newAnnouncementDesc.trim(),
+    priority: this.newAnnouncementPriority,
+    active: true,
+    timestamp: new Date(),
+  });
+
+  this.newAnnouncementTitle = '';
+  this.newAnnouncementDesc = '';
+  this.newAnnouncementPriority = 'normal';
+  this.closeAddModal();
+}
 
   private destroy$ = new Subject<void>();
   private readonly TICK_MS = 1000;
@@ -108,6 +145,10 @@ throw new Error('Method not implemented.');
   ) {}
 
   ngOnInit() {
+
+    this.showAddModal = false;
+this.showQR = false;
+
     // sessions$ from data service but ensure it's sorted and convert timestamps lazily when needed.
     const sessionsSorted$ = this.data.sessions$.pipe(
       map((sessions) =>
@@ -134,7 +175,12 @@ throw new Error('Method not implemented.');
 
     authState$.pipe(takeUntil(this.destroy$)).subscribe((user: any) => {
       this.displayName = user?.displayName ? this.formatDisplayName(user.displayName) : null;
+          this.isAdmin = !!user?.email && this.adminEmails.includes(user.email);
+
     });
+
+    
+    
 
     // Combine sessions + now to compute currentDay and evaluate live/up-next sessions
     combineLatest([sessionsSorted$, now$])
@@ -387,13 +433,28 @@ throw new Error('Method not implemented.');
     this.router.navigate(['/tips']);
   }
 
-  openQRCode() {
-    this.showQR = true;
-  }
+openAddModal() {
+  if (this.showQR) this.closeQRCode();
+  this.showAddModal = true;
+}
 
-  closeQRCode() {
-    this.showQR = false;
-  }
+async closeAddModal() {
+  this.showAddModal = false;
+  const modal = document.querySelector('ion-modal.add-modal') as HTMLIonModalElement;
+  if (modal) await modal.dismiss();
+}
+
+openQRCode() {
+  if (this.showAddModal) this.closeAddModal();
+  this.showQR = true;
+}
+
+async closeQRCode() {
+  this.showQR = false;
+  const modal = document.querySelector('ion-modal.qr-modal') as HTMLIonModalElement;
+  if (modal) await modal.dismiss();
+}
+
 
   timeAgo(timestamp: any): string {
     if (!timestamp?.toDate) return '';
@@ -424,5 +485,17 @@ throw new Error('Method not implemented.');
 
   openHSEInduction() {
     this.router.navigate(['/hse-induction']);
+
   }
+  async addAnnouncement(title: string, description: string, priority: string = 'normal') {
+  const ref = collection(this.firestore, 'announcements');
+  await addDoc(ref, {
+    title,
+    description,
+    priority,
+    active: true,
+    timestamp: new Date()
+  });
+}
+
 }

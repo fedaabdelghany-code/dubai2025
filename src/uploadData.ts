@@ -1,7 +1,7 @@
 // uploadSessions.ts
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore';
-import sessions from './assets/data/agenda.json' ;
+import data from './assets/data/agenda.json' ;
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -25,27 +25,39 @@ const convertToTimestamp = (isoString: string): Timestamp => {
   return Timestamp.fromDate(new Date(isoString));
 };
 
-// Function to upload sessions
+
+// Upload sessions
 const uploadSessions = async () => {
   try {
     const sessionsCollection = collection(db, 'sessions');
-    
-    for (const session of sessions.sessions) {
-      // Convert startTime and endTime to Firestore Timestamps
-      const sessionData = {
-        ...session,
-        startTime: convertToTimestamp(session.startTime),
-        endTime: convertToTimestamp(session.endTime)
-      };
-      
-      // Add document to Firestore
+
+    for (const session of data.sessions) {
+      // Convert startTime/endTime if they exist
+      const sessionData: any = { ...session };
+
+      if (session.startTime) sessionData.startTime = convertToTimestamp(session.startTime);
+      if (session.endTime) sessionData.endTime = convertToTimestamp(session.endTime);
+
+type RotationalSchedule = {
+  [group: string]: { startTime: string; endTime: string };
+};
+
+if (session.rotationalSchedule) {
+  const schedule: RotationalSchedule = session.rotationalSchedule;
+  sessionData.rotationalSchedule = {};
+  for (const group in schedule) {
+    sessionData.rotationalSchedule[group] = {
+      startTime: convertToTimestamp(schedule[group].startTime),
+      endTime: convertToTimestamp(schedule[group].endTime)
+    };
+  }
+}
+
       const docRef = await addDoc(sessionsCollection, sessionData);
-      console.log(`Session added with ID: ${docRef.id} - ${session.title}`);
+      console.log(`✅ Session added: ${session.title} (ID: ${docRef.id})`);
     }
-    
-    console.log('\n✅ All sessions uploaded successfully!');
-    console.log(`Total sessions uploaded: ${sessions.sessions.length}`);
-    
+
+    console.log(`\n🎉 Uploaded ${data.sessions.length} sessions successfully!`);
   } catch (error) {
     console.error('❌ Error uploading sessions:', error);
   }

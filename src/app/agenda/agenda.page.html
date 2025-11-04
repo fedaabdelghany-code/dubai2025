@@ -40,7 +40,7 @@
     </div>
 
     <!-- Sessions List -->
-    <div class="sessions-container">
+<div class="sessions-container" [class.transitioning]="isTransitioning">
       <ng-container *ngIf="filteredSessions.length > 0; else noSessions">
         <div
           *ngFor="let session of filteredSessions; let i = index"
